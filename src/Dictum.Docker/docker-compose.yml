@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  dictum.api:
+    image: ${DOCKER_REGISTRY-}dictumapi
+    build:
+      context: .
+      dockerfile: ../Dictum.Api/Dockerfile
