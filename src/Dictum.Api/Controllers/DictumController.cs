@@ -16,13 +16,13 @@ namespace Dictum.Api.Controllers
             _dictumService = dictumService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Business.Models.Dictum>> GetRandom()
+        [HttpGet("{lang:alpha}")]
+        public async Task<ActionResult<Business.Models.Dictum>> GetRandom(string lang)
         {
-            return Ok(await _dictumService.GetRandom());
+            return Ok(await _dictumService.GetRandom(lang));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Business.Models.Dictum>> Get(string uuid)
         {

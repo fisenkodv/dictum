@@ -1,5 +1,5 @@
-﻿using Dictum.Business.Anstract.Repositories;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Dictum.Business.Abstract.Repositories;
 
 namespace Dictum.Business.Services
 {
@@ -12,9 +12,9 @@ namespace Dictum.Business.Services
             _dictumRepository = dictumRepository;
         }
 
-        public Task<Models.Dictum> GetRandom()
+        public Task<Models.Dictum> GetRandom(string lang)
         {
-            return _dictumRepository.GetRandom();
+            return _dictumRepository.GetRandom(lang);
         }
 
         public Task<Models.Dictum> GetDictum(string uuid)

@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Dictum.Business.Models;
 
-namespace Dictum.Business.Anstract.Repositories
+namespace Dictum.Business.Abstract.Repositories
 {
     public interface IDictumRepository
     {
-        Task<Models.Dictum> GetRandom();
+        Task<Models.Dictum> GetRandom(string lang);
         Task<Models.Dictum> GetDictum(string uuid);
     }
 }

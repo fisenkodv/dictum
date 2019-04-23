@@ -1,4 +1,4 @@
-﻿using Dictum.Business.Anstract.Repositories;
+﻿using Dictum.Business.Abstract.Repositories;
 using Dictum.Business.Services;
 using Dictum.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
