@@ -1,9 +1,20 @@
-workflow "New workflow" {
+workflow "Publish Container" {
   on = "push"
-  resolves = ["GitHub Action for Docker"]
+  resolves = ["Publish"]
 }
 
-action "GitHub Action for Docker" {
+action "Build" {
   uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
   args = "build --rm --tag fisenkodv/dictum:latest --file Dockerfile ."
+}
+
+action "Push to Docker" {
+  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  args = "push fisenkodv/dictum:latest"
+}
+
+action "Publish" {
+  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  args = "push fisenkodv/dictum:latest"
+  needs = ["Build"]
 }
