@@ -8,7 +8,7 @@ namespace Dictum.Data
     {
         public static DbConnection GetConnection(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Monitoring");
+            var connectionString = configuration.GetConnectionString("Dictum");
             return GetConnection(connectionString);
         }
 
