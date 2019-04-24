@@ -1,6 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.Common;
 using Microsoft.Extensions.Configuration;
-using System.Data.Common;
+using MySql.Data.MySqlClient;
 
 namespace Dictum.Data
 {

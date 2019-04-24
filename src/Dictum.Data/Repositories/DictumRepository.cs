@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Dictum.Data.Models;
-using Microsoft.Extensions.Configuration;
 using Dapper;
 using Dictum.Business.Abstract.Repositories;
+using Dictum.Data.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Dictum.Data.Repositories
 {
@@ -15,36 +15,36 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Business.Models.Dictum> GetRandom(string lang)
+        public async Task<Business.Models.Quote> GetRandom(string lang)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
-                string sql = $@"
-                     SELECT     {DictumSchema.Columns.Uuid},
-                                {DictumSchema.Columns.Quote},
-                                {DictumSchema.Columns.Author}
-                     FROM       {DictumSchema.Table}
-                     INNER JOIN {LanguageSchema.Table}
-                     ON         {DictumSchema.Table}.{DictumSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
+                var sql = $@"
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid},
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Text},
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Author}
+                     FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
+                     INNER JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
+                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                      WHERE      {LanguageSchema.Columns.Code} = @{nameof(lang)}
                      ORDER BY RAND() LIMIT 1";
 
-                return await connection.QueryFirstAsync<Business.Models.Dictum>(sql, new {lang});
+                return await connection.QueryFirstAsync<Business.Models.Quote>(sql, new {lang});
             }
         }
 
-        public async Task<Business.Models.Dictum> GetDictum(string uuid)
+        public async Task<Business.Models.Quote> GetDictum(string uuid)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
-                string sql = $@"
-                     SELECT {DictumSchema.Columns.Uuid},
-                            {DictumSchema.Columns.Quote},
-                            {DictumSchema.Columns.Author}
-                     FROM   {DictumSchema.Table}
-                     WHERE  {DictumSchema.Columns.Uuid} = @{nameof(uuid)}";
+                var sql = $@"
+                     SELECT {QuoteSchema.Columns.Uuid},
+                            {QuoteSchema.Columns.Text},
+                            {QuoteSchema.Columns.Author}
+                     FROM   {QuoteSchema.Table}
+                     WHERE  {QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
-                return await connection.QueryFirstOrDefaultAsync<Business.Models.Dictum>(sql, new {uuid});
+                return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {uuid});
             }
         }
     }

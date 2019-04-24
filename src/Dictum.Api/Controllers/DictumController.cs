@@ -16,15 +16,15 @@ namespace Dictum.Api.Controllers
             _dictumService = dictumService;
         }
 
-        [HttpGet("{lang:alpha}")]
-        public async Task<ActionResult<Business.Models.Dictum>> GetRandom(string lang)
+        [HttpGet]
+        public async Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery] string lang)
         {
             return Ok(await _dictumService.GetRandom(lang));
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Business.Models.Dictum>> Get(string uuid)
+        public async Task<ActionResult<Business.Models.Quote>> Get(string uuid)
         {
             var dictum = await _dictumService.GetDictum(uuid);
 

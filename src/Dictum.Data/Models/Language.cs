@@ -1,4 +1,5 @@
 using Dictum.Data.Extensions;
+using Humanizer;
 
 namespace Dictum.Data.Models
 {
@@ -11,7 +12,7 @@ namespace Dictum.Data.Models
 
     internal static class LanguageSchema
     {
-        public static string Table { get; } = nameof(Language).ToPlural().ToSnakeCase();
+        public static string Table { get; } = nameof(Language).Pluralize().ToSnakeCase();
 
         public static class Columns
         {

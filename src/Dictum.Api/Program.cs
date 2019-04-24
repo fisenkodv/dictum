@@ -15,8 +15,8 @@ namespace Dictum.Api
         {
             var currentEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-                .AddJsonFile($"appsettings.{currentEnv}.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("appsettings.json", false, false)
+                .AddJsonFile($"appsettings.{currentEnv}.json", true, false)
                 .AddEnvironmentVariables()
                 .Build();
 
@@ -45,7 +45,7 @@ namespace Dictum.Api
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("hosting.json", optional: true)
+                .AddJsonFile("hosting.json", true)
                 .AddCommandLine(args)
                 .Build();
 

@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Dictum.Tests
@@ -8,7 +7,6 @@ namespace Dictum.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

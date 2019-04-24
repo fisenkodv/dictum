@@ -5,6 +5,8 @@ namespace Dictum.Business.Services
 {
     public class DictumService
     {
+        private const string DefaultLanguageCode = "EN";
+
         private readonly IDictumRepository _dictumRepository;
 
         public DictumService(IDictumRepository dictumRepository)
@@ -12,12 +14,12 @@ namespace Dictum.Business.Services
             _dictumRepository = dictumRepository;
         }
 
-        public Task<Models.Dictum> GetRandom(string lang)
+        public Task<Models.Quote> GetRandom(string lang)
         {
-            return _dictumRepository.GetRandom(lang);
+            return _dictumRepository.GetRandom(string.IsNullOrWhiteSpace(lang) ? DefaultLanguageCode : lang);
         }
 
-        public Task<Models.Dictum> GetDictum(string uuid)
+        public Task<Models.Quote> GetDictum(string uuid)
         {
             return _dictumRepository.GetDictum(uuid);
         }
