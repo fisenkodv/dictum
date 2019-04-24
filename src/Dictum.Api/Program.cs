@@ -51,7 +51,7 @@ namespace Dictum.Api
 
             return WebHost.CreateDefaultBuilder(args)
                 .SuppressStatusMessages(true)
-                //.UseUrls("http://*:5000")
+                .UseUrls("http://*:5000")
                 .UseConfiguration(config)
                 .UseStartup<Startup>()
                 .UseSerilog();
