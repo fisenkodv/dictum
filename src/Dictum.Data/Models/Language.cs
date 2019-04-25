@@ -1,9 +1,11 @@
 using Dictum.Data.Extensions;
 using Humanizer;
+using JetBrains.Annotations;
 
 namespace Dictum.Data.Models
 {
-    public class Language
+    [UsedImplicitly]
+    internal class Language
     {
         public int Id { get; set; }
         public string Code { get; set; }

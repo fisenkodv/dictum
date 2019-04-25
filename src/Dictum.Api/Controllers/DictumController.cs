@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
-using Dictum.Business.Services;
+﻿using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Dictum.Api.Controllers
 {
@@ -17,18 +18,23 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery] string lang)
+        public Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery] string lang)
         {
-            return Ok(await _dictumService.GetRandom(lang));
+            return WrapToActionResult(() => _dictumService.GetRandom(lang));
         }
 
         [HttpGet("{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Business.Models.Quote>> Get(string uuid)
+        public Task<ActionResult<Business.Models.Quote>> Get(string uuid)
         {
-            var dictum = await _dictumService.GetDictum(uuid);
+            return WrapToActionResult(() => _dictumService.GetDictum(uuid));
+        }
 
-            if (dictum != null) return Ok(dictum);
+        private async Task<ActionResult<T>> WrapToActionResult<T>(Func<Task<T>> resultFunc)
+        {
+            var result = await resultFunc();
+
+            if (result != null) return Ok(result);
 
             return NotFound();
         }

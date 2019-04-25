@@ -1,9 +1,11 @@
 ﻿using System;
 using Dictum.Data.Extensions;
 using Humanizer;
+using JetBrains.Annotations;
 
 namespace Dictum.Data.Models
 {
+    [UsedImplicitly]
     internal class Quote
     {
         public int Id { get; set; }

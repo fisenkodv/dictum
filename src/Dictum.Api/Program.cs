@@ -15,8 +15,8 @@ namespace Dictum.Api
         {
             var currentEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", false, false)
-                .AddJsonFile($"appsettings.{currentEnv}.json", true, false)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .AddJsonFile($"appsettings.{currentEnv}.json", optional: true, reloadOnChange: false)
                 .AddEnvironmentVariables()
                 .Build();
 
@@ -45,12 +45,12 @@ namespace Dictum.Api
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("hosting.json", true)
+                .AddJsonFile("hosting.json", optional: true)
                 .AddCommandLine(args)
                 .Build();
 
             return WebHost.CreateDefaultBuilder(args)
-                .SuppressStatusMessages(true)
+                .SuppressStatusMessages(suppressStatusMessages: true)
                 .UseUrls("http://*:5000")
                 .UseConfiguration(config)
                 .UseStartup<Startup>()

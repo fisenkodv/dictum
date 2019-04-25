@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 
-namespace Dictum.Data
+namespace Dictum.Data.Extensions
 {
     internal static class ConfigurationExtensions
     {

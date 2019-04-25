@@ -3,6 +3,7 @@ using Dapper;
 using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
+using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
 
 namespace Dictum.Data.Repositories
 {
@@ -29,7 +30,7 @@ namespace Dictum.Data.Repositories
                      WHERE      {LanguageSchema.Columns.Code} = @{nameof(lang)}
                      ORDER BY RAND() LIMIT 1";
 
-                return await connection.QueryFirstAsync<Business.Models.Quote>(sql, new {lang});
+                return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {lang});
             }
         }
 
