@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
 
@@ -22,4 +20,8 @@ RUN dotnet publish ./Dictum.Api/Dictum.Api.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+ENV ConnectionStrings__Dictum=
+ENV ASPNETCORE_ENVIRONMENT=production
+ENV ASPNETCORE_URLS=http://+:5000
+EXPOSE 5000/tcp
 ENTRYPOINT ["dotnet", "Dictum.Api.dll"]
