@@ -21,12 +21,14 @@ namespace Dictum.Data.Repositories
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid},
-                                {QuoteSchema.Table}.{QuoteSchema.Columns.Text},
-                                {QuoteSchema.Table}.{QuoteSchema.Columns.Author}
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
+                                {AuthorSchema.Table}.{AuthorSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
                      INNER JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
+                     INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
+                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
                      WHERE      {LanguageSchema.Columns.Code} = @{nameof(lang)}
                      ORDER BY RAND() LIMIT 1";
 
@@ -39,11 +41,13 @@ namespace Dictum.Data.Repositories
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT {QuoteSchema.Columns.Uuid},
-                            {QuoteSchema.Columns.Text},
-                            {QuoteSchema.Columns.Author}
-                     FROM   {QuoteSchema.Table}
-                     WHERE  {QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
+                     SELECT     {QuoteSchema.Columns.Uuid} AS Uuid,
+                                {QuoteSchema.Columns.Text} AS Text,
+                                {AuthorSchema.Columns.Name} AS Author
+                     FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
+                     INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
+                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
+                     WHERE      {QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
                 return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {uuid});
             }
