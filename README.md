@@ -26,9 +26,9 @@ returns
 
 ```json
 {
-  uuid: "l86O4m2Wez",
-  text: "Nothing is softer or more flexible than water, yet nothing can resist it.",
-  author: "Lao Tzu"
+  "uuid": "l86O4m2Wez",
+  "text": "Nothing is softer or more flexible than water, yet nothing can resist it.",
+  "author": "Lao Tzu"
 }
 ```
 
@@ -52,8 +52,8 @@ returns
 
 ```json
 {
-  uuid: "l86O4m2Wez",
-  text: "Nothing is softer or more flexible than water, yet nothing can resist it.",
-  author: "Lao Tzu"
+  "uuid": "l86O4m2Wez",
+  "text": "Nothing is softer or more flexible than water, yet nothing can resist it.",
+  "author": "Lao Tzu"
 }
 ```
