@@ -41,13 +41,13 @@ namespace Dictum.Data.Repositories
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT     {QuoteSchema.Columns.Uuid} AS Uuid,
-                                {QuoteSchema.Columns.Text} AS Text,
-                                {AuthorSchema.Columns.Name} AS Author
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
+                                {AuthorSchema.Table}.{AuthorSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
                      INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
-                     WHERE      {QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
+                     WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
                 return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {uuid});
             }
