@@ -7,11 +7,11 @@ using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
 
 namespace Dictum.Data.Repositories
 {
-    public class DictumRepository : IDictumRepository
+    public class QuoteRepository : IQuoteRepository
     {
         private readonly IConfiguration _configuration;
 
-        public DictumRepository(IConfiguration configuration)
+        public QuoteRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }

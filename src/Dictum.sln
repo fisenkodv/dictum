@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictum.Api", "Dictum.Api\Dictum.Api.csproj", "{E2678A37-6BF6-4D0B-A823-276885841CC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Api", "Quote.Api\Quote.Api.csproj", "{E2678A37-6BF6-4D0B-A823-276885841CC5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictum.Data", "Dictum.Data\Dictum.Data.csproj", "{501BB07E-4FEE-40AC-9FC9-B57C24B9CE26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Data", "Quote.Data\Quote.Data.csproj", "{501BB07E-4FEE-40AC-9FC9-B57C24B9CE26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictum.Business", "Dictum.Business\Dictum.Business.csproj", "{BC8109F8-3F66-4803-8DBC-68F035944D7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Business", "Quote.Business\Quote.Business.csproj", "{BC8109F8-3F66-4803-8DBC-68F035944D7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictum.Tests", "Dictum.Tests\Dictum.Tests.csproj", "{160845F8-C77E-47AC-B4C5-9E922B3B02E1}"
 EndProject

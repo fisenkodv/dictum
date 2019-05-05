@@ -9,9 +9,9 @@ namespace Dictum.Api.Extensions
     {
         public static void AddCustomServices(this IServiceCollection services)
         {
-            services.AddTransient<IDictumRepository, DictumRepository>();
+            services.AddTransient<IQuoteRepository, QuoteRepository>();
 
-            services.AddTransient<DictumService>();
+            services.AddTransient<QuoteService>();
         }
     }
 }

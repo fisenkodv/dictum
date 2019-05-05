@@ -7,11 +7,8 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>true</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>true</GenerateAssemblyProductAttribute>
+    <RootNamespace>Dictum.Api</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
@@ -27,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dictum.Business\Dictum.Business.csproj" />
-    <ProjectReference Include="..\Dictum.Data\Dictum.Data.csproj" />
+    <ProjectReference Include="..\Quote.Business\Quote.Business.csproj" />
+    <ProjectReference Include="..\Quote.Data\Quote.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

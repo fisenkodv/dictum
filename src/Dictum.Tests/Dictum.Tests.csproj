@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dictum.Business\Dictum.Business.csproj" />
-    <ProjectReference Include="..\Dictum.Data\Dictum.Data.csproj" />
+    <ProjectReference Include="..\Quote.Business\Quote.Business.csproj" />
+    <ProjectReference Include="..\Quote.Data\Quote.Data.csproj" />
   </ItemGroup>
 
 </Project>
