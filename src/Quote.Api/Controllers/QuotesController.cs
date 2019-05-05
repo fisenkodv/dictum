@@ -8,26 +8,26 @@ namespace Dictum.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class DictumController : ControllerBase
+    public class QuotesController : ControllerBase
     {
-        private readonly DictumService _dictumService;
+        private readonly QuoteService _quoteService;
 
-        public DictumController(DictumService dictumService)
+        public QuotesController(QuoteService quoteService)
         {
-            _dictumService = dictumService;
+            _quoteService = quoteService;
         }
 
         [HttpGet]
         public Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery] string lang)
         {
-            return WrapToActionResult(() => _dictumService.GetRandom(lang));
+            return WrapToActionResult(() => _quoteService.GetRandom(lang));
         }
 
         [HttpGet("{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<ActionResult<Business.Models.Quote>> Get(string uuid)
         {
-            return WrapToActionResult(() => _dictumService.GetDictum(uuid));
+            return WrapToActionResult(() => _quoteService.GetDictum(uuid));
         }
 
         private async Task<ActionResult<T>> WrapToActionResult<T>(Func<Task<T>> resultFunc)

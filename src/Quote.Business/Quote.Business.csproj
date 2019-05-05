@@ -6,13 +6,12 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>true</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>true</GenerateAssemblyProductAttribute>
+    <RootNamespace>Dictum.Business</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.60.6" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
-    <PackageReference Include="MySqlConnector" Version="0.53.0" />
-    <PackageReference Include="Nanoid" Version="2.0.0" />
+    <PackageReference Include="Humanizer" Version="2.6.2" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dictum.Business\Dictum.Business.csproj" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-
 </Project>
