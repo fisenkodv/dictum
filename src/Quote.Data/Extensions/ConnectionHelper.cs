@@ -8,7 +8,7 @@ namespace Dictum.Data.Extensions
     {
         public static DbConnection GetConnection(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Dictum");
+            var connectionString = configuration.GetConnectionString("Quote");
             return GetConnection(connectionString);
         }
 
