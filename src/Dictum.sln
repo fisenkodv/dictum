@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Data", "Quote.Data\Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Business", "Quote.Business\Quote.Business.csproj", "{BC8109F8-3F66-4803-8DBC-68F035944D7C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictum.Tests", "Dictum.Tests\Dictum.Tests.csproj", "{160845F8-C77E-47AC-B4C5-9E922B3B02E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Tests", "Quote.Tests\Quote.Tests.csproj", "{160845F8-C77E-47AC-B4C5-9E922B3B02E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F08CD440-9987-45FB-9B6B-63CAD8001F99}"
 	ProjectSection(SolutionItems) = preProject
