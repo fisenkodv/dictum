@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dictum.Api.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("quotes")]
     public class QuotesController : ControllerBase
     {
         private readonly QuoteService _quoteService;

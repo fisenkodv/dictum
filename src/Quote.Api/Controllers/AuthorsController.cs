@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dictum.Api.Controllers
 {
-    [Route("quotes/[controller]")]
+    [Route("quotes/authors")]
     [ApiController]
     public class QuoteAuthors : ControllerBase
     {
