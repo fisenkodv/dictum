@@ -1,25 +1,33 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dictum.Business.Models;
 using Dictum.Business.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dictum.Api.Controllers
 {
-    [Route("quotes/authors")]
     [ApiController]
+    [Route("quotes/authors")]
     public class AuthorsController : ControllerBase
     {
-        private readonly QuoteService _quoteService;
+        private readonly AuthorsService _authorsService;
 
-        public AuthorsController(QuoteService quoteService)
+        public AuthorsController(AuthorsService authorsService)
         {
-            _quoteService = quoteService;
+            _authorsService = authorsService;
         }
 
         [HttpGet]
-        public Task GetAuthors(string lang)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public Task<ActionResult<IEnumerable<Author>>> GetAuthors(
+            [FromQuery(Name = "q")] string query,
+            [FromQuery(Name = "l")] string languageCode,
+            [FromQuery(Name = "p")] int page,
+            [FromQuery(Name = "c")] int count
+        )
         {
-            //TODO
-            return null;
+            return WrapToActionResult(() => _authorsService.GetAuthors(query, languageCode, page, count));
         }
     }
 }

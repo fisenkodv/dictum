@@ -1,7 +1,6 @@
 ﻿using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Dictum.Api.Controllers
@@ -18,9 +17,9 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery] string lang)
+        public Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery(Name = "l")] string languageCode)
         {
-            return WrapToActionResult(() => _quoteService.GetRandom(lang));
+            return WrapToActionResult(() => _quoteService.GetRandom(languageCode));
         }
 
         [HttpGet("{uuid}")]
@@ -28,15 +27,6 @@ namespace Dictum.Api.Controllers
         public Task<ActionResult<Business.Models.Quote>> Get(string uuid)
         {
             return WrapToActionResult(() => _quoteService.GetDictum(uuid));
-        }
-
-        private async Task<ActionResult<T>> WrapToActionResult<T>(Func<Task<T>> resultFunc)
-        {
-            var result = await resultFunc();
-
-            if (result != null) return Ok(result);
-
-            return NotFound();
         }
     }
 }

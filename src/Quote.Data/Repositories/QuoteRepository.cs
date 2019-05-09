@@ -16,7 +16,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Business.Models.Quote> GetRandom(string lang)
+        public async Task<Business.Models.Quote> GetRandom(string languageCode)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -29,10 +29,10 @@ namespace Dictum.Data.Repositories
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                      INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
-                     WHERE      {LanguageSchema.Columns.Code} = @{nameof(lang)}
+                     WHERE      {LanguageSchema.Columns.Code} = @{nameof(languageCode)}
                      ORDER BY RAND() LIMIT 1";
 
-                return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {lang});
+                return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {languageCode});
             }
         }
 

@@ -14,9 +14,11 @@ namespace Dictum.Business.Services
             _quoteRepository = quoteRepository;
         }
 
-        public Task<Models.Quote> GetRandom(string lang)
+        public Task<Models.Quote> GetRandom(string languageCode)
         {
-            return _quoteRepository.GetRandom(string.IsNullOrWhiteSpace(lang) ? DefaultLanguageCode : lang);
+            return _quoteRepository.GetRandom(string.IsNullOrWhiteSpace(languageCode)
+                ? DefaultLanguageCode
+                : languageCode);
         }
 
         public Task<Models.Quote> GetDictum(string uuid)
