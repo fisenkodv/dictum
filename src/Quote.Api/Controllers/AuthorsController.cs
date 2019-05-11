@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Dictum.Business.Models;
 using Dictum.Business.Services;
@@ -21,13 +22,12 @@ namespace Dictum.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<ActionResult<IEnumerable<Author>>> GetAuthors(
-            [FromQuery(Name = "q")] string query,
-            [FromQuery(Name = "l")] string languageCode,
-            [FromQuery(Name = "p")] int page,
-            [FromQuery(Name = "c")] int count
+            [Required] [FromQuery(Name = "q")] string query,
+            [FromQuery(Name = "p")] int? page,
+            [FromQuery(Name = "c")] int? count
         )
         {
-            return WrapToActionResult(() => _authorsService.GetAuthors(query, languageCode, page, count));
+            return WrapToActionResult(() => _authorsService.GetAuthors(query, page, count));
         }
     }
 }
