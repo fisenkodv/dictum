@@ -8,7 +8,7 @@ namespace Dictum.Data.Models
     internal class Author
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Uuid { get; set; }
     }
 
     internal static class AuthorSchema
@@ -18,7 +18,7 @@ namespace Dictum.Data.Models
         public static class Columns
         {
             public static string Id { get; } = nameof(Author.Id).ToSnakeCase();
-            public static string Name { get; } = nameof(Author.Name).ToSnakeCase();
+            public static string Uuid { get; } = nameof(Author.Uuid).ToSnakeCase();
         }
     }
 }

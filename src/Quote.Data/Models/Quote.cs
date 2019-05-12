@@ -9,7 +9,7 @@ namespace Dictum.Data.Models
     internal class Quote
     {
         public int Id { get; set; }
-        public Guid Uuid { get; set; }
+        public string Uuid { get; set; }
         public string Text { get; set; }
         public int AuthorId { get; set; }
         public int LanguageId { get; set; }

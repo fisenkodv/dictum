@@ -23,12 +23,15 @@ namespace Dictum.Data.Repositories
                 var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
-                                {AuthorSchema.Table}.{AuthorSchema.Columns.Name} AS Author
+                                {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
                      INNER JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                      INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
+                     INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
+                     ON         {AuthorSchema.Table}.{AuthorSchema.Columns.Id} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
+                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {LanguageSchema.Columns.Code} = @{nameof(languageCode)}
                      ORDER BY RAND() LIMIT 1";
 
