@@ -24,8 +24,8 @@ namespace Dictum.Business.Services
             if (string.IsNullOrWhiteSpace(query))
                 throw new ArgumentException("Query is empty", nameof(query));
 
-            if (!count.HasValue) count = DefaultPageSize;
             if (!page.HasValue) page = DefaultPageIndex;
+            if (!count.HasValue) count = DefaultPageSize;
 
             if (count > MaxPageSize) throw new ArgumentException("Items per page is too high", nameof(count));
 

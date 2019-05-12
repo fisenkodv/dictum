@@ -22,7 +22,7 @@ namespace Dictum.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<ActionResult<IEnumerable<Author>>> GetAuthors(
-            [Required] [FromQuery(Name = "q")] string query,
+            [FromQuery(Name = "q")] string query,
             [FromQuery(Name = "p")] int? page,
             [FromQuery(Name = "c")] int? count
         )
