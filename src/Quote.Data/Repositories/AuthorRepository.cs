@@ -4,7 +4,6 @@ using Dapper;
 using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
-using Author = Dictum.Business.Models.Author;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
 
 namespace Dictum.Data.Repositories
@@ -18,7 +17,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Author>> GetAuthors(string query, int page, int count)
+        public async Task<IEnumerable<Business.Models.Author>> GetAuthors(string query, int page, int count)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
