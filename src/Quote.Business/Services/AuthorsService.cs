@@ -21,9 +21,6 @@ namespace Dictum.Business.Services
 
         public Task<IEnumerable<Author>> GetAuthors(string query, int? page, int? count)
         {
-            if (string.IsNullOrWhiteSpace(query))
-                throw new ArgumentException("Query is empty", nameof(query));
-
             if (!page.HasValue) page = DefaultPageIndex;
             if (!count.HasValue) count = DefaultPageSize;
 
