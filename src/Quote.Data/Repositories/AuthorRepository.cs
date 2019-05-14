@@ -21,12 +21,18 @@ namespace Dictum.Data.Repositories
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
+                var offset = page * count;
                 var sql = $@"
-                     SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
-                            {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description,
-                     FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}";
+                     SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
+                                {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Name
+                     FROM       {AuthorSchema.Table} AS {AuthorSchema.Table}
+                     INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
+                     ON         {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
+                     WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} LIKE '%@{nameof(query)}%'
+                     ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
+                     LIMIT @{nameof(count)} OFFSET @{nameof(offset)}";
 
-                return await connection.QueryAsync<Business.Models.Author>(sql);
+                return await connection.QueryAsync<Business.Models.Author>(sql, new {query, count, offset});
             }
         }
     }
