@@ -12,11 +12,11 @@ namespace Dictum.Api.Controllers
     [Route("quotes/authors")]
     public class AuthorsController : ControllerBase
     {
-        private readonly AuthorsService _authorsService;
+        private readonly AuthorService _authorService;
 
-        public AuthorsController(AuthorsService authorsService)
+        public AuthorsController(AuthorService authorService)
         {
-            _authorsService = authorsService;
+            _authorService = authorService;
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace Dictum.Api.Controllers
             [FromQuery(Name = "c")] int? count
         )
         {
-            return WrapToActionResult(() => _authorsService.GetAuthors(query, page, count));
+            return WrapToActionResult(() => _authorService.GetAuthors(query, page, count));
         }
     }
 }

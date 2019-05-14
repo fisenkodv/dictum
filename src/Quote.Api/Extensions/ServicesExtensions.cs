@@ -14,7 +14,7 @@ namespace Dictum.Api.Extensions
 
             services.AddTransient<QuoteService>();
             services.AddTransient<LanguageService>();
-            services.AddTransient<AuthorsService>();
+            services.AddTransient<AuthorService>();
         }
     }
 }

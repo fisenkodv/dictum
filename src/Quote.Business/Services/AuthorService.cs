@@ -6,7 +6,7 @@ using Dictum.Business.Models;
 
 namespace Dictum.Business.Services
 {
-    public class AuthorsService
+    public class AuthorService
     {
         private const int DefaultPageSize = 10;
         private const int DefaultPageIndex = 0;
@@ -14,7 +14,7 @@ namespace Dictum.Business.Services
 
         private readonly IAuthorRepository _authorRepository;
 
-        public AuthorsService(IAuthorRepository authorRepository)
+        public AuthorService(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
         }
