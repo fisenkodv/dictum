@@ -10,7 +10,8 @@ namespace Dictum.Api.Extensions
         public static void AddCustomServices(this IServiceCollection services)
         {
             services.AddTransient<IQuoteRepository, QuoteRepository>();
-            services.AddTransient<ILanguageRepository, ILanguageRepository>();
+            services.AddTransient<ILanguageRepository, LanguageRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
 
             services.AddTransient<QuoteService>();
             services.AddTransient<LanguageService>();
