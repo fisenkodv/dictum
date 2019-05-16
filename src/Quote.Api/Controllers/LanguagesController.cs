@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Dictum.Business.Models;
 using Dictum.Business.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Business.Models.Language>> GetLanguages()
+        public async Task<ActionResult<Language>> GetLanguages()
         {
             return Ok(await _languageService.GetLanguages());
         }

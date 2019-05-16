@@ -4,6 +4,7 @@ using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
+using Quote = Dictum.Business.Models.Quote;
 
 namespace Dictum.Data.Repositories
 {
@@ -16,7 +17,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Business.Models.Quote> GetRandom(string languageCode)
+        public async Task<Quote> GetRandom(string languageCode)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -35,11 +36,11 @@ namespace Dictum.Data.Repositories
                      WHERE      {LanguageSchema.Columns.Code} = @{nameof(languageCode)}
                      ORDER BY RAND() LIMIT 1";
 
-                return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {languageCode});
+                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {languageCode});
             }
         }
 
-        public async Task<Business.Models.Quote> GetDictum(string uuid)
+        public async Task<Quote> GetDictum(string uuid)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -57,7 +58,7 @@ namespace Dictum.Data.Repositories
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
-                return await connection.QueryFirstOrDefaultAsync<Business.Models.Quote>(sql, new {uuid});
+                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {uuid});
             }
         }
     }

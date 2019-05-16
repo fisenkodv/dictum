@@ -1,7 +1,8 @@
-﻿using Dictum.Business.Services;
+﻿using System.Threading.Tasks;
+using Dictum.Business.Models;
+using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Dictum.Api.Controllers
 {
@@ -17,14 +18,14 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ActionResult<Business.Models.Quote>> GetRandom([FromQuery(Name = "l")] string languageCode)
+        public Task<ActionResult<Quote>> GetRandom([FromQuery(Name = "l")] string languageCode)
         {
             return WrapToActionResult(() => _quoteService.GetRandom(languageCode));
         }
 
         [HttpGet("{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<ActionResult<Business.Models.Quote>> Get(string uuid)
+        public Task<ActionResult<Quote>> Get(string uuid)
         {
             return WrapToActionResult(() => _quoteService.GetDictum(uuid));
         }

@@ -5,6 +5,7 @@ using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
+using Language = Dictum.Business.Models.Language;
 
 namespace Dictum.Data.Repositories
 {
@@ -17,7 +18,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Business.Models.Language>> GetLanguages()
+        public async Task<IEnumerable<Language>> GetLanguages()
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -26,7 +27,7 @@ namespace Dictum.Data.Repositories
                             {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description,
                      FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}";
 
-                return await connection.QueryAsync<Business.Models.Language>(sql);
+                return await connection.QueryAsync<Language>(sql);
             }
         }
     }

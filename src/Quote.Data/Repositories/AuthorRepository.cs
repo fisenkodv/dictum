@@ -4,6 +4,7 @@ using Dapper;
 using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
+using Author = Dictum.Business.Models.Author;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
 
 namespace Dictum.Data.Repositories
@@ -17,7 +18,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Business.Models.Author>> GetAuthors(string query, int page, int count)
+        public async Task<IEnumerable<Author>> GetAuthors(string query, int page, int count)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -32,7 +33,7 @@ namespace Dictum.Data.Repositories
                      ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
                      LIMIT @{nameof(count)} OFFSET @{nameof(offset)}";
 
-                return await connection.QueryAsync<Business.Models.Author>(sql, new {query, count, offset});
+                return await connection.QueryAsync<Author>(sql, new {query, count, offset});
             }
         }
     }

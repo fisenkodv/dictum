@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Dictum.Business.Models;
 
 namespace Dictum.Business.Abstract.Repositories
 {
     public interface IQuoteRepository
     {
-        Task<Models.Quote> GetRandom(string languageCode);
-        Task<Models.Quote> GetDictum(string uuid);
+        Task<Quote> GetRandom(string languageCode);
+        Task<Quote> GetDictum(string uuid);
     }
 }
