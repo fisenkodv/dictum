@@ -24,7 +24,7 @@ namespace Dictum.Data.Repositories
             {
                 var sql = $@"
                      SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
-                            {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description,
+                            {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description
                      FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}";
 
                 return await connection.QueryAsync<Language>(sql);
