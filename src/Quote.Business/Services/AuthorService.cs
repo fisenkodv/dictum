@@ -21,8 +21,8 @@ namespace Dictum.Business.Services
 
         public Task<IEnumerable<Author>> GetAuthors(string query, int? page, int? count)
         {
-            if (!page.HasValue) page = DefaultPageIndex;
-            if (!count.HasValue) count = DefaultPageSize;
+            if (!page.HasValue || page < 0) page = DefaultPageIndex;
+            if (!count.HasValue || count <= 0) count = DefaultPageSize;
 
             if (count > MaxPageSize) throw new ArgumentException("Items per page is too high", nameof(count));
 

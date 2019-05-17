@@ -29,7 +29,7 @@ namespace Dictum.Data.Repositories
                      FROM       {AuthorSchema.Table} AS {AuthorSchema.Table}
                      INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
                      ON         {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
-                     WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} LIKE '%@{nameof(query)}%'
+                     WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} LIKE CONCAT('%',@{nameof(query)},'%')
                      ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
                      LIMIT @{nameof(count)} OFFSET @{nameof(offset)}";
 
