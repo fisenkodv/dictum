@@ -28,5 +28,10 @@ namespace Dictum.Business.Services
 
             return _authorRepository.GetAuthors(query, page.Value, count.Value);
         }
+
+        public Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int? page, int? count)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
