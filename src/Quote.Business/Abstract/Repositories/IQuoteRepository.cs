@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dictum.Business.Models;
 
 namespace Dictum.Business.Abstract.Repositories
@@ -7,5 +8,6 @@ namespace Dictum.Business.Abstract.Repositories
     {
         Task<Quote> GetRandom(string languageCode);
         Task<Quote> GetDictum(string uuid);
+        Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int page, int count);
     }
 }

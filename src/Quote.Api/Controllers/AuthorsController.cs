@@ -28,16 +28,5 @@ namespace Dictum.Api.Controllers
         {
             return WrapToActionResult(() => _authorService.GetAuthors(query, page, count));
         }
-
-        [HttpGet("{uuid}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<ActionResult<IEnumerable<Quote>>> GetAuthorQuotes(
-            string authorUuid,
-            [FromQuery(Name = "p")] int? page,
-            [FromQuery(Name = "c")] int? count
-        )
-        {
-            return WrapToActionResult(() => _authorService.GetAuthorQuotes(authorUuid, page, count));
-        }
     }
 }

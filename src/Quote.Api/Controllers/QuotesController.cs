@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Dictum.Business.Models;
 using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
@@ -20,14 +22,25 @@ namespace Dictum.Api.Controllers
         [HttpGet]
         public Task<ActionResult<Quote>> GetRandom([FromQuery(Name = "l")] string languageCode)
         {
-            return WrapToActionResult(() => _quoteService.GetRandom(languageCode));
+            return WrapToActionResult(() => _quoteService.GetRandomQuote(languageCode));
         }
 
         [HttpGet("{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<ActionResult<Quote>> Get(string uuid)
         {
-            return WrapToActionResult(() => _quoteService.GetDictum(uuid));
+            return WrapToActionResult(() => _quoteService.GetQuote(uuid));
+        }
+
+        [HttpGet("authors/{uuid}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public Task<ActionResult<IEnumerable<Quote>>> GetAuthorQuotes(
+            string uuid,
+            [FromQuery(Name = "p")] int? page,
+            [FromQuery(Name = "c")] int? count
+        )
+        {
+            return WrapToActionResult(() => _quoteService.GetAuthorQuotes(uuid, page, count));
         }
     }
 }
