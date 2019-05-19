@@ -31,7 +31,7 @@ namespace Dictum.Data.Repositories
                      ON         {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
                      WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} LIKE CONCAT('%',@{nameof(query)},'%')
                      ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
-                     LIMIT @{nameof(count)} OFFSET @{nameof(offset)}";
+                     LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
                 return await connection.QueryAsync<Author>(sql, new {query, count, offset});
             }

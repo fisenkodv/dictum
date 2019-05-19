@@ -81,7 +81,7 @@ namespace Dictum.Data.Repositories
                      ON         {AuthorSchema.Table}.{AuthorSchema.Columns.Id} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)}
-                     LIMIT @{nameof(count)} OFFSET @{nameof(offset)}";
+                     LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
                 return await connection.QueryAsync<Quote>(sql, new {authorUuid, count, offset});
             }
