@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F08CD440-9987-45FB-9B6B-63CAD8001F99}"
 	ProjectSection(SolutionItems) = preProject
 		Version.cs = Version.cs
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Global
