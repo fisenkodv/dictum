@@ -10,6 +10,7 @@
         "forceConsistentCasingInFileNames": true,
         "module": "esnext",
         "moduleResolution": "node",
+        "rootDir": "src",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
