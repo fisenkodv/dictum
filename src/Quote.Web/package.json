@@ -55,5 +55,6 @@
         "prettier": "^1.17.1",
         "pretty-quick": "^1.11.0",
         "tslint": "^5.17.0"
-    }
+    },
+    "proxy": "https://api.fisenko.page"
 }

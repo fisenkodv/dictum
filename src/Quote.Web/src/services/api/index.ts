@@ -1,1 +1,1 @@
-export const str = '';
+export * from './quotes-service';
