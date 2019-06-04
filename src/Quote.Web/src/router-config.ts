@@ -1,8 +1,6 @@
 import { RouteConfig } from 'react-router-config';
 
-import Home from './pages/home';
-import Layout from './pages/layout';
-import Author from './pages/author';
+import { Author, Home, Layout } from './pages';
 
 const routes: RouteConfig[] = [
     {
