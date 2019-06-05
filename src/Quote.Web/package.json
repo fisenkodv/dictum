@@ -18,7 +18,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "NODE_ENV=production lint-staged"
+            "pre-commit": "cross-env NODE_ENV=production lint-staged"
         }
     },
     "lint-staged": {
@@ -50,6 +50,7 @@
         "@types/react-dom": "16.8.4",
         "@types/react-router-config": "^5.0.0",
         "@types/react-router-dom": "^4.3.3",
+        "cross-env": "^5.2.0",
         "husky": "^2.3.0",
         "lint-staged": "^8.1.7",
         "node-sass": "^4.12.0",
