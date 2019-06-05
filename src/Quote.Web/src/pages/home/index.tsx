@@ -1,11 +1,16 @@
 import './styles.scss';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { QuotesApi } from '../../services/api';
 import { Quote } from '../../services/models';
 
 export const Home: React.FC = () => {
+    const fetchQuote = async () => {
+        const quote = await QuotesApi.getRandomQuote();
+        return setQuote(quote);
+    };
     const [initialized, setInitialized] = useState(false);
     const [quote, setQuote] = useState<Quote>({ uuid: '', author: '', text: '' });
 
@@ -14,11 +19,7 @@ export const Home: React.FC = () => {
             setInitialized(true);
             fetchQuote();
         }
-    });
-
-    function fetchQuote() {
-        return QuotesApi.getRandomQuote().then(x => setQuote(x));
-    }
+    }, [initialized]);
 
     return (
         <div className="App">
