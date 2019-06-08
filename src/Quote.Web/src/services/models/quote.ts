@@ -3,3 +3,7 @@ export interface Quote {
     author: string;
     text: string;
 }
+
+export function emptyQuote(): Quote {
+    return { uuid: '', author: '', text: '' };
+}

@@ -4,15 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { QuotesApi } from '../../services/api';
-import { Quote } from '../../services/models';
+import { Quote, emptyQuote } from '../../services/models';
 
 export const Home: React.FC = () => {
     const fetchQuote = async () => {
         const quote = await QuotesApi.getRandomQuote();
-        return setQuote(quote);
+        return quote ? setQuote(quote) : setQuote(emptyQuote());
     };
     const [initialized, setInitialized] = useState(false);
-    const [quote, setQuote] = useState<Quote>({ uuid: '', author: '', text: '' });
+    const [quote, setQuote] = useState<Quote>(emptyQuote());
 
     useEffect(() => {
         if (!initialized) {
