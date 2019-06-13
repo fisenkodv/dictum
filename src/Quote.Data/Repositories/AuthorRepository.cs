@@ -88,7 +88,7 @@ namespace Dictum.Data.Repositories
                         )
                         VALUES (@{name}, @author_id, @language_id)";
 
-                    await connection.ExecuteAsync(insertAuthorSql, new {authorUuid});
+                    await connection.ExecuteAsync(insertAuthorNameSql, new {authorUuid});
 
                     return authorUuid;
                 }
