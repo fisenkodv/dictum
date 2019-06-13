@@ -13,11 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Tests", "Quote.Tests\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F08CD440-9987-45FB-9B6B-63CAD8001F99}"
 	ProjectSection(SolutionItems) = preProject
-		Version.cs = Version.cs
 		..\README.md = ..\README.md
+		Version.cs = Version.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quote.Importer", "Quote.Importer\Quote.Importer.csproj", "{E84DE04E-1381-406D-8000-B878A1AC2DBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Importer", "Quote.Importer\Quote.Importer.csproj", "{E84DE04E-1381-406D-8000-B878A1AC2DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictum.ML", "Dictum.ML\Dictum.ML.csproj", "{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{E84DE04E-1381-406D-8000-B878A1AC2DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E84DE04E-1381-406D-8000-B878A1AC2DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E84DE04E-1381-406D-8000-B878A1AC2DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
