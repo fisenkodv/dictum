@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.ML;
+using Microsoft.ML.Data;
 using Microsoft.ML.Transforms.Text;
 
 namespace Dictum.ML
@@ -88,7 +89,8 @@ namespace Dictum.ML
         static void Evaluate(IDataView testData, ITransformer trainedModel)
         {
             IDataView scoredData = trainedModel.Transform(testData);
-            var evaluationMetrics = _mlContext.MulticlassClassification.Evaluate(scoredData);
+            MulticlassClassificationMetrics
+                evaluationMetrics = _mlContext.MulticlassClassification.Evaluate(scoredData);
 
             Console.WriteLine($"Model MicroAccuracy: {evaluationMetrics.MicroAccuracy:P2}");
             Console.WriteLine($"Model MacroAccuracy: {evaluationMetrics.MacroAccuracy:P2}");
