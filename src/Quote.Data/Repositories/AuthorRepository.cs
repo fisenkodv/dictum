@@ -55,7 +55,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<string> CreateAuthor(string name, string languageCode)
+        public async Task<Author> CreateAuthor(string name, string languageCode)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             using (var transaction = connection.BeginTransaction())
@@ -90,13 +90,12 @@ namespace Dictum.Data.Repositories
 
                     await connection.ExecuteAsync(insertAuthorNameSql, new {authorUuid});
 
-                    return authorUuid;
+                    return new Author {Uuid = authorUuid, Name = name};
                 }
-                catch (Exception exception)
+                catch (Exception)
                 {
                     transaction.Rollback();
-
-                    return string.Empty;
+                    return null;
                 }
                 finally
                 {

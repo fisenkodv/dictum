@@ -28,7 +28,7 @@ namespace Dictum.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<ActionResult<Quote>> Get(string uuid)
         {
-            return WrapToActionResult(() => _quoteService.GetQuote(uuid));
+            return WrapToActionResult(() => _quoteService.GetQuoteById(uuid));
         }
 
         [HttpGet("authors/{uuid}")]

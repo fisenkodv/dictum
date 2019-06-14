@@ -18,14 +18,14 @@ namespace Dictum.Business.Services
 
         public Task<Quote> GetRandomQuote(string languageCode)
         {
-            return _quoteRepository.GetRandom(string.IsNullOrWhiteSpace(languageCode)
+            return _quoteRepository.GetRandomQuote(string.IsNullOrWhiteSpace(languageCode)
                 ? DefaultLanguageCode
                 : languageCode);
         }
 
-        public Task<Quote> GetQuote(string uuid)
+        public Task<Quote> GetQuoteById(string uuid)
         {
-            return _quoteRepository.GetDictum(uuid);
+            return _quoteRepository.GetQuoteById(uuid);
         }
 
         public Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int? page, int? count)
@@ -33,6 +33,11 @@ namespace Dictum.Business.Services
             var paging = Paging.Create(page, count);
 
             return _quoteRepository.GetAuthorQuotes(authorUuid, paging.Page, paging.Count);
+        }
+
+        public Task<Quote> CreateQuote(Quote quote)
+        {
+            
         }
     }
 }

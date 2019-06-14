@@ -20,5 +20,11 @@ namespace Dictum.Business.Services
 
             return _authorRepository.GetAuthors(query, paging.Page, paging.Count);
         }
+
+        public async Task<Author> CreateAuthor(string name)
+        {
+            var author = await _authorRepository.GetAuthor(name);
+            return author == null ? await _authorRepository.CreateAuthor(name, "EN") : author;
+        }
     }
 }
