@@ -4,12 +4,7 @@ namespace Dictum.ML
 {
     public class ModelInput
     {
-        [LoadColumn(0)] public string Topic { get; set; }
-        [LoadColumn(1)] public string Text { get; set; }
-    }
-
-    public class ModelOutput
-    {
-        [ColumnName("PredictedLabel")] public string Topic;
+        [ColumnName("Topic"), LoadColumn(0)] public string Topic { get; set; }
+        [ColumnName("Quote"), LoadColumn(1)] public string Quote { get; set; }
     }
 }

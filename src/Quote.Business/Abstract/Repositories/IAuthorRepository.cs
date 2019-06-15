@@ -8,6 +8,6 @@ namespace Dictum.Business.Abstract.Repositories
     {
         Task<Author> GetAuthor(string name);
         Task<IEnumerable<Author>> GetAuthors(string query, int page, int count);
-        Task<Author> CreateAuthor(string name, string languageCode);
+        Task<Author> CreateAuthor(string name, Language language);
     }
 }

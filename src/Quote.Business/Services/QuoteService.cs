@@ -7,8 +7,6 @@ namespace Dictum.Business.Services
 {
     public class QuoteService
     {
-        private const string DefaultLanguageCode = "EN";
-
         private readonly IQuoteRepository _quoteRepository;
 
         public QuoteService(IQuoteRepository quoteRepository)
@@ -19,7 +17,7 @@ namespace Dictum.Business.Services
         public Task<Quote> GetRandomQuote(string languageCode)
         {
             return _quoteRepository.GetRandomQuote(string.IsNullOrWhiteSpace(languageCode)
-                ? DefaultLanguageCode
+                ? LanguageService.DefaultLanguageCode
                 : languageCode);
         }
 
@@ -35,9 +33,8 @@ namespace Dictum.Business.Services
             return _quoteRepository.GetAuthorQuotes(authorUuid, paging.Page, paging.Count);
         }
 
-        public Task<Quote> CreateQuote(Quote quote)
-        {
-            
-        }
+//        public Task<Quote> CreateQuote(Quote quote)
+//        {
+//        }
     }
 }

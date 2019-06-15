@@ -55,7 +55,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<Author> CreateAuthor(string name, string languageCode)
+        public async Task<Author> CreateAuthor(string name, Business.Models.Language language)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             using (var transaction = connection.BeginTransaction())
@@ -78,7 +78,7 @@ namespace Dictum.Data.Repositories
                         SELECT @language_id;
                         SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
                         FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
-                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{languageCode};
+                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @languageCode;
 
                         INSERT INTO {AuthorNameSchema.Table} 
                         (
@@ -88,7 +88,7 @@ namespace Dictum.Data.Repositories
                         )
                         VALUES (@{name}, @author_id, @language_id)";
 
-                    await connection.ExecuteAsync(insertAuthorNameSql, new {authorUuid});
+                    await connection.ExecuteAsync(insertAuthorNameSql, new {authorUuid, languageCode = language.Code});
 
                     return new Author {Uuid = authorUuid, Name = name};
                 }
