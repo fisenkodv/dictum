@@ -35,10 +35,10 @@ namespace Dictum.ML
             IDataView testData = dataSplit.TestSet;
 
             // Evaluate quality of Model
-            Evaluate(_mlContext, testData, trainingPipeline);
+            Evaluate(_mlContext, trainingData, trainingPipeline);
 
             // Train Model
-            ITransformer mlModel = TrainModel(trainingData, trainingPipeline);
+            ITransformer mlModel = TrainModel(trainingDataView, trainingPipeline);
 
             // Evaluate quality of Model
             EvaluateTestData(_mlContext, testData, mlModel);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.ML;
 
 namespace Dictum.ML
@@ -37,7 +38,8 @@ namespace Dictum.ML
             {
                 ModelOutput prediction = predictionEngine.Predict(new ModelInput {Quote = quote});
 
-                Console.WriteLine($"Prediction Result: {prediction.Prediction}. Confidence: {prediction.Score:P2}");
+                Console.WriteLine(
+                    $"Prediction Result: {prediction.Prediction}. Confidence: {prediction.Score.First():P2}");
             }
         }
     }
