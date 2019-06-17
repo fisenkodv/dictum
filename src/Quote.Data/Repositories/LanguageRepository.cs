@@ -18,7 +18,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Language>> GetLanguages()
+        public async Task<IEnumerable<Language>> GetAll()
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {

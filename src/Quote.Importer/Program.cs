@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 
 namespace Quote.Importer
 {
-    static class Program
+    internal static class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var configuration = CreateConfiguration();
             var languageService = new LanguageService(new LanguageRepository(configuration));
@@ -28,7 +28,7 @@ namespace Quote.Importer
         private static IConfiguration CreateConfiguration()
         {
             var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile("appsettings.json", true);
+            configurationBuilder.AddJsonFile("appsettings.json", optional: false);
             return configurationBuilder.Build();
         }
 

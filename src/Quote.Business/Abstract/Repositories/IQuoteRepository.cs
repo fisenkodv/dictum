@@ -6,9 +6,9 @@ namespace Dictum.Business.Abstract.Repositories
 {
     public interface IQuoteRepository
     {
-        Task<Quote> GetRandomQuote(string languageCode);
-        Task<Quote> GetQuoteById(string uuid);
-        Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int page, int count);
-        Task<Quote> CreateQuote(Quote quote, Author author, Language language);
+        Task<Quote> Create(Quote quote, Author author, Language language);
+        Task<Quote> GetById(string uuid);
+        Task<Quote> GetRandom(string languageCode);
+        Task<IEnumerable<Quote>> GetByAuthor(string authorUuid, int page, int count);
     }
 }

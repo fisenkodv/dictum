@@ -21,7 +21,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Quote> GetRandomQuote(string languageCode)
+        public async Task<Quote> GetRandom(string languageCode)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -44,7 +44,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<Quote> GetQuoteById(string uuid)
+        public async Task<Quote> GetById(string uuid)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -66,7 +66,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int page, int count)
+        public async Task<IEnumerable<Quote>> GetByAuthor(string authorUuid, int page, int count)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -90,7 +90,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<Quote> CreateQuote(Quote quote, Author author, Language language)
+        public async Task<Quote> Create(Quote quote, Author author, Language language)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             using (var transaction = connection.BeginTransaction())

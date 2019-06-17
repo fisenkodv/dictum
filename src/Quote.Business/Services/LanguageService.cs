@@ -16,12 +16,12 @@ namespace Dictum.Business.Services
             _languageRepository = languageRepository;
         }
 
-        public Task<IEnumerable<Language>> GetLanguages()
+        public Task<IEnumerable<Language>> GetAll()
         {
-            return _languageRepository.GetLanguages();
+            return _languageRepository.GetAll();
         }
 
-        public Task<Language> GetLanguage(string text)
+        public Task<Language> Detect(string text)
         {
             var language = new Language
                 {Code = DefaultLanguageCode, Description = "English"}; //TODO: implement logic to get correct language

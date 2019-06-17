@@ -19,7 +19,7 @@ namespace Dictum.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<Language>> GetLanguages()
         {
-            return Ok(await _languageService.GetLanguages());
+            return Ok(await _languageService.GetAll());
         }
     }
 }

@@ -6,8 +6,8 @@ namespace Dictum.Business.Abstract.Repositories
 {
     public interface IAuthorRepository
     {
-        Task<Author> GetAuthor(string name);
-        Task<IEnumerable<Author>> GetAuthors(string query, int page, int count);
-        Task<Author> CreateAuthor(string name, Language language);
+        Task<Author> Create(string name, Language language);
+        Task<Author> Get(string name);
+        Task<IEnumerable<Author>> SearchByName(string name, int page, int count);
     }
 }

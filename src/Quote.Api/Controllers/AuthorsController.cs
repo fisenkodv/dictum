@@ -26,7 +26,7 @@ namespace Dictum.Api.Controllers
             [FromQuery(Name = "c")] int? count
         )
         {
-            return WrapToActionResult(() => _authorService.GetAuthors(query, page, count));
+            return WrapToActionResult(() => _authorService.Search(query, page, count));
         }
     }
 }

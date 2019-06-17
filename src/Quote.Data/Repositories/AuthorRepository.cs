@@ -19,7 +19,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Author> GetAuthor(string name)
+        public async Task<Author> Get(string name)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -36,7 +36,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Author>> GetAuthors(string query, int page, int count)
+        public async Task<IEnumerable<Author>> SearchByName(string name, int page, int count)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
@@ -47,15 +47,15 @@ namespace Dictum.Data.Repositories
                      FROM       {AuthorSchema.Table} AS {AuthorSchema.Table}
                      INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
                      ON         {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
-                     WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} LIKE CONCAT('%',@{nameof(query)},'%')
+                     WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} LIKE CONCAT('%',@{nameof(name)},'%')
                      ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-                return await connection.QueryAsync<Author>(sql, new {query, count, offset});
+                return await connection.QueryAsync<Author>(sql, new {query = name, count, offset});
             }
         }
 
-        public async Task<Author> CreateAuthor(string name, Business.Models.Language language)
+        public async Task<Author> Create(string name, Business.Models.Language language)
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             using (var transaction = connection.BeginTransaction())

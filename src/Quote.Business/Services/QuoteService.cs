@@ -23,28 +23,28 @@ namespace Dictum.Business.Services
 
         public Task<Quote> GetRandomQuote(string languageCode)
         {
-            return _quoteRepository.GetRandomQuote(string.IsNullOrWhiteSpace(languageCode)
+            return _quoteRepository.GetRandom(string.IsNullOrWhiteSpace(languageCode)
                 ? LanguageService.DefaultLanguageCode
                 : languageCode);
         }
 
         public Task<Quote> GetQuoteById(string uuid)
         {
-            return _quoteRepository.GetQuoteById(uuid);
+            return _quoteRepository.GetById(uuid);
         }
 
         public Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int? page, int? count)
         {
             var paging = Paging.Create(page, count);
 
-            return _quoteRepository.GetAuthorQuotes(authorUuid, paging.Page, paging.Count);
+            return _quoteRepository.GetByAuthor(authorUuid, paging.Page, paging.Count);
         }
 
         public async Task<Quote> CreateQuote(Quote quote)
         {
-            var author = await _authorService.CreateAuthor(quote.Author);
-            var language = await _languageService.GetLanguage(quote.Text);
-            return await _quoteRepository.CreateQuote(quote, author, language);
+            var author = await _authorService.GetOrCreate(quote.Author);
+            var language = await _languageService.Detect(quote.Text);
+            return await _quoteRepository.Create(quote, author, language);
         }
     }
 }
