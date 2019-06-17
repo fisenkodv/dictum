@@ -7,10 +7,10 @@ namespace Dictum.Business.Services
 {
     public class AuthorService
     {
-        private readonly IAuthorRepository _authorRepository;
         private readonly LanguageService _languageService;
+        private readonly IAuthorRepository _authorRepository;
 
-        public AuthorService(IAuthorRepository authorRepository, LanguageService languageService)
+        public AuthorService(LanguageService languageService, IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
             _languageService = languageService;

@@ -64,21 +64,22 @@ namespace Dictum.Data.Repositories
                 {
                     var authorUuid = IdGenerator.Instance.Next();
                     var insertAuthorSql = $@"
-                        INSERT INTO {AuthorSchema.Table} ({AuthorNameSchema.Columns.Name})
-                        VALUES      @{authorUuid}";
+                        INSERT INTO {AuthorSchema.Table} ({AuthorSchema.Columns.Uuid})
+                        VALUES      (@{nameof(authorUuid)})";
 
-                    await connection.ExecuteAsync(insertAuthorSql, new {authorUuid});
+                    await connection.ExecuteAsync(insertAuthorSql, new {authorUuid}, transaction);
 
+                    var languageCode = language.Code;
                     var insertAuthorNameSql = $@"
                         SELECT @author_id;
                         SELECT {AuthorSchema.Table}.{AuthorSchema.Columns.Id} INTO @author_id 
                         FROM   {AuthorSchema.Table} AS {AuthorSchema.Table}
-                        WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{authorUuid};
+                        WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)};
 
                         SELECT @language_id;
                         SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
                         FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
-                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @languageCode;
+                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};
 
                         INSERT INTO {AuthorNameSchema.Table} 
                         (
@@ -86,9 +87,14 @@ namespace Dictum.Data.Repositories
                             {AuthorNameSchema.Columns.AuthorId},
                             {AuthorNameSchema.Columns.LanguageId}
                         )
-                        VALUES (@{name}, @author_id, @language_id)";
+                        VALUES (@{nameof(name)}, @author_id, @language_id)";
 
-                    await connection.ExecuteAsync(insertAuthorNameSql, new {authorUuid, languageCode = language.Code});
+                    await connection.ExecuteAsync(
+                        insertAuthorNameSql,
+                        new {name, authorUuid, languageCode},
+                        transaction);
+
+                    transaction.Commit();
 
                     return new Author {Uuid = authorUuid, Name = name};
                 }
@@ -96,10 +102,6 @@ namespace Dictum.Data.Repositories
                 {
                     transaction.Rollback();
                     return null;
-                }
-                finally
-                {
-                    transaction.Commit();
                 }
             }
         }

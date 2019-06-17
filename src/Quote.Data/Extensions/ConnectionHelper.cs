@@ -18,7 +18,8 @@ namespace Dictum.Data.Extensions
             {
                 AllowZeroDateTime = false,
                 ConvertZeroDateTime = false,
-                Pooling = true
+                Pooling = true,
+                AllowUserVariables = true
             };
 
             var connection = new MySqlConnection(connectionStringBuilder.ConnectionString);

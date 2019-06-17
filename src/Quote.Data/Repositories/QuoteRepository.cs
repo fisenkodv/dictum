@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
+using Author = Dictum.Business.Models.Author;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
 using Quote = Dictum.Business.Models.Quote;
+using Language = Dictum.Business.Models.Language;
 
 namespace Dictum.Data.Repositories
 {
@@ -84,6 +87,61 @@ namespace Dictum.Data.Repositories
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
                 return await connection.QueryAsync<Quote>(sql, new {authorUuid, count, offset});
+            }
+        }
+
+        public async Task<Quote> CreateQuote(Quote quote, Author author, Language language)
+        {
+            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    var quoteUuid = IdGenerator.Instance.Next();
+                    var authorUuid = author.Uuid;
+                    var quoteText = quote.Text;
+                    var languageCode = language.Code;
+                    var addedAt = DateTime.UtcNow;
+
+                    var insertQuoteSql = $@"
+                        SELECT @author_id;
+                        SELECT {AuthorSchema.Table}.{AuthorSchema.Columns.Id} INTO @author_id 
+                        FROM   {AuthorSchema.Table} AS {AuthorSchema.Table}
+                        WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)};
+
+                        SELECT @language_id;
+                        SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
+                        FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
+                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};
+
+                        INSERT INTO {QuoteSchema.Table} 
+                        (
+                            {QuoteSchema.Columns.Uuid},
+                            {QuoteSchema.Columns.Text},
+                            {QuoteSchema.Columns.AuthorId},
+                            {QuoteSchema.Columns.LanguageId},
+                            {QuoteSchema.Columns.AddedAt}
+                        )
+                        VALUES (@{nameof(quoteUuid)}, @{nameof(quoteText)}, @author_id, @language_id, @{nameof(addedAt)})";
+
+                    await connection.ExecuteAsync(insertQuoteSql, new
+                    {
+                        quoteUuid,
+                        quoteText,
+                        authorUuid,
+                        languageCode,
+                        addedAt
+                    }, transaction);
+
+                    transaction.Commit();
+
+                    return new Quote {Uuid = quoteUuid, Text = quoteText};
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return null;
+                }
             }
         }
     }
