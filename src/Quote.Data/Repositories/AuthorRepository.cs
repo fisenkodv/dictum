@@ -103,7 +103,7 @@ namespace Dictum.Data.Repositories
                      ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-                return await connection.QueryAsync<Author>(sql, new { query = name, count, offset });
+                return await connection.QueryAsync<Author>(sql, new { name, count, offset });
             }
         }
     }
