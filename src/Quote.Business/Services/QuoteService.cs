@@ -7,10 +7,17 @@ namespace Dictum.Business.Services
 {
     public class QuoteService
     {
+        private readonly AuthorService _authorService;
+        private readonly LanguageService _languageService;
         private readonly IQuoteRepository _quoteRepository;
 
-        public QuoteService(IQuoteRepository quoteRepository)
+        public QuoteService(
+            AuthorService authorService,
+            LanguageService languageService,
+            IQuoteRepository quoteRepository)
         {
+            _authorService = authorService;
+            _languageService = languageService;
             _quoteRepository = quoteRepository;
         }
 
@@ -33,8 +40,11 @@ namespace Dictum.Business.Services
             return _quoteRepository.GetAuthorQuotes(authorUuid, paging.Page, paging.Count);
         }
 
-//        public Task<Quote> CreateQuote(Quote quote)
-//        {
-//        }
+        public async Task<Quote> CreateQuote(Quote quote)
+        {
+            var author = await _authorService.CreateAuthor(quote.Author);
+            var language = await _languageService.GetLanguage(quote.Text);
+            return await _quoteRepository.CreateQuote(quote, author, language);
+        }
     }
 }

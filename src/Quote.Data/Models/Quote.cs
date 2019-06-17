@@ -26,6 +26,7 @@ namespace Dictum.Data.Models
             public static string Text { get; } = nameof(Quote.Text).ToSnakeCase();
             public static string AuthorId { get; } = nameof(Quote.AuthorId).ToSnakeCase();
             public static string LanguageId { get; } = nameof(Quote.LanguageId).ToSnakeCase();
+            public static string AddedAt { get; } = nameof(Quote.AddedAt).ToSnakeCase();
         }
     }
 }
