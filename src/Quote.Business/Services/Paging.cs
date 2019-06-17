@@ -8,14 +8,14 @@ namespace Dictum.Business.Services
         private const int DefaultPageIndex = 0;
         private const int MaxPageSize = 50;
 
-        public int Page { get; }
-        public int Count { get; }
-
         private Paging(int page, int count)
         {
             Page = page;
             Count = count;
         }
+
+        public int Page { get; }
+        public int Count { get; }
 
         public static Paging Create(int? page, int? count)
         {

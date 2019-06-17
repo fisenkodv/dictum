@@ -26,7 +26,7 @@ namespace Dictum.Business.Services
             var language = new Language
                 {Code = DefaultLanguageCode, Description = "English"}; //TODO: implement logic to get correct language
 
-            return Task.FromResult<Language>(language);
+            return Task.FromResult(language);
         }
     }
 }

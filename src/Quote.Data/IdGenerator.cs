@@ -9,11 +9,9 @@ namespace Dictum.Data
 
         private static readonly Lazy<IdGenerator> Lazy = new Lazy<IdGenerator>(() => new IdGenerator());
 
-        public static IdGenerator Instance => Lazy.Value;
+        private IdGenerator() { }
 
-        private IdGenerator()
-        {
-        }
+        public static IdGenerator Instance => Lazy.Value;
 
         public string Next()
         {

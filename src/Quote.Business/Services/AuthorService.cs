@@ -7,8 +7,8 @@ namespace Dictum.Business.Services
 {
     public class AuthorService
     {
-        private readonly LanguageService _languageService;
         private readonly IAuthorRepository _authorRepository;
+        private readonly LanguageService _languageService;
 
         public AuthorService(LanguageService languageService, IAuthorRepository authorRepository)
         {
@@ -16,11 +16,11 @@ namespace Dictum.Business.Services
             _languageService = languageService;
         }
 
-        public Task<IEnumerable<Author>> Search(string query, int? page, int? count)
+        public Task<IEnumerable<Author>> Search(string name, int? page, int? count)
         {
             var paging = Paging.Create(page, count);
 
-            return _authorRepository.SearchByName(query, paging.Page, paging.Count);
+            return _authorRepository.SearchByName(name, paging.Page, paging.Count);
         }
 
         public async Task<Author> GetOrCreate(string name)
