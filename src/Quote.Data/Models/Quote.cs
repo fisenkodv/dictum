@@ -23,6 +23,7 @@ namespace Dictum.Data.Models
 
         public static class Columns
         {
+            public static string Id { get; } = nameof(Quote.Id).ToSnakeCase();
             public static string Uuid { get; } = nameof(Quote.Uuid).ToSnakeCase();
             public static string Text { get; } = nameof(Quote.Text).ToSnakeCase();
             public static string Hash { get; } = nameof(Quote.Hash).ToSnakeCase();

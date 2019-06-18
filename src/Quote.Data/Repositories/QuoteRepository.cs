@@ -112,13 +112,12 @@ namespace Dictum.Data.Repositories
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
                      INNER JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
-                     INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
-                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
-                     INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
-                     ON         {AuthorSchema.Table}.{AuthorSchema.Columns.Id} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
+                     LEFT JOIN  {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
+                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
-                     WHERE      {LanguageSchema.Columns.Code} = @{nameof(languageCode)}
-                     ORDER BY RAND() LIMIT 1";
+                     WHERE      {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)}
+                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.Id} > CAST(RAND() * (SELECT MAX({QuoteSchema.Table}.{QuoteSchema.Columns.Id}) FROM {QuoteSchema.Table}) AS INT)
+                     LIMIT 1";
 
                 return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { languageCode });
             }
