@@ -21,7 +21,8 @@ namespace Quote.Importer
 
             foreach (var quoteFile in quoteFiles)
             {
-                await CreateQuote(quoteFile, quoteService);
+                Console.WriteLine($"Reading: {Path.GetFileName(quoteFile)}");
+                await CreateQuotes(quoteFile, quoteService);
             }
         }
 
@@ -32,7 +33,7 @@ namespace Quote.Importer
             return configurationBuilder.Build();
         }
 
-        private static async Task CreateQuote(string filePath, QuoteService quoteService)
+        private static async Task CreateQuotes(string filePath, QuoteService quoteService)
         {
             var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Quote[]>(File.ReadAllText(filePath));
             foreach (var quote in quotes)
