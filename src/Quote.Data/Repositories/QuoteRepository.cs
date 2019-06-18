@@ -31,6 +31,7 @@ namespace Dictum.Data.Repositories
                     var quoteUuid = IdGenerator.Instance.Next();
                     var authorUuid = author.Uuid;
                     var quoteText = quote.Text;
+                    var quoteHash = HashGenerator.SHA256(quote.Text);
                     var languageCode = language.Code;
                     var addedAt = DateTime.UtcNow;
 
@@ -49,16 +50,18 @@ namespace Dictum.Data.Repositories
                         (
                             {QuoteSchema.Columns.Uuid},
                             {QuoteSchema.Columns.Text},
+                            {QuoteSchema.Columns.Hash},
                             {QuoteSchema.Columns.AuthorId},
                             {QuoteSchema.Columns.LanguageId},
                             {QuoteSchema.Columns.AddedAt}
                         )
-                        VALUES (@{nameof(quoteUuid)}, @{nameof(quoteText)}, @author_id, @language_id, @{nameof(addedAt)})";
+                        VALUES (@{nameof(quoteUuid)}, @{nameof(quoteText)}, @{nameof(quoteHash)}, @author_id, @language_id, @{nameof(addedAt)})";
 
                     await connection.ExecuteAsync(insertQuoteSql, new
                     {
                         quoteUuid,
                         quoteText,
+                        quoteHash,
                         authorUuid,
                         languageCode,
                         addedAt
