@@ -18,7 +18,9 @@ namespace Quote.Importer
             var authorService = new AuthorService(languageService, new AuthorRepository(configuration));
             var quoteService = new QuoteService(authorService, languageService, new QuoteRepository(configuration));
 
-            var quoteFiles = Directory.GetFiles(configuration["QuotesDirectory"], "*.json");
+            var quoteFiles = Directory
+                .GetFiles(configuration["QuotesDirectory"], "*.json")
+                .OrderBy(Path.GetFileNameWithoutExtension);
 
             foreach (var quoteFile in quoteFiles)
             {
