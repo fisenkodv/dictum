@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Dictum.Business.Services;
 using Dictum.Data.Repositories;
@@ -21,7 +22,7 @@ namespace Quote.Importer
 
             foreach (var quoteFile in quoteFiles)
             {
-                Console.WriteLine($"Reading: {Path.GetFileName(quoteFile)}");
+                Console.WriteLine($"Importing: {Path.GetFileName(quoteFile)}");
                 await CreateQuotes(quoteFile, quoteService);
             }
         }
@@ -36,11 +37,8 @@ namespace Quote.Importer
         private static async Task CreateQuotes(string filePath, QuoteService quoteService)
         {
             var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Quote[]>(File.ReadAllText(filePath));
-            foreach (var quote in quotes)
-            {
-                var createdQuote = await quoteService.CreateQuote(quote);
-                Console.WriteLine($"New quote has been created with id: {createdQuote.Uuid}");
-            }
+            var createQuoteTasks = quotes.Select(quoteService.CreateQuote);
+            await Task.WhenAll(createQuoteTasks);
         }
     }
 }

@@ -26,7 +26,6 @@ namespace Dictum.Data.Repositories
                      SELECT     {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
                                 {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description
                      FROM       {LanguageSchema.Table} AS {LanguageSchema.Table}
-                     INNER JOIN {QuoteSchema.Table} AS {QuoteSchema.Table} ON {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}={LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                      GROUP BY   {LanguageSchema.Table}.{LanguageSchema.Columns.Id}";
 
                 return await connection.QueryAsync<Language>(sql);
