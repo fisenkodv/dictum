@@ -18,14 +18,17 @@ namespace Quote.Importer
             var authorService = new AuthorService(languageService, new AuthorRepository(configuration));
             var quoteService = new QuoteService(authorService, languageService, new QuoteRepository(configuration));
 
+            var quotesDirectory = configuration["QuotesDirectory"];
             var quoteFiles = Directory
-                .GetFiles(configuration["QuotesDirectory"], "*.json")
+                .GetFiles(quotesDirectory, "*.json")
                 .OrderBy(Path.GetFileNameWithoutExtension);
 
             foreach (var quoteFile in quoteFiles)
             {
                 Console.WriteLine($"Importing: {Path.GetFileName(quoteFile)}");
                 await CreateQuotes(quoteFile, quoteService);
+                var newQuoteFilePath = Path.Combine(quotesDirectory, "processed", Path.GetFileName(quoteFile));
+                File.Move(quoteFile, newQuoteFilePath);
             }
         }
 
