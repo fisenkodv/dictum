@@ -116,7 +116,14 @@ namespace Dictum.Data.Repositories
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)}
-                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.Id} > CAST(RAND() * (SELECT MAX({QuoteSchema.Table}.{QuoteSchema.Columns.Id}) FROM {QuoteSchema.Table}) AS INT)
+                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.Id} >= 
+                        CAST(
+                            RAND() * (
+                                SELECT MAX({QuoteSchema.Table}_1.{QuoteSchema.Columns.Id}) 
+                                FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}_1
+                                WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {QuoteSchema.Table}_1.{QuoteSchema.Columns.LanguageId}
+                            ) 
+                            AS INT)
                      LIMIT 1";
 
                 return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { languageCode });
