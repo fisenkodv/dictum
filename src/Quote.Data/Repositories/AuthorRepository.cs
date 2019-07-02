@@ -30,38 +30,26 @@ namespace Dictum.Data.Repositories
                     var authorUuid = IdGenerator.Instance.Next();
                     var insertAuthorSql = $@"
                         INSERT INTO {AuthorSchema.Table} ({AuthorSchema.Columns.Uuid})
-                        VALUES      (@{nameof(authorUuid)})";
+                        VALUES      (@{nameof(authorUuid)});
+                        SELECT LAST_INSERT_ID();";
 
-                    await connection.ExecuteAsync(insertAuthorSql, new { authorUuid }, transaction);
+                    var authorId = await connection.QueryFirstAsync<int>(insertAuthorSql, new { authorUuid }, transaction);
 
-                    var languageCode = language.Code;
+                    var languageId = language.Id;
                     var insertAuthorNameSql = $@"
-                        SELECT @author_id;
-                        SELECT {AuthorSchema.Table}.{AuthorSchema.Columns.Id} INTO @author_id 
-                        FROM   {AuthorSchema.Table} AS {AuthorSchema.Table}
-                        WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)};
-
-                        SELECT @language_id;
-                        SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
-                        FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
-                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};
-
                         INSERT INTO {AuthorNameSchema.Table} 
                         (
                             {AuthorNameSchema.Columns.Name},
                             {AuthorNameSchema.Columns.AuthorId},
                             {AuthorNameSchema.Columns.LanguageId}
                         )
-                        VALUES (@{nameof(name)}, @author_id, @language_id)";
+                        VALUES (@{nameof(name)}, @{nameof(authorId)}, @{nameof(languageId)})";
 
-                    await connection.ExecuteAsync(
-                        insertAuthorNameSql,
-                        new { name, authorUuid, languageCode },
-                        transaction);
+                    await connection.ExecuteAsync(insertAuthorNameSql, new { name, authorId, languageId }, transaction);
 
                     transaction.Commit();
 
-                    return new Author { Uuid = authorUuid, Name = name };
+                    return new Author { Id = authorId, Uuid = authorUuid, Name = name };
                 }
                 catch (Exception)
                 {
@@ -76,7 +64,8 @@ namespace Dictum.Data.Repositories
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
+                     SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Id} AS Id,
+                                {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
                                 {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Name
                      FROM       {AuthorSchema.Table} AS {AuthorSchema.Table}
                      INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
@@ -94,7 +83,8 @@ namespace Dictum.Data.Repositories
             {
                 var offset = page * count;
                 var sql = $@"
-                     SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
+                     SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Id} AS Id,
+                                {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
                                 {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Name
                      FROM       {AuthorSchema.Table} AS {AuthorSchema.Table}
                      INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}

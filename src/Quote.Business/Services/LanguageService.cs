@@ -18,13 +18,18 @@ namespace Dictum.Business.Services
 
         public Task<IEnumerable<Language>> GetAll()
         {
-            return _languageRepository.GetAll();
+            return _languageRepository.GetLanguages();
         }
 
         public Task<Language> Detect(string text)
         {
+            //TODO: implement logic to get correct language
             var language = new Language
-                {Code = DefaultLanguageCode, Description = "English"}; //TODO: implement logic to get correct language
+            {
+                Id = 8,
+                Code = DefaultLanguageCode,
+                Description = "English"
+            };
 
             return Task.FromResult(language);
         }

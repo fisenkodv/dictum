@@ -18,17 +18,34 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Language>> GetAll()
+        public async Task<IEnumerable<Language>> GetLanguages()
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT     {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
-                                {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description
-                     FROM       {LanguageSchema.Table} AS {LanguageSchema.Table}
-                     GROUP BY   {LanguageSchema.Table}.{LanguageSchema.Columns.Id}";
+                     SELECT   {LanguageSchema.Table}.{LanguageSchema.Columns.Id} AS Id,
+                              {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
+                              {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description
+                     FROM     {LanguageSchema.Table} AS {LanguageSchema.Table}
+                     GROUP BY {LanguageSchema.Table}.{LanguageSchema.Columns.Id}";
 
                 return await connection.QueryAsync<Language>(sql);
+            }
+        }
+
+        public async Task<Language> GetLanguage(string code)
+        {
+            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
+            {
+                var sql = $@"
+                     SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} AS Id,
+                            {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
+                            {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description
+                     FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
+                     WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(code)}
+                     LIMIT  1;";
+
+                return await connection.QueryFirstOrDefaultAsync<Language>(sql, code);
             }
         }
     }

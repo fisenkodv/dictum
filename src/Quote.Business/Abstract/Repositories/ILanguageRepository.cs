@@ -6,6 +6,8 @@ namespace Dictum.Business.Abstract.Repositories
 {
     public interface ILanguageRepository
     {
-        Task<IEnumerable<Language>> GetAll();
+        Task<IEnumerable<Language>> GetLanguages();
+
+        Task<Language> GetLanguage(string code);
     }
 }

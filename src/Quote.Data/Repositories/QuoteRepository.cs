@@ -28,53 +28,54 @@ namespace Dictum.Data.Repositories
             {
                 try
                 {
-                    var quoteUuid = IdGenerator.Instance.Next();
-                    var authorUuid = author.Uuid;
-                    var quoteText = quote.Text;
                     var quoteHash = HashGenerator.SHA256(quote.Text);
-                    var languageCode = language.Code;
+                    var quoteIds = await GetQuoteIdsByHash(quoteHash);
+                    if (quoteIds != default)
+                    {
+                        quote.Id = quoteIds.Id;
+                        quote.Uuid = quoteIds.Uuid;
+                        return quote;
+                    }
+
+                    var quoteUuid = IdGenerator.Instance.Next();
+                    var quoteText = quote.Text;
+                    var authorId = author.Id;
+                    var languageId = language.Id;
                     var addedAt = DateTime.UtcNow;
 
                     var insertQuoteSql = $@"
-                        IF NOT EXISTS (
-                            SELECT 1 FROM {QuoteSchema.Table} AS {QuoteSchema.Table}
-                            WHERE {QuoteSchema.Table}.{QuoteSchema.Columns.Hash}=@{nameof(quoteHash)})
-                        THEN
-                            SELECT @author_id;
-                            SELECT {AuthorSchema.Table}.{AuthorSchema.Columns.Id} INTO @author_id 
-                            FROM   {AuthorSchema.Table} AS {AuthorSchema.Table}
-                            WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)};
+                        INSERT INTO {QuoteSchema.Table}
+                        (
+                            {QuoteSchema.Columns.Uuid},
+                            {QuoteSchema.Columns.Text},
+                            {QuoteSchema.Columns.Hash},
+                            {QuoteSchema.Columns.AuthorId},
+                            {QuoteSchema.Columns.LanguageId},
+                            {QuoteSchema.Columns.AddedAt}
+                        )
+                        VALUES
+                        (
+                            @{nameof(quoteUuid)}, @{nameof(quoteText)}, @{nameof(quoteHash)},
+                            @{nameof(authorId)}, @{nameof(languageId)}, @{nameof(addedAt)}
+                        );
+                        SELECT {QuoteSchema.Columns.Id} FROM {QuoteSchema.Table} WHERE {QuoteSchema.Columns.Uuid} = @{nameof(quoteUuid)};";
 
-                            SELECT @language_id;
-                            SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
-                            FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
-                            WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};
-
-                            INSERT INTO {QuoteSchema.Table} 
-                            (
-                                {QuoteSchema.Columns.Uuid},
-                                {QuoteSchema.Columns.Text},
-                                {QuoteSchema.Columns.Hash},
-                                {QuoteSchema.Columns.AuthorId},
-                                {QuoteSchema.Columns.LanguageId},
-                                {QuoteSchema.Columns.AddedAt}
-                            )
-                            VALUES (@{nameof(quoteUuid)}, @{nameof(quoteText)}, @{nameof(quoteHash)}, @author_id, @language_id, @{nameof(addedAt)});
-                        END IF;";
-
-                    await connection.ExecuteAsync(insertQuoteSql, new
+                    var quoteId = await connection.QueryFirstAsync<int>(insertQuoteSql, new
                     {
                         quoteUuid,
                         quoteText,
                         quoteHash,
-                        authorUuid,
-                        languageCode,
+                        authorId,
+                        languageId,
                         addedAt
                     }, transaction);
 
                     transaction.Commit();
 
-                    return new Quote { Uuid = quoteUuid, Text = quoteText };
+                    quote.Id = quoteId;
+                    quote.Uuid = quoteUuid;
+
+                    return quote;
                 }
                 catch (Exception ex)
                 {
@@ -90,7 +91,8 @@ namespace Dictum.Data.Repositories
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
                                 {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
@@ -112,7 +114,8 @@ namespace Dictum.Data.Repositories
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
                 var sql = $@"
-                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
                                 {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
@@ -142,7 +145,8 @@ namespace Dictum.Data.Repositories
             {
                 var offset = page * count;
                 var sql = $@"
-                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
                                 {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
@@ -157,6 +161,21 @@ namespace Dictum.Data.Repositories
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
                 return await connection.QueryAsync<Quote>(sql, new { authorUuid, count, offset });
+            }
+        }
+
+        private async Task<Quote> GetQuoteIdsByHash(string hash)
+        {
+            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
+            {
+                var sql = $@"
+                     SELECT {QuoteSchema.Table}.{QuoteSchema.Columns.Id},
+                            {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid}
+                     FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}
+                     WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.Hash} = @{nameof(hash)}
+                     LIMIT  1";
+
+                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { hash });
             }
         }
     }
