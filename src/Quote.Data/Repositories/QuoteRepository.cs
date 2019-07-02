@@ -36,26 +36,31 @@ namespace Dictum.Data.Repositories
                     var addedAt = DateTime.UtcNow;
 
                     var insertQuoteSql = $@"
-                        SELECT @author_id;
-                        SELECT {AuthorSchema.Table}.{AuthorSchema.Columns.Id} INTO @author_id 
-                        FROM   {AuthorSchema.Table} AS {AuthorSchema.Table}
-                        WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)};
+                        IF NOT EXISTS (
+                            SELECT 1 FROM {QuoteSchema.Table} AS {QuoteSchema.Table}
+                            WHERE {QuoteSchema.Table}.{QuoteSchema.Columns.Hash}=@{nameof(quoteHash)})
+                        THEN
+                            SELECT @author_id;
+                            SELECT {AuthorSchema.Table}.{AuthorSchema.Columns.Id} INTO @author_id 
+                            FROM   {AuthorSchema.Table} AS {AuthorSchema.Table}
+                            WHERE  {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)};
 
-                        SELECT @language_id;
-                        SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
-                        FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
-                        WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};
+                            SELECT @language_id;
+                            SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} INTO @language_id 
+                            FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
+                            WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};
 
-                        INSERT INTO {QuoteSchema.Table} 
-                        (
-                            {QuoteSchema.Columns.Uuid},
-                            {QuoteSchema.Columns.Text},
-                            {QuoteSchema.Columns.Hash},
-                            {QuoteSchema.Columns.AuthorId},
-                            {QuoteSchema.Columns.LanguageId},
-                            {QuoteSchema.Columns.AddedAt}
-                        )
-                        VALUES (@{nameof(quoteUuid)}, @{nameof(quoteText)}, @{nameof(quoteHash)}, @author_id, @language_id, @{nameof(addedAt)})";
+                            INSERT INTO {QuoteSchema.Table} 
+                            (
+                                {QuoteSchema.Columns.Uuid},
+                                {QuoteSchema.Columns.Text},
+                                {QuoteSchema.Columns.Hash},
+                                {QuoteSchema.Columns.AuthorId},
+                                {QuoteSchema.Columns.LanguageId},
+                                {QuoteSchema.Columns.AddedAt}
+                            )
+                            VALUES (@{nameof(quoteUuid)}, @{nameof(quoteText)}, @{nameof(quoteHash)}, @author_id, @language_id, @{nameof(addedAt)});
+                        END IF;";
 
                     await connection.ExecuteAsync(insertQuoteSql, new
                     {
@@ -71,8 +76,9 @@ namespace Dictum.Data.Repositories
 
                     return new Quote { Uuid = quoteUuid, Text = quoteText };
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     transaction.Rollback();
                     return null;
                 }

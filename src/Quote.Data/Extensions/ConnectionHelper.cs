@@ -19,7 +19,8 @@ namespace Dictum.Data.Extensions
                 AllowZeroDateTime = false,
                 ConvertZeroDateTime = false,
                 Pooling = true,
-                AllowUserVariables = true
+                AllowUserVariables = true,
+                ConnectionTimeout = 60 * 5
             };
 
             var connection = new MySqlConnection(connectionStringBuilder.ConnectionString);
