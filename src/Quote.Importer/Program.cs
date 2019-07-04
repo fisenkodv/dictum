@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dictum.Business.Services;
 using Dictum.Data.Repositories;
+using Kurukuru;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -25,8 +26,8 @@ namespace Quote.Importer
 
             foreach (var quoteFile in quoteFiles)
             {
-                Console.WriteLine($"Importing: {Path.GetFileName(quoteFile)}");
-                await CreateQuotes(quoteFile, authorService, quoteService);
+                await Spinner.StartAsync($"Importing: {Path.GetFileName(quoteFile)}",
+                    () => CreateQuotes(quoteFile, authorService, quoteService));
                 var newQuoteFilePath = Path.Combine(quotesDirectory, "processed", Path.GetFileName(quoteFile));
                 File.Move(quoteFile, newQuoteFilePath);
             }
@@ -44,11 +45,17 @@ namespace Quote.Importer
             var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Quote[]>(File.ReadAllText(filePath));
             var authors = quotes.Select(x => x.Author).Distinct();
             await Task.WhenAll(authors.Select(authorService.GetOrCreate));
-            foreach (var quote in quotes)
+
+            var chunks = quotes
+                .Select((quote, index) => new {quote, index})
+                .GroupBy(x => x.index / 8)
+                .Select(x => x.Select(y => y.quote));
+
+            foreach (var chunk in chunks)
             {
-                await quoteService.CreateQuote(quote);
+                await Task.WhenAll(chunk.Select(quoteService.CreateQuote));
+                await Task.Delay(TimeSpan.FromSeconds(2));
             }
-            // await Task.WhenAll(quotes.Select(quoteService.CreateQuote));
         }
     }
 }
