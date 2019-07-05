@@ -12,6 +12,9 @@ namespace Quote.Importer
 {
     internal static class Program
     {
+        private const bool SplitIntoChunks = false;
+        private const int ChunkSize = 8;
+
         private static async Task Main(string[] args)
         {
             var configuration = CreateConfiguration();
@@ -27,7 +30,7 @@ namespace Quote.Importer
             foreach (var quoteFile in quoteFiles)
             {
                 await Spinner.StartAsync($"Importing: {Path.GetFileName(quoteFile)}",
-                    () => CreateQuotes(quoteFile, authorService, quoteService));
+                    () => CreateQuotes(quoteFile, authorService, quoteService, SplitIntoChunks));
                 var newQuoteFilePath = Path.Combine(quotesDirectory, "processed", Path.GetFileName(quoteFile));
                 File.Move(quoteFile, newQuoteFilePath);
             }
@@ -40,22 +43,30 @@ namespace Quote.Importer
             return configurationBuilder.Build();
         }
 
-        private static async Task CreateQuotes(string filePath, AuthorService authorService, QuoteService quoteService)
+        private static async Task CreateQuotes(
+            string filePath,
+            AuthorService authorService,
+            QuoteService quoteService,
+            bool splitIntoChunks)
         {
             var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Quote[]>(File.ReadAllText(filePath));
             var authors = quotes.Select(x => x.Author).Distinct();
             await Task.WhenAll(authors.Select(authorService.GetOrCreate));
-
-            var chunks = quotes
-                .Select((quote, index) => new {quote, index})
-                .GroupBy(x => x.index / 8)
-                .Select(x => x.Select(y => y.quote));
-
-            foreach (var chunk in chunks)
+            if (splitIntoChunks)
             {
-                await Task.WhenAll(chunk.Select(quoteService.CreateQuote));
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                var chunks = quotes
+                    .Select((quote, index) => new {quote, index})
+                    .GroupBy(x => x.index / ChunkSize)
+                    .Select(x => x.Select(y => y.quote));
+
+                foreach (var chunk in chunks)
+                {
+                    await Task.WhenAll(chunk.Select(quoteService.CreateQuote));
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                }
             }
+            else
+                await Task.WhenAll(quotes.Select(quoteService.CreateQuote));
         }
     }
 }
