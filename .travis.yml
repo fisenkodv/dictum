@@ -1,0 +1,4 @@
+language: csharp
+solution: Dictum.sln
+script:
+  - xbuild /p:Configuration=Release src/Dictum.sln
