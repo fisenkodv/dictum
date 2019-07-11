@@ -1,5 +1,7 @@
 language: csharp
 mono: none
-dotnet: 2.2.301
+sudo: required
+dist: xenial
+dotnet: 2.2
 script:
  - dotnet build src/Dictum.sln
