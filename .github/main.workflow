@@ -30,14 +30,14 @@ action "Docker Login" {
 }
 
 action "Publish To Docker Hub" {
-  uses    = "actions/docker/cli@master"
+  uses  = "actions/docker/cli@master"
 
-  needs   = [
+  needs = [
     "Build Docker Image",
     "Docker Login"
   ]
 
-  args    = [
+  args  = [
     "push",
     "fisenkodv/dictum:latest"
   ]
