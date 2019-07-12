@@ -1,8 +1,10 @@
 # Dictum
 
-API to get access to the collection of the most inspiring expressions of mankind.
-
 [![Build Status](https://travis-ci.org/fisenkodv/dictum.svg?branch=master)](https://travis-ci.org/fisenkodv/dictum)
+
+---
+
+> API to get access to the collection of the most inspiring expressions of mankind.
 
 ## API Methods
 
