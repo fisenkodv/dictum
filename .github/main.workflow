@@ -2,7 +2,7 @@ workflow "Build and Publish" {
   on       = "push"
 
   resolves = [
-    "Publish"
+    "Publish To Docker Hub"
   ]
 }
 
