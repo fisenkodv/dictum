@@ -21,7 +21,7 @@ action "Build" {
 }
 
 action "Docker Login" {
-  uses    = actions/docker/login@master"
+  uses    = "actions/docker/login@master"
 
   needs   = [
     "Build"
