@@ -20,7 +20,14 @@ action "Build" {
   ]
 }
 
+action "Docker Login" {
+  needs = ["Publish Filter"]
+  uses    = "docker://docker:stable"
+  secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+}
+
 action "Publish" {
+  needs = ["Docker Login"]
   uses    = "docker://docker:stable"
 
   args    = [
