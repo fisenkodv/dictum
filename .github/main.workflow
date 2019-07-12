@@ -6,7 +6,7 @@ workflow "Build and Publish" {
   ]
 }
 
-action "Build" {
+action "Build Docker Image" {
   uses = "actions/docker/cli@master"
 
   args = [
@@ -23,20 +23,17 @@ action "Build" {
 action "Docker Login" {
   uses    = "actions/docker/login@master"
 
-  needs   = [
-    "Build"
-  ]
-
   secrets = [
     "DOCKER_USERNAME",
     "DOCKER_PASSWORD"
   ]
 }
 
-action "Publish" {
+action "Publish To Docker Hub" {
   uses    = "actions/docker/cli@master"
 
   needs   = [
+    "Build Docker Image",
     "Docker Login"
   ]
 
