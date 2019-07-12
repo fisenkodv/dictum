@@ -7,7 +7,7 @@ workflow "Build and Publish" {
 }
 
 action "Build" {
-  uses = "docker://docker:stable"
+  uses = "actions/docker/cli@master"
 
   args = [
     "build",
@@ -21,7 +21,7 @@ action "Build" {
 }
 
 action "Docker Login" {
-  uses    = "docker://docker:stable"
+  uses    = actions/docker/login@master"
 
   needs   = [
     "Build"
@@ -34,7 +34,7 @@ action "Docker Login" {
 }
 
 action "Publish" {
-  uses    = "docker://docker:stable"
+  uses    = "actions/docker/cli@master"
 
   needs   = [
     "Docker Login"
@@ -43,14 +43,5 @@ action "Publish" {
   args    = [
     "push",
     "fisenkodv/dictum:latest"
-  ]
-
-  needs   = [
-    "Build"
-  ]
-
-  secrets = [
-    "DOCKER_PASSWORD",
-    "DOCKER_USERNAME"
   ]
 }
