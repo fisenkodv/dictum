@@ -2,12 +2,12 @@ workflow "Build and Publish" {
   on       = "push"
 
   resolves = [
-    "Publish"
+    "Publish To Docker Hub"
   ]
 }
 
-action "Build" {
-  uses = "docker://docker:stable"
+action "Build Docker Image" {
+  uses = "actions/docker/cli@master"
 
   args = [
     "build",
@@ -21,11 +21,7 @@ action "Build" {
 }
 
 action "Docker Login" {
-  uses    = "docker://docker:stable"
-
-  needs   = [
-    "Build"
-  ]
+  uses    = "actions/docker/login@master"
 
   secrets = [
     "DOCKER_USERNAME",
@@ -33,24 +29,16 @@ action "Docker Login" {
   ]
 }
 
-action "Publish" {
-  uses    = "docker://docker:stable"
+action "Publish To Docker Hub" {
+  uses    = "actions/docker/cli@master"
 
   needs   = [
+    "Build Docker Image",
     "Docker Login"
   ]
 
   args    = [
     "push",
     "fisenkodv/dictum:latest"
-  ]
-
-  needs   = [
-    "Build"
-  ]
-
-  secrets = [
-    "DOCKER_PASSWORD",
-    "DOCKER_USERNAME"
   ]
 }
