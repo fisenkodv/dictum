@@ -6,8 +6,23 @@ workflow "Build and Publish" {
   ]
 }
 
+action "Run Tests" {
+  uses = "actions/docker/cli@master"
+
+  args = [
+    "build",
+    "--file",
+    "docker/test/Dockerfile",
+    "."
+  ]
+}
+
 action "Build Docker Image" {
   uses = "actions/docker/cli@master"
+  
+  needs = [
+    "Run Tests"
+  ]
 
   args = [
     "build",
