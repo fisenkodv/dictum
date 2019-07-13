@@ -16,7 +16,7 @@ action "Build Docker Image" {
     "fisenkodv/dictum:latest",
     "--file",
     "Dockerfile",
-    "."
+    "./docker/api"
   ]
 }
 
