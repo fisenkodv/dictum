@@ -1,6 +1,6 @@
 ﻿using Microsoft.ML.Data;
 
-namespace Dictum.ML
+namespace Quote.ML
 {
     public class ModelInput
     {

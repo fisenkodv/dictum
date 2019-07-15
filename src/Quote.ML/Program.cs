@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ML;
 
-namespace Dictum.ML
+namespace Quote.ML
 {
     internal static class Program
     {

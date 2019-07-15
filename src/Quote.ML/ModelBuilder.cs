@@ -5,7 +5,7 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.Transforms.Text;
 
-namespace Dictum.ML
+namespace Quote.ML
 {
     public class ModelBuilder
     {

@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.Importer", "Quote.Importer\Quote.Importer.csproj", "{E84DE04E-1381-406D-8000-B878A1AC2DBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictum.ML", "Dictum.ML\Dictum.ML.csproj", "{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quote.ML", "Quote.ML\Quote.ML.csproj", "{20997F6B-F7BF-4E53-B0FF-7487286A4DEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3F211980-69E3-48E0-8547-E77CEF1D9B78}"
 	ProjectSection(SolutionItems) = preProject
