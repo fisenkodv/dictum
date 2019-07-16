@@ -6,10 +6,10 @@
         "axios": "^0.19.0",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-router-config": "^5.0.0",
-        "react-router-dom": "^5.0.0",
+        "react-router-config": "^5.0.1",
+        "react-router-dom": "^5.0.1",
         "react-scripts": "3.0.1",
-        "typescript": "3.5.1"
+        "typescript": "3.5.3"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -44,19 +44,19 @@
         ]
     },
     "devDependencies": {
-        "@types/jest": "24.0.13",
-        "@types/node": "12.0.4",
-        "@types/react": "16.8.19",
+        "@types/jest": "24.0.15",
+        "@types/node": "12.6.3",
+        "@types/react": "16.8.23",
         "@types/react-dom": "16.8.4",
         "@types/react-router-config": "^5.0.0",
-        "@types/react-router-dom": "^4.3.3",
+        "@types/react-router-dom": "^4.3.4",
         "cross-env": "^5.2.0",
-        "husky": "^2.3.0",
-        "lint-staged": "^8.1.7",
+        "husky": "^3.0.0",
+        "lint-staged": "^9.2.0",
         "node-sass": "^4.12.0",
-        "prettier": "^1.17.1",
-        "pretty-quick": "^1.11.0",
-        "tslint": "^5.17.0"
+        "prettier": "^1.18.2",
+        "pretty-quick": "^1.11.1",
+        "tslint": "^5.18.0"
     },
     "proxy": "https://api.fisenko.page"
 }
