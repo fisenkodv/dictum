@@ -16,9 +16,9 @@ GET https://api.fisenko.page/quotes?l=[EN|RU]
 | :-------- | :------- | :----------------------------------------- |
 | `l`       | `string` | **optional** language. By default is `EN`. |
 
-#### Response
+#### Example
 
-For example:
+request
 
 ```http
 GET https://api.fisenko.page/quotes
@@ -52,9 +52,9 @@ GET https://api.fisenko.page/quotes/[uuid]
 | :-------- | :------- | :------------------------------ |
 | `uuid`    | `string` | **required** unique quote's id. |
 
-#### Response
+#### Example
 
-For example:
+request
 
 ```http
 GET https://api.fisenko.page/quotes/l86O4m2Wez
@@ -84,9 +84,9 @@ GET https://api.fisenko.page/quotes/authors/[uuid]?p=[page]&c=[count]
 | `p`       | `int`    | **optional** page number, by default is `0`                                     |
 | `c`       | `int`    | **optional** items per page, by default is `10`. Could not be greater than `50` |
 
-#### Response
+#### Example
 
-For example:
+request
 
 ```http
 GET https://api.fisenko.page/quotes/authors/4PO19Pf6DR
