@@ -5,7 +5,7 @@ using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
-using Language = Dictum.Business.Models.Language;
+using Language = Dictum.Business.Models.Internal.Language;
 
 namespace Dictum.Data.Repositories
 {

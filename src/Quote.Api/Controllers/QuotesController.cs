@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dictum.Business.Models;
+using Dictum.Business.Models.Dto;
+using Dictum.Business.Models.Internal;
 using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,27 +20,27 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ActionResult<Quote>> GetRandom([FromQuery(Name = "l")] string languageCode)
+        public Task<ActionResult<QuoteDto>> GetRandom([FromQuery(Name = "l")] string languageCode)
         {
-            return WrapToActionResult(() => _quoteService.GetRandomQuote(languageCode));
+            return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetRandomQuote(languageCode));
         }
 
         [HttpGet("{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<ActionResult<Quote>> Get(string uuid)
+        public Task<ActionResult<QuoteDto>> Get(string uuid)
         {
-            return WrapToActionResult(() => _quoteService.GetQuoteById(uuid));
+            return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetQuoteById(uuid));
         }
 
         [HttpGet("authors/{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<ActionResult<IEnumerable<Quote>>> GetAuthorQuotes(
+        public Task<ActionResult<IEnumerable<QuoteDto>>> GetAuthorQuotes(
             string uuid,
             [FromQuery(Name = "p")] int? page,
             [FromQuery(Name = "c")] int? count
         )
         {
-            return WrapToActionResult(() => _quoteService.GetAuthorQuotes(uuid, page, count));
+            return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetAuthorQuotes(uuid, page, count));
         }
     }
 }

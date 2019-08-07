@@ -5,10 +5,10 @@ using Dapper;
 using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
-using Author = Dictum.Business.Models.Author;
+using Author = Dictum.Business.Models.Internal.Author;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
-using Language = Dictum.Business.Models.Language;
-using Quote = Dictum.Business.Models.Quote;
+using Language = Dictum.Business.Models.Internal.Language;
+using Quote = Dictum.Business.Models.Internal.Quote;
 
 namespace Dictum.Data.Repositories
 {

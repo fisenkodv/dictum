@@ -1,11 +1,10 @@
 using JetBrains.Annotations;
 
-namespace Dictum.Business.Models
+namespace Dictum.Business.Models.Dto
 {
     [PublicAPI]
-    public class Author
+    public class AuthorDto
     {
-        public int Id { get; set; }
         public string Uuid { get; set; }
         public string Name { get; set; }
     }

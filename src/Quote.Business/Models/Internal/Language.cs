@@ -1,8 +1,5 @@
-using JetBrains.Annotations;
-
-namespace Dictum.Business.Models
+namespace Dictum.Business.Models.Internal
 {
-    [PublicAPI]
     public class Language
     {
         public int Id { get; set; }

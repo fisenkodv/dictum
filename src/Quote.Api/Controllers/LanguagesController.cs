@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dictum.Business.Models;
+using Dictum.Business.Models.Dto;
+using Dictum.Business.Models.Internal;
 using Dictum.Business.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +19,9 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Language>> GetLanguages()
+        public Task<ActionResult<IEnumerable<LanguageDto>>> GetLanguages()
         {
-            return Ok(await _languageService.GetAll());
+            return WrapToActionResult<Language, LanguageDto>(() => _languageService.GetAll());
         }
     }
 }

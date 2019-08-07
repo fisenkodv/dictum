@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Dictum.Business.Abstract.Repositories;
 using Dictum.Business.Models;
+using Dictum.Business.Models.Internal;
 
 namespace Dictum.Business.Services
 {
