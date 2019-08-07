@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Dictum.Business.Abstract.Repositories;
@@ -105,7 +106,7 @@ namespace Dictum.Data.Repositories
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
-                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { uuid });
+                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {uuid});
             }
         }
 
@@ -113,29 +114,44 @@ namespace Dictum.Data.Repositories
         {
             using (var connection = ConfigurationExtensions.GetConnection(_configuration))
             {
+                var languageIdSql = $@"
+                    SELECT @languageId := {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
+                    FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
+                    WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};";
+
+                var minMaxIdSql = $@"
+                    SELECT @min := MIN({QuoteSchema.Table}.{QuoteSchema.Columns.Id}),
+                           @max := MAX({QuoteSchema.Table}.{QuoteSchema.Columns.Id})
+                    FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}
+                    WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = @languageId;";
+
                 var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
                                 {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
-                     INNER JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
-                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                      LEFT JOIN  {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
                      ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
-                     WHERE      {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)}
-                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.Id} >= 
-                        CAST(
-                            RAND() * (
-                                SELECT MAX({QuoteSchema.Table}_1.{QuoteSchema.Columns.Id}) 
-                                FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}_1
-                                WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {QuoteSchema.Table}_1.{QuoteSchema.Columns.LanguageId}
-                            ) 
-                            AS INT)
-                     LIMIT 1";
+                     JOIN (
+                        SELECT {QuoteSchema.Columns.Id}
+                        FROM (
+                             SELECT   {QuoteSchema.Columns.Id}
+                             FROM     (SELECT @min + (@max - @min + 1 - 50) * RAND() AS START FROM DUAL) AS INIT
+                             JOIN     {QuoteSchema.Table} AS Y
+                             WHERE    Y.{QuoteSchema.Columns.Id} > INIT.START
+                             ORDER BY Y.{QuoteSchema.Columns.Id}
+                             LIMIT 50 -- Inflated to deal with gaps
+                        ) AS Z ORDER BY RAND()
+                        LIMIT 1 -- number of rows desired (change to 1 if looking for a single row)
+                     ) R
+                     ON {QuoteSchema.Table}.{QuoteSchema.Columns.Id} = R.{QuoteSchema.Columns.Id}
+                     AND {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}=@languageId;";
 
-                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { languageCode });
+                var languageId = await connection.QueryFirstAsync<int>(languageIdSql, new {languageCode});
+                var (min, max) = await connection.QueryFirstAsync<(int min, int max)>(minMaxIdSql, new {languageId});
+                return await connection.QueryFirstAsync<Quote>(sql, new {min, max, languageId});
             }
         }
 
@@ -160,7 +176,7 @@ namespace Dictum.Data.Repositories
                      WHERE      {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)}
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-                return await connection.QueryAsync<Quote>(sql, new { authorUuid, count, offset });
+                return await connection.QueryAsync<Quote>(sql, new {authorUuid, count, offset});
             }
         }
 
@@ -175,7 +191,7 @@ namespace Dictum.Data.Repositories
                      WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.Hash} = @{nameof(hash)}
                      LIMIT  1";
 
-                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { hash });
+                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {hash});
             }
         }
     }
