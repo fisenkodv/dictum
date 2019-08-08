@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Dictum.Business.Abstract.Repositories;
@@ -29,7 +28,7 @@ namespace Dictum.Data.Repositories
             {
                 try
                 {
-                    var quoteHash = HashGenerator.SHA256(quote.Text);
+                    var quoteHash = HashGenerator.Sha256(quote.Text);
                     var quoteIds = await GetQuoteIdsByHash(quoteHash);
                     if (quoteIds != default)
                     {

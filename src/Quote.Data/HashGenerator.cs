@@ -1,11 +1,10 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
 
 namespace Dictum.Data
 {
     internal static class HashGenerator
     {
-        public static string SHA256(string text)
+        public static string Sha256(string text)
         {
             using (var sha256Hash = System.Security.Cryptography.SHA256.Create())
             {
