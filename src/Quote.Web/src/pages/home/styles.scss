@@ -1,0 +1,17 @@
+.quote1 {
+    position: relative;
+    z-index: 1;
+    &::before {
+        $background-color: hsl(50, 5, 97);
+        $black: hsl(200, 40, 10);
+        $white: $background-color;
+        font-family: Arial;
+        content: '\201C';
+        position: absolute;
+        left: 10px;
+        top: -10px;
+        color: darken($white, 10%);
+        font-size: 6em;
+        z-index: -1;
+    }
+}
