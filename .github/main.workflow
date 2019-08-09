@@ -17,11 +17,17 @@ action "Run Tests" {
   ]
 }
 
+action "Filter Master" {
+  needs = "Run Tests"
+  uses = "actions/bin/filter@master"
+  args = "branch master"
+}
+
 action "Build Docker Image" {
   uses = "actions/docker/cli@master"
   
   needs = [
-    "Run Tests"
+    "Filter Master"
   ]
 
   args = [
@@ -37,6 +43,10 @@ action "Build Docker Image" {
 
 action "Docker Login" {
   uses    = "actions/docker/login@master"
+  
+  needs = [
+    "Filter Master"
+  ]
 
   secrets = [
     "DOCKER_USERNAME",
