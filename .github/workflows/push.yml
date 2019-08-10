@@ -1,4 +1,4 @@
-name: Build and Publish
+name: Test And Publish
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
     - master
 
 jobs:
-  test:
-    name: Run Tests
+  test_and_publish:
+    name: Test And Publish To Docker
+    needs: test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -15,11 +16,6 @@ jobs:
       uses: actions/docker/cli@master
       with:
         args: build --file docker/test/Dockerfile .
-  publish:
-    name: Publish To Docker
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
     - name: Docker Login
       uses: actions/docker/login@master
       env:
@@ -28,8 +24,7 @@ jobs:
     - name: Build Docker Image
       uses: actions/docker/cli@master
       with:
-        args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile
-          .
+        args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile .
     - name: Publish To Docker Hub
       uses: actions/docker/cli@master
       with:
