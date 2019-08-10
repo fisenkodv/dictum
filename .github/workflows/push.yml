@@ -1,7 +1,12 @@
-on: push
 name: Build and Publish
+
+on:
+  push:
+    branches:
+    - master
+
 jobs:
-  runTests:
+  test:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
@@ -10,21 +15,27 @@ jobs:
       uses: actions/docker/cli@master
       with:
         args: build --file docker/test/Dockerfile .
-    - name: Filter Master
-      uses: actions/bin/filter@master
-      with:
-        args: branch master
-    - name: Docker Login
-      uses: actions/docker/login@master
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    - name: Build Docker Image
+  build:
+    name: Build Docker Image
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build
       uses: actions/docker/cli@master
       with:
         args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile
           .
-    - name: Publish To Docker Hub
+  publish:
+    name: Publish To Docker Hub
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login
+      uses: actions/docker/login@master
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    - name: Publish
       uses: actions/docker/cli@master
       with:
         args: push fisenkodv/dictum:latest
