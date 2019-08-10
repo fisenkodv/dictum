@@ -18,6 +18,7 @@ jobs:
   build:
     name: Build Docker Image
     needs: test
+    runs-on: ubuntu-latest
     steps:
     - name: Build
       uses: actions/docker/cli@master
@@ -26,6 +27,7 @@ jobs:
   publish:
     name: Publish To Docker Hub
     needs: [test, build]
+    runs-on: ubuntu-latest
     steps:
     - name: Login
       uses: actions/docker/login@master
