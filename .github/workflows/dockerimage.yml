@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/docker/cli@master
     - name: Run Unit Tests
-      run: docker build --rm --file docker/test/Dockerfile .
+      run: docker build --file docker/test/Dockerfile .
 
   build:
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: actions/docker/login@master
     - name: Login in Docker
-      run: docker build --rm --tag fisenkodv/dictum:$(date +%s) --file docker/api/Dockerfile .
+      secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 
   publish:
     runs-on: ubuntu-latest
