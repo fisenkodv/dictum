@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: actions/docker/login@master
     - name: Login in Docker
-      secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+      secrets: ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 
   publish:
     runs-on: ubuntu-latest
