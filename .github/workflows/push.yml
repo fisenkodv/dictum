@@ -1,30 +1,42 @@
-on: push
 name: Build and Publish
+
+on:
+  push:
+    branches:
+    - master
+
 jobs:
-  runTests:
+  test:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Run Tests
-      uses: actions/docker/cli@master
+    - uses: actions/docker/cli@master
       with:
         args: build --file docker/test/Dockerfile .
-    - name: Filter Master
-      uses: actions/bin/filter@master
-      with:
-        args: branch master
-    - name: Docker Login
-      uses: actions/docker/login@master
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    - name: Build Docker Image
-      uses: actions/docker/cli@master
-      with:
-        args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile
-          .
-    - name: Publish To Docker Hub
-      uses: actions/docker/cli@master
-      with:
-        args: push fisenkodv/dictum:latest
+
+  login:
+    name: Docker Login
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    -uses: actions/docker/login@master
+    env:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  
+  build:
+    name: Build Docker Image
+    needs: login
+    uses: actions/docker/cli@master
+    with:
+      args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile .
+
+  publish:
+    needs:
+      - test
+      - build
+    name: Publish To Docker Hub
+    uses: actions/docker/cli@master
+    with:
+      args: push fisenkodv/dictum:latest
