@@ -41,10 +41,10 @@ export const Home: React.FC = () => {
     return (
         <div className={classes.heroContent}>
             <Container maxWidth="lg">
-                <Typography variant="h2" align="center" color="textPrimary" gutterBottom className="quote">
+                <Typography variant="h4" align="center" color="textPrimary" gutterBottom className="quote">
                     {quote.text}
                 </Typography>
-                <Typography variant="h5" align="right" color="textSecondary" paragraph>
+                <Typography variant="subtitle1" align="right" color="textSecondary" paragraph>
                     <RouteLink to={`/author/${quote.author}`}>{quote.author}</RouteLink>
                 </Typography>
                 <div className={classes.heroButtons}>
