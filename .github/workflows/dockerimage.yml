@@ -8,14 +8,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-     steps:
+    steps:
     - uses: actions/checkout@master
     - name: Build the Docker image
       run: docker build --rm --file docker/test/Dockerfile .
 
   build:
     runs-on: ubuntu-latest
-     steps:
+    needs: test
+    steps:
     - uses: actions/checkout@master
     - name: Build the Docker image
       run: docker build --rm --tag fisenkodv/dictum:$(date +%s) --file docker/api/Dockerfile .
