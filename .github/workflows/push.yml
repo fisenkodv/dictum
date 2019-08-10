@@ -16,7 +16,7 @@ jobs:
       with:
         args: build --file docker/test/Dockerfile .
   publish:
-    name: Run Tests
+    name: Publish To Docker
     needs: test
     runs-on: ubuntu-latest
     steps:
