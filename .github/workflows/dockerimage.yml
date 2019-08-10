@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/docker/cli@master
+    - uses: actions/checkout@master
     - name: Run Unit Tests
       run: docker build --file docker/test/Dockerfile .
 
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-    - uses: actions/docker/cli@master
+    - uses: actions/checkout@master
     - name: Build the Docker image
       run: docker build --rm --tag fisenkodv/dictum:$(date +%s) --file docker/api/Dockerfile .
 
