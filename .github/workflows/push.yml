@@ -11,32 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: actions/docker/cli@master
+    - name: Run Tests
+      uses: actions/docker/cli@master
       with:
         args: build --file docker/test/Dockerfile .
-
-  login:
-    name: Docker Login
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    -uses: actions/docker/login@master
-    env:
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  
   build:
     name: Build Docker Image
-    needs: login
-    uses: actions/docker/cli@master
-    with:
-      args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile .
-
+    needs: test
+    steps:
+    - name: Build
+      uses: actions/docker/cli@master
+      with:
+        args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile .
   publish:
-    needs:
-      - test
-      - build
     name: Publish To Docker Hub
-    uses: actions/docker/cli@master
-    with:
-      args: push fisenkodv/dictum:latest
+    needs: [test, build]
+    steps:
+    - name: Login
+      uses: actions/docker/login@master
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    - name: Publish
+      uses: actions/docker/cli@master
+      with:
+        args: push fisenkodv/dictum:latest
