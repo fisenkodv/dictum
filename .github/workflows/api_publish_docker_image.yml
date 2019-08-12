@@ -1,4 +1,4 @@
-name: Test And Publish To Docker
+name: Publish API To Docker
 
 on:
   push:
