@@ -25,7 +25,6 @@ namespace Dictum.Business
             _mapper = config.CreateMapper();
         }
 
-
         public static TDestination Map<TSource, TDestination>(TSource source)
         {
             return Instance.Value._mapper.Map<TSource, TDestination>(source);
