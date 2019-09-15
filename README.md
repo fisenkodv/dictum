@@ -81,8 +81,8 @@ GET https://api.fisenko.page/quotes/authors/[uuid]?p=[page]&c=[count]
 | Parameter | Type     | Description                                                                     |
 | :-------- | :------- | :------------------------------------------------------------------------------ |
 | `uuid`    | `string` | **required** unique author's id.                                                |
-| `p`       | `int`    | **optional** page number, by default is `0`                                     |
-| `c`       | `int`    | **optional** items per page, by default is `10`. Could not be greater than `50` |
+| `p`       | `int`    | **optional** page number. By default is `0`                                     |
+| `c`       | `int`    | **optional** items per page. By default is `10`. Could not be greater than `50` |
 
 #### Example
 
