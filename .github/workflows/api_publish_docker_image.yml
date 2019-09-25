@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    # - name: Run Tests
-    #  uses: actions/docker/cli@master
-    #  with:
-    #    args: build --file docker/test/Dockerfile .
+    - name: Run Tests
+      uses: actions/docker/cli@master
+      with:
+        args: build --file docker/test/Dockerfile .
     - name: Docker Login
       uses: actions/docker/login@master
       env:
