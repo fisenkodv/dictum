@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace Dictum.Api
@@ -41,7 +42,7 @@ namespace Dictum.Api
             }
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHostBuilder CreateWebHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -49,12 +50,15 @@ namespace Dictum.Api
                 .AddCommandLine(args)
                 .Build();
 
-            return WebHost.CreateDefaultBuilder(args)
-                .SuppressStatusMessages(true)
-                .UseUrls("http://*:5000")
-                .UseConfiguration(config)
-                .UseStartup<Startup>()
-                .UseSerilog();
+            return Host.CreateDefaultBuilder(args)
+                    .ConfigureWebHost(webBuilder =>
+                        webBuilder
+                            .SuppressStatusMessages(true).UseUrls("http://*:5000")
+                            .UseConfiguration(config)
+                            .UseKestrel()
+                            .UseStartup<Startup>()
+                            .UseSerilog())
+                ;
         }
     }
 }

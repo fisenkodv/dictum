@@ -20,7 +20,7 @@ namespace Dictum.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ActionResult<QuoteDto>> GetRandom([FromQuery(Name = "l")] string languageCode)
+        public Task<ActionResult<QuoteDto>> GetRandom([FromQuery(Name = "l")] string? languageCode)
         {
             return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetRandomQuote(languageCode));
         }
