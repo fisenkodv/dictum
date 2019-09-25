@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 
 WORKDIR /src
 
