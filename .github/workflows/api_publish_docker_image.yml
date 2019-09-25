@@ -8,7 +8,7 @@ on:
 jobs:
   test_and_publish:
     name: Test And Publish To Docker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
     - name: Run Tests
