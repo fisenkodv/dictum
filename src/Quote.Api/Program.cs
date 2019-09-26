@@ -27,7 +27,7 @@ namespace Dictum.Api
             try
             {
                 Log.Information("Starting Monitoring Web Api Host");
-                CreateWebHostBuilder(args).Build().Run();
+                CreateHostBuilder(args).Build().Run();
 
                 return 0;
             }
@@ -42,7 +42,7 @@ namespace Dictum.Api
             }
         }
 
-        private static IHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -51,14 +51,14 @@ namespace Dictum.Api
                 .Build();
 
             return Host.CreateDefaultBuilder(args)
-                    .ConfigureWebHost(webBuilder =>
-                        webBuilder
-                            .SuppressStatusMessages(true).UseUrls("http://*:5000")
-                            .UseConfiguration(config)
-                            .UseKestrel()
-                            .UseStartup<Startup>()
-                            .UseSerilog())
-                ;
+                .ConfigureWebHost(webBuilder =>
+                    webBuilder
+                        .SuppressStatusMessages(true)
+                        .UseUrls("http://*:5000")
+                        .UseConfiguration(config)
+                        .UseKestrel()
+                        .UseStartup<Startup>()
+                        .UseSerilog());
         }
     }
 }

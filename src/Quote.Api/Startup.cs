@@ -39,7 +39,7 @@ namespace Dictum.Api
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
             app.UseHealthChecks("/health",
                 new HealthCheckOptions
                 {
