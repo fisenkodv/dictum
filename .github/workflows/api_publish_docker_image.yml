@@ -23,8 +23,8 @@ jobs:
     - name: Build Docker Image
       uses: actions/docker/cli@master
       with:
-        args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile .
+        args: build --rm --tag fisenkodv/dictum:api-latest --file docker/api/Dockerfile .
     - name: Publish To Docker Hub
       uses: actions/docker/cli@master
       with:
-        args: push fisenkodv/dictum:latest
+        args: push fisenkodv/dictum:api-latest
