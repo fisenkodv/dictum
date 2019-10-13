@@ -108,3 +108,7 @@ returns
   }
 ]
 ```
+
+## License
+
+MIT
