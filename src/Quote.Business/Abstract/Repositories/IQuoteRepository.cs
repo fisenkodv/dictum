@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dictum.Business.Models.Domain;
 using Dictum.Business.Models.Internal;
 
 namespace Dictum.Business.Abstract.Repositories
@@ -10,5 +11,6 @@ namespace Dictum.Business.Abstract.Repositories
         Task<Quote> GetById(string uuid);
         Task<Quote> GetRandom(string languageCode);
         Task<IEnumerable<Quote>> GetByAuthor(string authorUuid, int page, int count);
+        Task<QuotesStatistics> GetStatistics();
     }
 }

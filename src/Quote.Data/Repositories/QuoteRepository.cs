@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Dictum.Business.Abstract.Repositories;
+using Dictum.Business.Models.Domain;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
 using Author = Dictum.Business.Models.Internal.Author;
@@ -23,27 +25,26 @@ namespace Dictum.Data.Repositories
 
         public async Task<Quote> Create(Quote quote, Author author, Language language)
         {
-            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
-            using (var transaction = connection.BeginTransaction())
+            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var transaction = connection.BeginTransaction();
+            try
             {
-                try
+                var quoteHash = HashGenerator.Sha256(quote.Text);
+                var quoteIds = await GetQuoteIdsByHash(quoteHash);
+                if (quoteIds != default)
                 {
-                    var quoteHash = HashGenerator.Sha256(quote.Text);
-                    var quoteIds = await GetQuoteIdsByHash(quoteHash);
-                    if (quoteIds != default)
-                    {
-                        quote.Id = quoteIds.Id;
-                        quote.Uuid = quoteIds.Uuid;
-                        return quote;
-                    }
+                    quote.Id = quoteIds.Id;
+                    quote.Uuid = quoteIds.Uuid;
+                    return quote;
+                }
 
-                    var quoteUuid = IdGenerator.Instance.Next();
-                    var quoteText = quote.Text;
-                    var authorId = author.Id;
-                    var languageId = language.Id;
-                    var addedAt = DateTime.UtcNow;
+                var quoteUuid = IdGenerator.Instance.Next();
+                var quoteText = quote.Text;
+                var authorId = author.Id;
+                var languageId = language.Id;
+                var addedAt = DateTime.UtcNow;
 
-                    var insertQuoteSql = $@"
+                var insertQuoteSql = $@"
                         INSERT INTO {QuoteSchema.Table}
                         (
                             {QuoteSchema.Columns.Uuid},
@@ -60,37 +61,35 @@ namespace Dictum.Data.Repositories
                         );
                         SELECT {QuoteSchema.Columns.Id} FROM {QuoteSchema.Table} WHERE {QuoteSchema.Columns.Uuid} = @{nameof(quoteUuid)};";
 
-                    var quoteId = await connection.QueryFirstAsync<int>(insertQuoteSql, new
-                    {
-                        quoteUuid,
-                        quoteText,
-                        quoteHash,
-                        authorId,
-                        languageId,
-                        addedAt
-                    }, transaction);
-
-                    transaction.Commit();
-
-                    quote.Id = quoteId;
-                    quote.Uuid = quoteUuid;
-
-                    return quote;
-                }
-                catch (Exception ex)
+                var quoteId = await connection.QueryFirstAsync<int>(insertQuoteSql, new
                 {
-                    Console.WriteLine(ex.Message);
-                    transaction.Rollback();
-                    return null;
-                }
+                    quoteUuid,
+                    quoteText,
+                    quoteHash,
+                    authorId,
+                    languageId,
+                    addedAt
+                }, transaction);
+
+                transaction.Commit();
+
+                quote.Id = quoteId;
+                quote.Uuid = quoteUuid;
+
+                return quote;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                transaction.Rollback();
+                return null;
             }
         }
 
         public async Task<Quote> GetById(string uuid)
         {
-            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
-            {
-                var sql = $@"
+            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
@@ -105,26 +104,24 @@ namespace Dictum.Data.Repositories
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
-                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {uuid});
-            }
+            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {uuid});
         }
 
         public async Task<Quote> GetRandom(string languageCode)
         {
-            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
-            {
-                var languageIdSql = $@"
+            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            var languageIdSql = $@"
                     SELECT @languageId := {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                     FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
                     WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};";
 
-                var minMaxIdSql = $@"
+            var minMaxIdSql = $@"
                     SELECT @min := MIN({QuoteSchema.Table}.{QuoteSchema.Columns.Id}),
                            @max := MAX({QuoteSchema.Table}.{QuoteSchema.Columns.Id})
                     FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}
                     WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = @languageId;";
 
-                var sql = $@"
+            var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
@@ -148,18 +145,16 @@ namespace Dictum.Data.Repositories
                      ON {QuoteSchema.Table}.{QuoteSchema.Columns.Id} = R.{QuoteSchema.Columns.Id}
                      AND {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}=@languageId;";
 
-                var languageId = await connection.QueryFirstAsync<int>(languageIdSql, new {languageCode});
-                var (min, max) = await connection.QueryFirstAsync<(int min, int max)>(minMaxIdSql, new {languageId});
-                return await connection.QueryFirstAsync<Quote>(sql, new {min, max, languageId});
-            }
+            var languageId = await connection.QueryFirstAsync<int>(languageIdSql, new {languageCode});
+            var (min, max) = await connection.QueryFirstAsync<(int min, int max)>(minMaxIdSql, new {languageId});
+            return await connection.QueryFirstAsync<Quote>(sql, new {min, max, languageId});
         }
 
         public async Task<IEnumerable<Quote>> GetByAuthor(string authorUuid, int page, int count)
         {
-            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
-            {
-                var offset = page * count;
-                var sql = $@"
+            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            var offset = page * count;
+            var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
@@ -175,23 +170,41 @@ namespace Dictum.Data.Repositories
                      WHERE      {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)}
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-                return await connection.QueryAsync<Quote>(sql, new {authorUuid, count, offset});
-            }
+            return await connection.QueryAsync<Quote>(sql, new {authorUuid, count, offset});
+        }
+
+        public async Task<QuotesStatistics> GetStatistics()
+        {
+            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            var sql = $@"
+                     SELECT    {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS code,
+                               COUNT({QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}) AS count
+                     FROM      {QuoteSchema.Table} AS {QuoteSchema.Table}
+                     LEFT JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
+                     ON        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
+                     GROUP BY  {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}
+                     ORDER BY  Count DESC";
+
+            var statistics = (await connection.QueryAsync<(string code, int count)>(sql)).ToList();
+            var result = new QuotesStatistics
+            {
+                ByLanguage = statistics.ToDictionary(x => x.code, x => x.count),
+                Total = statistics.Sum(x => x.count)
+            };
+            return result;
         }
 
         private async Task<Quote> GetQuoteIdsByHash(string hash)
         {
-            using (var connection = ConfigurationExtensions.GetConnection(_configuration))
-            {
-                var sql = $@"
+            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            var sql = $@"
                      SELECT {QuoteSchema.Table}.{QuoteSchema.Columns.Id},
                             {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid}
                      FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}
                      WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.Hash} = @{nameof(hash)}
                      LIMIT  1";
 
-                return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {hash});
-            }
+            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {hash});
         }
     }
 }
