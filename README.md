@@ -109,6 +109,41 @@ returns
 ]
 ```
 
+### Get Statistics
+
+```http
+GET https://api.fisenko.page/statistics
+```
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.page/statistics
+```
+
+returns
+
+```json
+{
+  "authors": {
+    "total": 29573,
+    "byLanguage": {
+      "EN": 28203,
+      "RU": 1370
+    }
+  },
+  "quotes": {
+    "total": 731144,
+    "byLanguage": {
+      "EN": 724315,
+      "RU": 6829
+    }
+  }
+}
+```
+
 ## License
 
 MIT
