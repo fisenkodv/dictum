@@ -144,6 +144,29 @@ returns
 }
 ```
 
+### Get Health
+
+```http
+GET https://api.fisenko.page/health
+```
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.page/health
+```
+
+returns
+
+```json
+{
+  "status": "Healthy",
+  "errors": []
+}
+```
+
 ## License
 
 MIT
