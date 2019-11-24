@@ -16,6 +16,10 @@ jobs:
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    - name: Run Tests
+      uses: actions-hub/docker@master
+      with:
+        args: build --file docker/test/Dockerfile .
     - name: Build Docker Image
       uses: actions-hub/docker@master
       with:
