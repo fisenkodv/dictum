@@ -31,6 +31,7 @@ namespace Dictum.Api
             services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddCustomServices();
             services.AddHealthChecks();
+            services.AddDictumCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +49,7 @@ namespace Dictum.Api
                     ResponseWriter = JsonHealthCheckWriter
                 }
             );
+            app.UseCors(CorsExtensions.DictumCorsPolicyName);
         }
 
         private static async Task JsonHealthCheckWriter(HttpContext context, HealthReport report)
