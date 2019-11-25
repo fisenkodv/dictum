@@ -4,7 +4,7 @@ namespace Dictum.Api.Extensions
 {
     public static class CorsExtensions
     {
-        public static readonly string DictumCorsPolicyName = "_myAllowSpecificOrigins";
+        public const string DictumCorsPolicyName = "_myAllowSpecificOrigins";
 
         public static IServiceCollection AddDictumCors(this IServiceCollection services)
         {

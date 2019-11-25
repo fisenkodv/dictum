@@ -40,6 +40,7 @@ namespace Dictum.Api
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
+            app.UseCors(CorsExtensions.DictumCorsPolicyName);
             app.UseEndpoints(endpoints => endpoints.MapControllers());
             app.UseHealthChecks("/health",
                 new HealthCheckOptions
@@ -49,7 +50,6 @@ namespace Dictum.Api
                     ResponseWriter = JsonHealthCheckWriter
                 }
             );
-            app.UseCors(CorsExtensions.DictumCorsPolicyName);
         }
 
         private static async Task JsonHealthCheckWriter(HttpContext context, HealthReport report)
