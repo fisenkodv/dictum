@@ -1,5 +1,6 @@
 import './styles.scss';
 
+import { Box, CircularProgress } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -22,12 +23,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Home: React.FC = () => {
+    const [initialized, setInitialized] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [quote, setQuote] = useState<Quote>(emptyQuote());
+
     const fetchQuote = async () => {
+        setLoading(true);
         const quote = await QuotesApi.getRandomQuote();
+        setLoading(false);
         return quote ? setQuote(quote) : setQuote(emptyQuote());
     };
-    const [initialized, setInitialized] = useState(false);
-    const [quote, setQuote] = useState<Quote>(emptyQuote());
 
     useEffect(() => {
         if (!initialized) {
@@ -39,30 +44,38 @@ export const Home: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.heroContent}>
+        <Box className={classes.heroContent}>
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" color="textPrimary" gutterBottom className="quote">
-                    {quote.text}
-                </Typography>
-                <Typography variant="subtitle1" align="right" color="textSecondary" paragraph>
-                    <RouteLink to={`/author/${quote.author}`}>{quote.author}</RouteLink>
-                </Typography>
-                <div className={classes.heroButtons}>
+                <Box textAlign="center">
+                    {loading ? (
+                        <CircularProgress />
+                    ) : (
+                        <Box>
+                            <Typography variant="h4" align="center" color="textPrimary" gutterBottom className="quote">
+                                {quote.text}
+                            </Typography>
+                            <Typography variant="subtitle1" align="right" color="textSecondary" paragraph>
+                                <RouteLink to={`/author/${quote.author}`}>{quote.author}</RouteLink>
+                            </Typography>
+                        </Box>
+                    )}
+                </Box>
+                <Box className={classes.heroButtons}>
                     <Grid container spacing={2} justify="center">
                         <Grid item>
-                            <Button variant="contained" color="primary" onClick={() => fetchQuote()}>
+                            <Button variant="contained" color="primary" disabled={loading} onClick={() => fetchQuote()}>
                                 Get Random
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined" color="primary">
+                            <Button variant="outlined" color="primary" disabled={loading}>
                                 Copy Link
                             </Button>
                         </Grid>
                     </Grid>
-                </div>
+                </Box>
             </Container>
-        </div>
+        </Box>
     );
 };
 
