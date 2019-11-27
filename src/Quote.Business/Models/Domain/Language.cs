@@ -1,4 +1,4 @@
-namespace Dictum.Business.Models.Internal
+namespace Dictum.Business.Models.Domain
 {
     public class Language
     {

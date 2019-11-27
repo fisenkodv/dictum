@@ -73,13 +73,14 @@ returns
 ### Get Quotes By Author UUID
 
 ```http
-GET https://api.fisenko.page/quotes/authors/[uuid]?p=[page]&c=[count]
+GET https://api.fisenko.page/quotes/author/[uuid]?l=[EN|RU]&p=[page]&c=[count]
 ```
 
 #### Parameters
 
 | Parameter | Type     | Description                                                                     |
 | :-------- | :------- | :------------------------------------------------------------------------------ |
+| `l`       | `string` | **optional** language. By default is `EN`.                                      |
 | `uuid`    | `string` | **required** unique author's id.                                                |
 | `p`       | `int`    | **optional** page number. By default is `0`                                     |
 | `c`       | `int`    | **optional** items per page. By default is `10`. Could not be greater than `50` |
@@ -89,7 +90,7 @@ GET https://api.fisenko.page/quotes/authors/[uuid]?p=[page]&c=[count]
 request
 
 ```http
-GET https://api.fisenko.page/quotes/authors/4PO19Pf6DR
+GET https://api.fisenko.page/quotes/author/4PO19Pf6DR
 ```
 
 returns

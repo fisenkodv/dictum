@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dictum.Business.Models.Domain;
-using Dictum.Business.Models.Internal;
 
 namespace Dictum.Business.Abstract.Repositories
 {

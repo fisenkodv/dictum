@@ -7,10 +7,10 @@ using Dictum.Business.Abstract.Repositories;
 using Dictum.Business.Models.Domain;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
-using Author = Dictum.Business.Models.Internal.Author;
+using Author = Dictum.Business.Models.Domain.Author;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
-using Language = Dictum.Business.Models.Internal.Language;
-using Quote = Dictum.Business.Models.Internal.Quote;
+using Language = Dictum.Business.Models.Domain.Language;
+using Quote = Dictum.Business.Models.Domain.Quote;
 
 namespace Dictum.Data.Repositories
 {
@@ -61,15 +61,10 @@ namespace Dictum.Data.Repositories
                         );
                         SELECT {QuoteSchema.Columns.Id} FROM {QuoteSchema.Table} WHERE {QuoteSchema.Columns.Uuid} = @{nameof(quoteUuid)};";
 
-                var quoteId = await connection.QueryFirstAsync<int>(insertQuoteSql, new
-                {
-                    quoteUuid,
-                    quoteText,
-                    quoteHash,
-                    authorId,
-                    languageId,
-                    addedAt
-                }, transaction);
+                var quoteId = await connection.QueryFirstAsync<int>(
+                    insertQuoteSql,
+                    new {quoteUuid, quoteText, quoteHash, authorId, languageId, addedAt},
+                    transaction);
 
                 transaction.Commit();
 
@@ -150,7 +145,7 @@ namespace Dictum.Data.Repositories
             return await connection.QueryFirstAsync<Quote>(sql, new {min, max, languageId});
         }
 
-        public async Task<IEnumerable<Quote>> GetByAuthor(string authorUuid, int page, int count)
+        public async Task<IEnumerable<Quote>> GetByAuthor(string languageCode, string authorUuid, int page, int count)
         {
             await using var connection = ConfigurationExtensions.GetConnection(_configuration);
             var offset = page * count;
@@ -168,9 +163,10 @@ namespace Dictum.Data.Repositories
                      ON         {AuthorSchema.Table}.{AuthorSchema.Columns.Id} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} = @{nameof(authorUuid)}
+                     AND        {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)}
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-            return await connection.QueryAsync<Quote>(sql, new {authorUuid, count, offset});
+            return await connection.QueryAsync<Quote>(sql, new {languageCode, authorUuid, count, offset});
         }
 
         public async Task<QuotesStatistics> GetStatistics()

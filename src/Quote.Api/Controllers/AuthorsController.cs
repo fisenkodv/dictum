@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dictum.Business.Models.Domain;
 using Dictum.Business.Models.Dto;
-using Dictum.Business.Models.Internal;
 using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

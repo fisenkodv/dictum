@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dictum.Business.Models.Domain;
 using Dictum.Business.Models.Dto;
-using Dictum.Business.Models.Internal;
 using Dictum.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,15 +32,16 @@ namespace Dictum.Api.Controllers
             return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetQuoteById(uuid));
         }
 
-        [HttpGet("authors/{uuid}")]
+        [HttpGet("author/{uuid}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<ActionResult<IEnumerable<QuoteDto>>> GetAuthorQuotes(
             string uuid,
+            [FromQuery(Name = "l")] string? languageCode,
             [FromQuery(Name = "p")] int? page,
             [FromQuery(Name = "c")] int? count
         )
         {
-            return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetAuthorQuotes(uuid, page, count));
+            return WrapToActionResult<Quote, QuoteDto>(() => _quoteService.GetAuthorQuotes(languageCode, uuid, page, count));
         }
     }
 }

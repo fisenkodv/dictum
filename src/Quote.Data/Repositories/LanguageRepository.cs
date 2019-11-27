@@ -5,7 +5,7 @@ using Dictum.Business.Abstract.Repositories;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
-using Language = Dictum.Business.Models.Internal.Language;
+using Language = Dictum.Business.Models.Domain.Language;
 
 namespace Dictum.Data.Repositories
 {
@@ -39,7 +39,7 @@ namespace Dictum.Data.Repositories
                             {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
                             {LanguageSchema.Table}.{LanguageSchema.Columns.Name} AS Description
                      FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
-                     WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(code)}
+                     WHERE  LOWER({LanguageSchema.Table}.{LanguageSchema.Columns.Code}) = LOWER(@{nameof(code)})
                      LIMIT  1;";
 
             return await connection.QueryFirstOrDefaultAsync<Language>(sql, code);

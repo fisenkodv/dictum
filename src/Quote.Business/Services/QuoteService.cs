@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dictum.Business.Abstract.Repositories;
-using Dictum.Business.Models.Internal;
+using Dictum.Business.Models.Domain;
 
 namespace Dictum.Business.Services
 {
@@ -23,9 +24,11 @@ namespace Dictum.Business.Services
 
         public Task<Quote> GetRandomQuote(string languageCode)
         {
-            return _quoteRepository.GetRandom(string.IsNullOrWhiteSpace(languageCode)
+            languageCode = string.IsNullOrWhiteSpace(languageCode)
                 ? LanguageService.DefaultLanguageCode
-                : languageCode);
+                : languageCode;
+
+            return _quoteRepository.GetRandom(languageCode);
         }
 
         public Task<Quote> GetQuoteById(string uuid)
@@ -33,11 +36,14 @@ namespace Dictum.Business.Services
             return _quoteRepository.GetById(uuid);
         }
 
-        public Task<IEnumerable<Quote>> GetAuthorQuotes(string authorUuid, int? page, int? count)
+        public Task<IEnumerable<Quote>> GetAuthorQuotes(string languageCode, string authorUuid, int? page, int? count)
         {
             var paging = Paging.Create(page, count);
+            languageCode = string.IsNullOrWhiteSpace(languageCode)
+                ? LanguageService.DefaultLanguageCode
+                : languageCode;
 
-            return _quoteRepository.GetByAuthor(authorUuid, paging.Page, paging.Count);
+            return _quoteRepository.GetByAuthor(languageCode, authorUuid, paging.Page, paging.Count);
         }
 
         public async Task<Quote> CreateQuote(Quote quote)

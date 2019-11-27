@@ -49,7 +49,7 @@ namespace Quote.Importer
             QuoteService quoteService,
             bool splitIntoChunks)
         {
-            var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Internal.Quote[]>(File.ReadAllText(filePath));
+            var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Domain.Quote[]>(File.ReadAllText(filePath));
             var authors = quotes.Select(x => x.Author).Distinct();
             await Task.WhenAll(authors.Select(authorService.GetOrCreate));
             if (splitIntoChunks)

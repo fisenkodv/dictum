@@ -1,6 +1,6 @@
 using AutoMapper;
+using Dictum.Business.Models.Domain;
 using Dictum.Business.Models.Dto;
-using Dictum.Business.Models.Internal;
 using JetBrains.Annotations;
 
 namespace Dictum.Business.Models.Mapping

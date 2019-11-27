@@ -7,9 +7,9 @@ using Dictum.Business.Abstract.Repositories;
 using Dictum.Business.Models.Domain;
 using Dictum.Data.Models;
 using Microsoft.Extensions.Configuration;
-using Author = Dictum.Business.Models.Internal.Author;
+using Author = Dictum.Business.Models.Domain.Author;
 using ConfigurationExtensions = Dictum.Data.Extensions.ConfigurationExtensions;
-using Language = Dictum.Business.Models.Internal.Language;
+using Language = Dictum.Business.Models.Domain.Language;
 
 namespace Dictum.Data.Repositories
 {
