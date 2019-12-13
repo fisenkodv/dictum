@@ -7,7 +7,7 @@
 ### Get Random Quote
 
 ```http
-GET https://api.fisenko.page/quotes?l=[EN|RU]
+GET https://api.fisenko.net/quotes?l=[EN|RU]
 ```
 
 #### Parameters
@@ -21,13 +21,13 @@ GET https://api.fisenko.page/quotes?l=[EN|RU]
 request
 
 ```http
-GET https://api.fisenko.page/quotes
+GET https://api.fisenko.net/quotes
 ```
 
 or
 
 ```http
-GET https://api.fisenko.page/quotes?l=en
+GET https://api.fisenko.net/quotes?l=en
 ```
 
 returns
@@ -43,7 +43,7 @@ returns
 ### Get Quote By Id
 
 ```http
-GET https://api.fisenko.page/quotes/[uuid]
+GET https://api.fisenko.net/quotes/[uuid]
 ```
 
 #### Parameters
@@ -57,7 +57,7 @@ GET https://api.fisenko.page/quotes/[uuid]
 request
 
 ```http
-GET https://api.fisenko.page/quotes/l86O4m2Wez
+GET https://api.fisenko.net/quotes/l86O4m2Wez
 ```
 
 returns
@@ -73,7 +73,7 @@ returns
 ### Get Quotes By Author UUID
 
 ```http
-GET https://api.fisenko.page/quotes/author/[uuid]?l=[EN|RU]&p=[page]&c=[count]
+GET https://api.fisenko.net/quotes/author/[uuid]?l=[EN|RU]&p=[page]&c=[count]
 ```
 
 #### Parameters
@@ -90,7 +90,7 @@ GET https://api.fisenko.page/quotes/author/[uuid]?l=[EN|RU]&p=[page]&c=[count]
 request
 
 ```http
-GET https://api.fisenko.page/quotes/author/4PO19Pf6DR
+GET https://api.fisenko.net/quotes/author/4PO19Pf6DR
 ```
 
 returns
@@ -113,7 +113,7 @@ returns
 ### Get Statistics
 
 ```http
-GET https://api.fisenko.page/statistics
+GET https://api.fisenko.net/statistics
 ```
 
 #### Example
@@ -121,7 +121,7 @@ GET https://api.fisenko.page/statistics
 request
 
 ```http
-GET https://api.fisenko.page/statistics
+GET https://api.fisenko.net/statistics
 ```
 
 returns
@@ -148,7 +148,7 @@ returns
 ### Get Health
 
 ```http
-GET https://api.fisenko.page/health
+GET https://api.fisenko.net/health
 ```
 
 #### Example
@@ -156,7 +156,7 @@ GET https://api.fisenko.page/health
 request
 
 ```http
-GET https://api.fisenko.page/health
+GET https://api.fisenko.net/health
 ```
 
 returns
