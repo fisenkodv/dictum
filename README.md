@@ -1,4 +1,4 @@
-# Dictum &middot; [![Travis CI](https://travis-ci.org/fisenkodv/dictum.svg?branch=master)](https://travis-ci.org/fisenkodv/dictum) [![GitHub Actions](https://action-badges.now.sh/fisenkodv/dictum?workflow=main)](https://github.com/fisenkodv/dictum/actions) ![Publish API To Docker](https://github.com/fisenkodv/dictum/workflows/Publish%20API%20To%20Docker/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/maintainability)](https://codeclimate.com/github/fisenkodv/dictum/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/test_coverage)](https://codeclimate.com/github/fisenkodv/dictum/test_coverage) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/fisenkodv/dictum/blob/master/LICENSE) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+# Dictum &middot; [![Travis CI](https://travis-ci.org/fisenkodv/dictum.svg?branch=master)](https://travis-ci.org/fisenkodv/dictum) [![GitHub Actions](https://action-badges.now.sh/fisenkodv/dictum?workflow=main)](https://github.com/fisenkodv/dictum/actions) ![Publish API To Docker](https://github.com/fisenkodv/dictum/workflows/Publish%20API%20To%20Docker/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/maintainability)](https://codeclimate.com/github/fisenkodv/dictum/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/test_coverage)](https://codeclimate.com/github/fisenkodv/dictum/test_coverage) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/fisenkodv/dictum/blob/master/LICENSE)
 
 > API to get access to the collection of the most inspiring expressions of mankind
 
@@ -171,19 +171,3 @@ returns
 ## License
 
 MIT
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-<table>
-  <tr>
-    <td align="center"><a href="https://jakebolam.com"><img src="https://avatars2.githubusercontent.com/u/3534236?v=4" width="100px;" alt="Jake Bolam"/><br /><sub><b>Jake Bolam</b></sub></a><br /><a href="#infra-jakebolam" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/fisenkodv/dictum/commits?author=jakebolam" title="Tests">⚠️</a> <a href="https://github.com/fisenkodv/dictum/commits?author=jakebolam" title="Code">💻</a></td>
-  </tr>
-</table>
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
