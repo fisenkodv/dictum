@@ -24,8 +24,8 @@ jobs:
     - name: Build Docker Image
       uses: actions-hub/docker@master
       with:
-        args: build --rm --tag docker.pkg.github.com/fisenkodv/dictum/dictum-api:latest --file docker/api/Dockerfile .
+        args: build --rm --tag docker.pkg.github.com/${{ github.repository }}/api:latest --file docker/api/Dockerfile .
     - name: Publish To GitHub
       uses: actions-hub/docker@master
       with:
-        args: push docker.pkg.github.com/fisenkodv/dictum/dictum-api:latest
+        args: push docker.pkg.github.com/${{ github.repository }}/api:latest
