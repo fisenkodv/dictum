@@ -7,15 +7,15 @@ on:
 
 jobs:
   test_and_publish:
-    name: Test And Publish To Docker
+    name: Test And Publish To GitHub
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - name: Docker Login
       uses: actions-hub/docker/login@master
       env:
-        DOCKER_PASSWORD: ${{ secrets.SECRET_TOKEN }}
-        DOCKER_USERNAME: fisenkodv
+        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
         DOCKER_REGISTRY_URL: docker.pkg.github.com
     - name: Run Tests
       uses: actions-hub/docker@master
