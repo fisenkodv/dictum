@@ -32,6 +32,9 @@ namespace Quote.Importer
                 await Spinner.StartAsync($"Importing: {Path.GetFileName(quoteFile)}",
                     () => CreateQuotes(quoteFile, authorService, quoteService, SplitIntoChunks));
                 var newQuoteFilePath = Path.Combine(quotesDirectory, "processed", Path.GetFileName(quoteFile));
+                var newQuoteDirectoryPath = Path.GetDirectoryName(newQuoteFilePath);
+                if (!Directory.Exists(newQuoteDirectoryPath))
+                    Directory.CreateDirectory(newQuoteDirectoryPath);
                 File.Move(quoteFile, newQuoteFilePath);
             }
         }
@@ -55,7 +58,7 @@ namespace Quote.Importer
             if (splitIntoChunks)
             {
                 var chunks = quotes
-                    .Select((quote, index) => new {quote, index})
+                    .Select((quote, index) => new { quote, index })
                     .GroupBy(x => x.index / ChunkSize)
                     .Select(x => x.Select(y => y.quote));
 
