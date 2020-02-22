@@ -1,0 +1,27 @@
+name: Publish UI To GitHub
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  publish:
+    name: Publish To GitHub
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Docker Login
+      uses: actions-hub/docker/login@master
+      env:
+        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
+        DOCKER_REGISTRY_URL: docker.pkg.github.com
+    - name: Build Docker Image
+      uses: actions-hub/docker@master
+      with:
+        args: build --rm --tag docker.pkg.github.com/${{ github.repository }}/ui:latest --file docker/ui/Dockerfile .
+    - name: Publish To GitHub
+      uses: actions-hub/docker@master
+      with:
+        args: push docker.pkg.github.com/${{ github.repository }}/ui:latest
