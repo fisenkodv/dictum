@@ -63,7 +63,7 @@ namespace Dictum.Data.Repositories
 
                 var quoteId = await connection.QueryFirstAsync<int>(
                     insertQuoteSql,
-                    new {quoteUuid, quoteText, quoteHash, authorId, languageId, addedAt},
+                    new { quoteUuid, quoteText, quoteHash, authorId, languageId, addedAt },
                     transaction);
 
                 transaction.Commit();
@@ -99,7 +99,7 @@ namespace Dictum.Data.Repositories
                      AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
                      WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} = @{nameof(uuid)}";
 
-            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {uuid});
+            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { uuid });
         }
 
         public async Task<Quote> GetRandom(string languageCode)
@@ -140,9 +140,9 @@ namespace Dictum.Data.Repositories
                      ON {QuoteSchema.Table}.{QuoteSchema.Columns.Id} = R.{QuoteSchema.Columns.Id}
                      AND {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}=@languageId;";
 
-            var languageId = await connection.QueryFirstAsync<int>(languageIdSql, new {languageCode});
-            var (min, max) = await connection.QueryFirstAsync<(int min, int max)>(minMaxIdSql, new {languageId});
-            return await connection.QueryFirstAsync<Quote>(sql, new {min, max, languageId});
+            var languageId = await connection.QueryFirstAsync<int>(languageIdSql, new { languageCode });
+            var (min, max) = await connection.QueryFirstAsync<(int min, int max)>(minMaxIdSql, new { languageId });
+            return await connection.QueryFirstAsync<Quote>(sql, new { min, max, languageId });
         }
 
         public async Task<IEnumerable<Quote>> GetByAuthor(string languageCode, string authorUuid, int page, int count)
@@ -166,7 +166,7 @@ namespace Dictum.Data.Repositories
                      AND        {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)}
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-            return await connection.QueryAsync<Quote>(sql, new {languageCode, authorUuid, count, offset});
+            return await connection.QueryAsync<Quote>(sql, new { languageCode, authorUuid, count, offset });
         }
 
         public async Task<QuotesStatistics> GetStatistics()
@@ -184,7 +184,7 @@ namespace Dictum.Data.Repositories
             var statistics = (await connection.QueryAsync<(string code, int count)>(sql)).ToList();
             var result = new QuotesStatistics
             {
-                ByLanguage = statistics.ToDictionary(x => x.code, x => x.count),
+                Languages = statistics.ToDictionary(x => x.code, x => x.count),
                 Total = statistics.Sum(x => x.count)
             };
             return result;
@@ -200,7 +200,7 @@ namespace Dictum.Data.Repositories
                      WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.Hash} = @{nameof(hash)}
                      LIMIT  1";
 
-            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new {hash});
+            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { hash });
         }
     }
 }

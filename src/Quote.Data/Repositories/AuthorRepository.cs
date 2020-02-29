@@ -34,7 +34,7 @@ namespace Dictum.Data.Repositories
                         VALUES      (@{nameof(authorUuid)});
                         SELECT LAST_INSERT_ID();";
 
-                var authorId = await connection.QueryFirstAsync<int>(insertAuthorSql, new {authorUuid}, transaction);
+                var authorId = await connection.QueryFirstAsync<int>(insertAuthorSql, new { authorUuid }, transaction);
 
                 var languageId = language.Id;
                 var insertAuthorNameSql = $@"
@@ -46,11 +46,11 @@ namespace Dictum.Data.Repositories
                         )
                         VALUES (@{nameof(name)}, @{nameof(authorId)}, @{nameof(languageId)})";
 
-                await connection.ExecuteAsync(insertAuthorNameSql, new {name, authorId, languageId}, transaction);
+                await connection.ExecuteAsync(insertAuthorNameSql, new { name, authorId, languageId }, transaction);
 
                 transaction.Commit();
 
-                return new Author {Id = authorId, Uuid = authorUuid, Name = name};
+                return new Author { Id = authorId, Uuid = authorUuid, Name = name };
             }
             catch (Exception)
             {
@@ -72,7 +72,7 @@ namespace Dictum.Data.Repositories
                      WHERE      {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} = @{nameof(name)}
                      LIMIT      1";
 
-            return await connection.QueryFirstOrDefaultAsync<Author>(sql, new {name});
+            return await connection.QueryFirstOrDefaultAsync<Author>(sql, new { name });
         }
 
         public async Task<IEnumerable<Author>> SearchByName(string name, int page, int count)
@@ -90,7 +90,7 @@ namespace Dictum.Data.Repositories
                      ORDER BY   {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} ASC
                      LIMIT      @{nameof(count)} OFFSET @{nameof(offset)}";
 
-            return await connection.QueryAsync<Author>(sql, new {name, count, offset});
+            return await connection.QueryAsync<Author>(sql, new { name, count, offset });
         }
 
         public async Task<AuthorStatistics> GetStatistics()
@@ -108,7 +108,7 @@ namespace Dictum.Data.Repositories
             var statistics = (await connection.QueryAsync<(string code, int count)>(sql)).ToList();
             var result = new AuthorStatistics
             {
-                ByLanguage = statistics.ToDictionary(x => x.code, x => x.count),
+                Languages = statistics.ToDictionary(x => x.code, x => x.count),
                 Total = statistics.Sum(x => x.count)
             };
 
