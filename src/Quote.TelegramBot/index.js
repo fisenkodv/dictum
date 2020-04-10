@@ -11,7 +11,7 @@ async function getData(url) {
     return `<b>${quote}</b>\n\u2014 <i>${author}</i>`;
   } catch (err) {
     console.error('Fail to fetch data: ' + err);
-    return 'Try one more timr.';
+    return 'Try one more time.';
   }
 }
 
