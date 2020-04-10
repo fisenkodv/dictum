@@ -168,6 +168,9 @@ returns
 }
 ```
 
+## Links
+- [Telegram Bot](https://telegram.me/ExpressionsOfMankindBot)
+
 ## License
 
 MIT
