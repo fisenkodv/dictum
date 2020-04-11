@@ -1,9 +1,19 @@
 const fetch = require('node-fetch');
 const { random, includes } = require('lodash');
-const api = `https://api.fisenko.net/quotes`;
+const quoteApiUrl = 'https://api.fisenko.net/quotes';
 
-async function getData(url) {
+const enKeywords = ['though', 'quote', 'dictum', 'wise', 'more'];
+const ruKeywords = ['цитата', 'мысль', 'еще', 'ещё'];
+
+function getLanguage(query) {
+  if (enKeywords.some(keyword => includes(query, keyword))) return 'en';
+  else if (ruKeywords.some(keyword => includes(query, keyword))) return 'ru';
+  return null;
+}
+
+async function getQuote(language) {
   try {
+    const url = `${quoteApiUrl}?l=${language}`;
     const data = await fetch(url);
     const json = await data.json();
     const quote = json.text;
@@ -11,38 +21,40 @@ async function getData(url) {
     return `<b>${quote}</b>\n\u2014 <i>${author}</i>`;
   } catch (err) {
     console.error('Fail to fetch data: ' + err);
-    return 'Try one more time.';
+    return language === 'en'
+      ? 'Oops, something went wrong. Try one more time?'
+      : 'Ой, что-то пошло не так. Может ещё раз?';
   }
 }
 
-function getTrigger(str) {
-  const triggerWords = ['though', 'though', 'quote', 'dictum', 'wise'];
-  for (let item of triggerWords) {
-    if (includes(str, item.toLowerCase())) {
-      return true;
-    }
-  }
-  return false;
+function getHelp() {
+  const help =
+    '<b>To get a quote send any of the following:</b> <i>quote, though, dictum, more</i>\n' +
+    '<b>Чтобы получить цитату отправьте любую из следующих фраз:</b> <i>цитата, мысль, еще</i>';
+
+  return help;
 }
 
 exports.handler = async event => {
   const body = JSON.parse(event.body);
-  const text = body.message.text;
+  const text = body.message.text.trim().toLowerCase();
 
-  const userMsg = text.toLowerCase();
-
-  let botMsg;
-  if (getTrigger(userMsg)) {
-    botMsg = await getData(api);
+  let botMessage;
+  if (text === '/help') {
+    botMessage = getHelp();
   }
+
+  const language = getLanguage(text);
+  if (language !== null) botMessage = await getQuote(language);
+  else botMessage = getHelp();
 
   const msg = {
     method: 'sendMessage',
     parse_mode: 'HTML',
     chat_id: body.message.chat.id,
-    text: botMsg,
+    text: botMessage,
     reply_markup: JSON.stringify({
-      keyboard: [[{ text: 'Get Quote' }]]
+      keyboard: [[{ text: 'More quote' }], [{ text: 'Ещё цитату' }]]
     })
   };
 
