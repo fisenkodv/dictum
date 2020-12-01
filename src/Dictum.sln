@@ -24,7 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3F211980-69E3-48E0-8547-E77CEF1D9B78}"
 	ProjectSection(SolutionItems) = preProject
 		..\scripts\build-docker.ps1 = ..\scripts\build-docker.ps1
-		..\scripts\build-docker.sh = ..\scripts\build-api-docker.sh
+		..\scripts\build-docker.sh = ..\scripts\build-docker.sh
 		..\scripts\run-db-in-docker.sh = ..\scripts\run-db-in-docker.sh
 	EndProjectSection
 EndProject
@@ -67,5 +67,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {342E4357-F8CC-4F96-8DE1-04D727E7B4CF}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 0.2
 	EndGlobalSection
 EndGlobal
