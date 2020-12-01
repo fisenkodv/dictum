@@ -5,7 +5,7 @@
 // associated with an assembly.
 [assembly: AssemblyCompany("Dictum")]
 [assembly: AssemblyProduct("Dictum")]
-[assembly: AssemblyCopyright("Copyright Dictum © 2019")]
+[assembly: AssemblyCopyright("Copyright Dictum © 2019-2020")]
 [assembly: AssemblyTrademark("")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
@@ -22,6 +22,6 @@
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.1")]
-[assembly: AssemblyFileVersion("1.0.1")]
-[assembly: AssemblyInformationalVersion("1.0.0-rc.2")]
+[assembly: AssemblyVersion("1.0.2")]
+[assembly: AssemblyFileVersion("1.0.2")]
+[assembly: AssemblyInformationalVersion("1.0.0-rc.3")]

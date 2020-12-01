@@ -9,6 +9,7 @@
     <RootNamespace>Dictum.Business</RootNamespace>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
+    <ReleaseVersion>0.2</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>

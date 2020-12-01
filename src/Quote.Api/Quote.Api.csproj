@@ -10,6 +10,7 @@
     <RootNamespace>Dictum.Api</RootNamespace>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
+    <ReleaseVersion>0.2</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="System.Text.Json" Version="4.7.0" />
+    <PackageReference Include="Serilog.Sinks.Graylog" Version="2.2.2" />
   </ItemGroup>
 
   <ItemGroup>
