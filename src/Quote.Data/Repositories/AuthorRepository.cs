@@ -22,10 +22,10 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Author> Create(string name, Language language)
+        public async Task<Author?> Create(string name, Language language)
         {
             await using var connection = ConfigurationExtensions.GetConnection(_configuration);
-            await using var transaction = connection.BeginTransaction();
+            await using var transaction = await connection.BeginTransactionAsync();
             try
             {
                 var authorUuid = IdGenerator.Instance.Next();
@@ -48,13 +48,13 @@ namespace Dictum.Data.Repositories
 
                 await connection.ExecuteAsync(insertAuthorNameSql, new { name, authorId, languageId }, transaction);
 
-                transaction.Commit();
+                await transaction.CommitAsync();
 
                 return new Author { Id = authorId, Uuid = authorUuid, Name = name };
             }
             catch (Exception)
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync();
                 return null;
             }
         }

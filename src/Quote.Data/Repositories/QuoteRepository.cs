@@ -23,7 +23,7 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Quote> Create(Quote quote, Author author, Language language)
+        public async Task<Quote?> Create(Quote quote, Author author, Language language)
         {
             await using var connection = ConfigurationExtensions.GetConnection(_configuration);
             await using var transaction = connection.BeginTransaction();
@@ -66,7 +66,7 @@ namespace Dictum.Data.Repositories
                     new { quoteUuid, quoteText, quoteHash, authorId, languageId, addedAt },
                     transaction);
 
-                transaction.Commit();
+                await transaction.CommitAsync();
 
                 quote.Id = quoteId;
                 quote.Uuid = quoteUuid;
@@ -76,7 +76,7 @@ namespace Dictum.Data.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                transaction.Rollback();
+                await transaction.RollbackAsync();
                 return null;
             }
         }
@@ -190,7 +190,7 @@ namespace Dictum.Data.Repositories
             return result;
         }
 
-        private async Task<Quote> GetQuoteIdsByHash(string hash)
+        private async Task<Quote?> GetQuoteIdsByHash(string hash)
         {
             await using var connection = ConfigurationExtensions.GetConnection(_configuration);
             var sql = $@"
