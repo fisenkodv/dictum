@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace Dictum.Data.Extensions
 {
