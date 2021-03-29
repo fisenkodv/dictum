@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 
 WORKDIR /src
 

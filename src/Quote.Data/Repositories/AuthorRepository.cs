@@ -22,10 +22,10 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Author> Create(string name, Language language)
+        public async Task<Author?> Create(string name, Language language)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
-            await using var transaction = connection.BeginTransaction();
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
+            await using var transaction = await connection.BeginTransactionAsync();
             try
             {
                 var authorUuid = IdGenerator.Instance.Next();
@@ -48,20 +48,20 @@ namespace Dictum.Data.Repositories
 
                 await connection.ExecuteAsync(insertAuthorNameSql, new { name, authorId, languageId }, transaction);
 
-                transaction.Commit();
+                await transaction.CommitAsync();
 
                 return new Author { Id = authorId, Uuid = authorUuid, Name = name };
             }
             catch (Exception)
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync();
                 return null;
             }
         }
 
         public async Task<Author> Get(string name)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Id} AS Id,
                                 {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
@@ -77,7 +77,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<IEnumerable<Author>> SearchByName(string name, int page, int count)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var offset = page * count;
             var sql = $@"
                      SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Id} AS Id,
@@ -95,7 +95,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<AuthorStatistics> GetStatistics()
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT    {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS code,
                                COUNT({AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}) AS count

@@ -23,9 +23,9 @@ namespace Dictum.Data.Repositories
             _configuration = configuration;
         }
 
-        public async Task<Quote> Create(Quote quote, Author author, Language language)
+        public async Task<Quote?> Create(Quote quote, Author author, Language language)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             await using var transaction = connection.BeginTransaction();
             try
             {
@@ -66,7 +66,7 @@ namespace Dictum.Data.Repositories
                     new { quoteUuid, quoteText, quoteHash, authorId, languageId, addedAt },
                     transaction);
 
-                transaction.Commit();
+                await transaction.CommitAsync();
 
                 quote.Id = quoteId;
                 quote.Uuid = quoteUuid;
@@ -76,14 +76,14 @@ namespace Dictum.Data.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                transaction.Rollback();
+                await transaction.RollbackAsync();
                 return null;
             }
         }
 
         public async Task<Quote> GetById(string uuid)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
                                 {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
@@ -104,7 +104,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<Quote> GetRandom(string languageCode)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var languageIdSql = $@"
                     SELECT @languageId := {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
                     FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
@@ -147,7 +147,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<IEnumerable<Quote>> GetByAuthor(string languageCode, string authorUuid, int page, int count)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var offset = page * count;
             var sql = $@"
                      SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
@@ -171,7 +171,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<QuotesStatistics> GetStatistics()
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT    {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS code,
                                COUNT({QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}) AS count
@@ -190,9 +190,9 @@ namespace Dictum.Data.Repositories
             return result;
         }
 
-        private async Task<Quote> GetQuoteIdsByHash(string hash)
+        private async Task<Quote?> GetQuoteIdsByHash(string hash)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT {QuoteSchema.Table}.{QuoteSchema.Columns.Id},
                             {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid}

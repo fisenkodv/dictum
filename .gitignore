@@ -331,3 +331,5 @@ ASALocalRun/
 
 # Docker data files
 db/
+
+.DS_Store

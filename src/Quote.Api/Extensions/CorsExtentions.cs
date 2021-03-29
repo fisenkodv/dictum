@@ -14,7 +14,7 @@ namespace Dictum.Api.Extensions
                     builder =>
                     {
                         builder
-                            .WithOrigins("https://*.fisenko.page", "https://*.fisenko.io")
+                            .WithOrigins("https://*.fisenko.net")
                             .SetIsOriginAllowedToAllowWildcardSubdomains();
                     });
             });

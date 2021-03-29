@@ -25,7 +25,7 @@ namespace Dictum.Api
                 .CreateLogger();
             try
             {
-                Log.Information("Starting Monitoring Web Api Host");
+                Log.Information("Starting Dictum Web Api Host");
                 CreateHostBuilder(args).Build().Run();
 
                 return 0;

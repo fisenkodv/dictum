@@ -20,7 +20,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<IEnumerable<Language>> GetLanguages()
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT   {LanguageSchema.Table}.{LanguageSchema.Columns.Id} AS Id,
                               {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,
@@ -33,7 +33,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<Language> GetLanguage(string code)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT {LanguageSchema.Table}.{LanguageSchema.Columns.Id} AS Id,
                             {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS Code,

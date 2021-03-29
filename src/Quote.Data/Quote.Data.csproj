@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>true</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>true</GenerateAssemblyProductAttribute>
     <RootNamespace>Dictum.Data</RootNamespace>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
     <ReleaseVersion>0.2</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.30" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.0" />
-    <PackageReference Include="MySqlConnector" Version="0.61.0" />
-    <PackageReference Include="Nanoid" Version="2.0.0" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="MySqlConnector" Version="1.3.2" />
+    <PackageReference Include="Nanoid" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
