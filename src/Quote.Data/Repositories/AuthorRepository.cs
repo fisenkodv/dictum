@@ -24,7 +24,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<Author?> Create(string name, Language language)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             await using var transaction = await connection.BeginTransactionAsync();
             try
             {
@@ -61,7 +61,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<Author> Get(string name)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Id} AS Id,
                                 {AuthorSchema.Table}.{AuthorSchema.Columns.Uuid} AS Uuid,
@@ -77,7 +77,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<IEnumerable<Author>> SearchByName(string name, int page, int count)
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var offset = page * count;
             var sql = $@"
                      SELECT     {AuthorSchema.Table}.{AuthorSchema.Columns.Id} AS Id,
@@ -95,7 +95,7 @@ namespace Dictum.Data.Repositories
 
         public async Task<AuthorStatistics> GetStatistics()
         {
-            await using var connection = ConfigurationExtensions.GetConnection(_configuration);
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
                      SELECT    {LanguageSchema.Table}.{LanguageSchema.Columns.Code} AS code,
                                COUNT({AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}) AS count

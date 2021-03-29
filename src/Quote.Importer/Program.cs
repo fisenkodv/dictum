@@ -33,7 +33,7 @@ namespace Quote.Importer
                     () => CreateQuotes(quoteFile, authorService, quoteService, SplitIntoChunks));
                 var newQuoteFilePath = Path.Combine(quotesDirectory, "processed", Path.GetFileName(quoteFile));
                 var newQuoteDirectoryPath = Path.GetDirectoryName(newQuoteFilePath);
-                if (!Directory.Exists(newQuoteDirectoryPath))
+                if (!String.IsNullOrEmpty(newQuoteDirectoryPath) && !Directory.Exists(newQuoteDirectoryPath))
                     Directory.CreateDirectory(newQuoteDirectoryPath);
                 File.Move(quoteFile, newQuoteFilePath);
             }
@@ -52,13 +52,15 @@ namespace Quote.Importer
             QuoteService quoteService,
             bool splitIntoChunks)
         {
-            var quotes = JsonConvert.DeserializeObject<Dictum.Business.Models.Domain.Quote[]>(File.ReadAllText(filePath));
+            var quotes =
+                JsonConvert.DeserializeObject<Dictum.Business.Models.Domain.Quote[]>(
+                    await File.ReadAllTextAsync(filePath));
             var authors = quotes.Select(x => x.Author).Distinct();
             await Task.WhenAll(authors.Select(authorService.GetOrCreate));
             if (splitIntoChunks)
             {
                 var chunks = quotes
-                    .Select((quote, index) => new { quote, index })
+                    .Select((quote, index) => new {quote, index})
                     .GroupBy(x => x.index / ChunkSize)
                     .Select(x => x.Select(y => y.quote));
 

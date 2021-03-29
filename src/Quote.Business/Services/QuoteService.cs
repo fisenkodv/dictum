@@ -22,7 +22,7 @@ namespace Dictum.Business.Services
             _quoteRepository = quoteRepository;
         }
 
-        public Task<Quote> GetRandomQuote(string languageCode)
+        public Task<Quote> GetRandomQuote(string? languageCode)
         {
             languageCode = string.IsNullOrWhiteSpace(languageCode)
                 ? LanguageService.DefaultLanguageCode
@@ -36,7 +36,7 @@ namespace Dictum.Business.Services
             return _quoteRepository.GetById(uuid);
         }
 
-        public Task<IEnumerable<Quote>> GetAuthorQuotes(string languageCode, string authorUuid, int? page, int? count)
+        public Task<IEnumerable<Quote>> GetAuthorQuotes(string? languageCode, string authorUuid, int? page, int? count)
         {
             var paging = Paging.Create(page, count);
             languageCode = string.IsNullOrWhiteSpace(languageCode)
@@ -46,7 +46,7 @@ namespace Dictum.Business.Services
             return _quoteRepository.GetByAuthor(languageCode, authorUuid, paging.Page, paging.Count);
         }
 
-        public async Task<Quote> CreateQuote(Quote quote)
+        public async Task<Quote?> CreateQuote(Quote quote)
         {
             var author = await _authorService.GetOrCreate(quote.Author);
             var language = await _languageService.Detect(quote.Text);
