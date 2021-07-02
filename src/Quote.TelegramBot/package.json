@@ -9,7 +9,7 @@
   "author": "Dmitry Fisenko",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.1"
   }
 }
