@@ -110,6 +110,39 @@ returns
 ]
 ```
 
+### Get Authors
+
+```http
+GET https://api.fisenko.net/quotes/authors?q=[query]&p=[page]&c=[count]
+```
+
+#### Parameters
+
+| Parameter | Type     | Description                                                                     |
+| :-------- | :------- | :------------------------------------------------------------------------------ |
+| `q`       | `string` | **required** query                                                              |
+| `p`       | `int`    | **optional** page number. By default is `0`                                     |
+| `c`       | `int`    | **optional** items per page. By default is `10`. Could not be greater than `50` |
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.net/quotes/authors?q=Elon Musk
+```
+
+returns
+
+```json
+[
+  {
+    "uuid": "GUAsFob8S9",
+    "name": "Elon Musk"
+  }
+]
+```
+
 ### Get Statistics
 
 ```http
