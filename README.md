@@ -1,4 +1,4 @@
-# Dictum &middot; [![Travis CI](https://travis-ci.org/fisenkodv/dictum.svg?branch=master)](https://travis-ci.org/fisenkodv/dictum) [![GitHub Actions](https://action-badges.now.sh/fisenkodv/dictum?workflow=main)](https://github.com/fisenkodv/dictum/actions) ![CodeQL](https://github.com/fisenkodv/dictum/workflows/CodeQL/badge.svg) ![Publish API To Docker](https://github.com/fisenkodv/dictum/workflows/Publish%20API%20To%20Docker/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/maintainability)](https://codeclimate.com/github/fisenkodv/dictum/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/test_coverage)](https://codeclimate.com/github/fisenkodv/dictum/test_coverage) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/fisenkodv/dictum/blob/master/LICENSE)
+# Dictum &middot; [![Travis CI](https://travis-ci.com/fisenkodv/dictum.svg?branch=master)](https://travis-ci.com/fisenkodv/dictum) [![GitHub Actions](https://action-badges.now.sh/fisenkodv/dictum?workflow=main)](https://github.com/fisenkodv/dictum/actions) ![CodeQL](https://github.com/fisenkodv/dictum/workflows/CodeQL/badge.svg) ![Publish API To Docker](https://github.com/fisenkodv/dictum/workflows/Publish%20API%20To%20Docker/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/maintainability)](https://codeclimate.com/github/fisenkodv/dictum/maintainability) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/fisenkodv/dictum/blob/master/LICENSE)
 
 > API to get access to the collection of the most inspiring expressions of mankind
 
@@ -106,6 +106,39 @@ returns
     "uuid": "BqI18fmaGH",
     "text": "If you would take, you must first give, this is the beginning of intelligence.",
     "author": "Lao Tzu"
+  }
+]
+```
+
+### Get Authors
+
+```http
+GET https://api.fisenko.net/quotes/authors?q=[query]&p=[page]&c=[count]
+```
+
+#### Parameters
+
+| Parameter | Type     | Description                                                                     |
+| :-------- | :------- | :------------------------------------------------------------------------------ |
+| `q`       | `string` | **required** query                                                              |
+| `p`       | `int`    | **optional** page number. By default is `0`                                     |
+| `c`       | `int`    | **optional** items per page. By default is `10`. Could not be greater than `50` |
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.net/quotes/authors?q=Elon Musk
+```
+
+returns
+
+```json
+[
+  {
+    "uuid": "GUAsFob8S9",
+    "name": "Elon Musk"
   }
 ]
 ```
