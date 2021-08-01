@@ -132,7 +132,7 @@ namespace Dictum.Data.Repositories
                     WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};";
 
             var sql = $@"
-                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id},
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id}
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
                      WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = @languageId;";
 

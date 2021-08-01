@@ -13,10 +13,10 @@ namespace Dictum.Api.Extensions
             services.AddTransient<ILanguageRepository, LanguageRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
 
-            services.AddTransient<QuoteService>();
-            services.AddTransient<LanguageService>();
-            services.AddTransient<AuthorService>();
-            services.AddTransient<StatisticsService>();
+            services.AddSingleton<QuoteService>();
+            services.AddSingleton<LanguageService>();
+            services.AddSingleton<AuthorService>();
+            services.AddSingleton<StatisticsService>();
         }
     }
 }

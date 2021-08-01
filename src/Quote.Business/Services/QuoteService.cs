@@ -29,7 +29,7 @@ namespace Dictum.Business.Services
         {
             languageCode = string.IsNullOrWhiteSpace(languageCode)
                 ? LanguageService.EnLanguage.Code
-                : languageCode;
+                : languageCode.ToUpper();
 
             if (!_languageCodeToQuoteIds.ContainsKey(languageCode))
             {
