@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dictum.Business.Abstract.Repositories;
@@ -7,7 +8,21 @@ namespace Dictum.Business.Services
 {
     public class LanguageService
     {
-        public const string DefaultLanguageCode = "EN";
+        public static readonly Language EnLanguage = new Language
+        {
+            Id = 8,
+            Code = "EN",
+            Description = "English",
+            Alphabet = new HashSet<char>() { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Y', 'Z' }
+        };
+
+        public static readonly Language RuLanguage = new Language
+        {
+            Id = 27,
+            Code = "RU",
+            Description = "Русский",
+            Alphabet = new HashSet<char>() { 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я' }
+        };
 
         private readonly ILanguageRepository _languageRepository;
 
@@ -23,15 +38,24 @@ namespace Dictum.Business.Services
 
         public Task<Language> Detect(string text)
         {
-            //TODO: implement logic to get correct language
-            var language = new Language
-            {
-                Id = 8,
-                Code = DefaultLanguageCode,
-                Description = "English"
-            };
+            if (BelongsTo(text, EnLanguage))
+                return Task.FromResult(EnLanguage);
+            else if (BelongsTo(text, RuLanguage))
+                return Task.FromResult(RuLanguage);
 
-            return Task.FromResult(language);
+            return Task.FromException<Language>(new NullReferenceException("Language is null"));
+        }
+
+        private bool BelongsTo(string text, Language language)
+        {
+            int languageThreashold = (text.Length * 70) / 100; // if 70% of the text belongs to some language then we have detected the language
+            foreach (var ch in text)
+            {
+                if (language.Alphabet.Contains(char.ToUpper(ch))) languageThreashold--;
+                if (languageThreashold == 0) return true;
+            }
+
+            return false;
         }
     }
 }

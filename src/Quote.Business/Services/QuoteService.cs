@@ -25,7 +25,7 @@ namespace Dictum.Business.Services
         public Task<Quote> GetRandomQuote(string? languageCode)
         {
             languageCode = string.IsNullOrWhiteSpace(languageCode)
-                ? LanguageService.DefaultLanguageCode
+                ? LanguageService.EnLanguage.Code
                 : languageCode;
 
             return _quoteRepository.GetRandom(languageCode);
@@ -40,7 +40,7 @@ namespace Dictum.Business.Services
         {
             var paging = Paging.Create(page, count);
             languageCode = string.IsNullOrWhiteSpace(languageCode)
-                ? LanguageService.DefaultLanguageCode
+                ? LanguageService.EnLanguage.Code
                 : languageCode;
 
             return _quoteRepository.GetByAuthor(languageCode, authorUuid, paging.Page, paging.Count);

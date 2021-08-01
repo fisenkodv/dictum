@@ -129,11 +129,11 @@ namespace Dictum.Data.Repositories
                         SELECT {QuoteSchema.Columns.Id}
                         FROM (
                              SELECT   {QuoteSchema.Columns.Id}
-                             FROM     (SELECT @min + (@max - @min + 1 - 50) * RAND() AS START FROM DUAL) AS INIT
+                             FROM     (SELECT @min + (@max - @min + 1 - 500) * RAND() AS START FROM DUAL) AS INIT
                              JOIN     {QuoteSchema.Table} AS Y
                              WHERE    Y.{QuoteSchema.Columns.Id} > INIT.START
                              ORDER BY Y.{QuoteSchema.Columns.Id}
-                             LIMIT 50 -- Inflated to deal with gaps
+                             LIMIT 500 -- Inflated to deal with gaps
                         ) AS Z ORDER BY RAND()
                         LIMIT 1 -- number of rows desired (change to 1 if looking for a single row)
                      ) R
