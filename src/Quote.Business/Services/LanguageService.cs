@@ -43,7 +43,7 @@ namespace Dictum.Business.Services
             else if (BelongsTo(text, RuLanguage))
                 return Task.FromResult(RuLanguage);
 
-            return Task.FromException<Language>(new NullReferenceException("Language is null"));
+            return Task.FromResult<Language>(null);
         }
 
         private bool BelongsTo(string text, Language language)
@@ -51,7 +51,7 @@ namespace Dictum.Business.Services
             int languageThreashold = (text.Length * 70) / 100; // if 70% of the text belongs to some language then we have detected the language
             foreach (var ch in text)
             {
-                if (language.Alphabet.Contains(char.ToUpper(ch))) languageThreashold--;
+                if (Char.IsLetter(ch) && language.Alphabet.Contains(char.ToUpper(ch))) languageThreashold--;
                 if (languageThreashold == 0) return true;
             }
 

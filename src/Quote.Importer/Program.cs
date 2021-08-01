@@ -12,7 +12,7 @@ namespace Quote.Importer
 {
     internal static class Program
     {
-        private const bool SplitIntoChunks = false;
+        private const bool SplitIntoChunks = true;
         private const int ChunkSize = 8;
 
         private static async Task Main(string[] args)
@@ -35,7 +35,7 @@ namespace Quote.Importer
                 var newQuoteDirectoryPath = Path.GetDirectoryName(newQuoteFilePath);
                 if (!String.IsNullOrEmpty(newQuoteDirectoryPath) && !Directory.Exists(newQuoteDirectoryPath))
                     Directory.CreateDirectory(newQuoteDirectoryPath);
-                File.Move(quoteFile, newQuoteFilePath);
+                File.Move(quoteFile, newQuoteFilePath, true);
             }
         }
 
@@ -67,7 +67,6 @@ namespace Quote.Importer
                 foreach (var chunk in chunks)
                 {
                     await Task.WhenAll(chunk.Select(quoteService.CreateQuote));
-                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
             }
             else

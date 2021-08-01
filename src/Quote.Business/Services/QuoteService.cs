@@ -62,6 +62,10 @@ namespace Dictum.Business.Services
         {
             var author = await _authorService.GetOrCreate(quote.Author);
             var language = await _languageService.Detect(quote.Text);
+            if (language == null)
+            {
+                return await Task.FromResult(quote);
+            }
             return await _quoteRepository.Create(quote, author, language);
         }
     }
