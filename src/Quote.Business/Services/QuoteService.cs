@@ -8,9 +8,11 @@ namespace Dictum.Business.Services
 {
     public class QuoteService
     {
+        private readonly Random _random = new Random();
         private readonly AuthorService _authorService;
         private readonly LanguageService _languageService;
         private readonly IQuoteRepository _quoteRepository;
+        private readonly IDictionary<string, IList<int>> _languageCodeToQuoteIds;
 
         public QuoteService(
             AuthorService authorService,
@@ -20,20 +22,30 @@ namespace Dictum.Business.Services
             _authorService = authorService;
             _languageService = languageService;
             _quoteRepository = quoteRepository;
+            _languageCodeToQuoteIds = new Dictionary<string, IList<int>>();
         }
 
-        public Task<Quote> GetRandomQuote(string? languageCode)
+        public async Task<Quote> GetRandomQuote(string? languageCode)
         {
             languageCode = string.IsNullOrWhiteSpace(languageCode)
                 ? LanguageService.EnLanguage.Code
                 : languageCode;
 
-            return _quoteRepository.GetRandom(languageCode);
+            if (!_languageCodeToQuoteIds.ContainsKey(languageCode))
+            {
+                IList<int> idsList = new List<int>(await _quoteRepository.GetQuoteIds(languageCode));
+                _languageCodeToQuoteIds.Add(languageCode, idsList);
+            }
+
+            IList<int> ids = _languageCodeToQuoteIds[languageCode];
+            int id = ids[_random.Next(ids.Count)];
+
+            return await _quoteRepository.GetById(id);
         }
 
         public Task<Quote> GetQuoteById(string uuid)
         {
-            return _quoteRepository.GetById(uuid);
+            return _quoteRepository.GetByUUID(uuid);
         }
 
         public Task<IEnumerable<Quote>> GetAuthorQuotes(string? languageCode, string authorUuid, int? page, int? count)

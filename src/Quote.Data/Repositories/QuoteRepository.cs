@@ -81,7 +81,7 @@ namespace Dictum.Data.Repositories
             }
         }
 
-        public async Task<Quote> GetById(string uuid)
+        public async Task<Quote> GetByUUID(string uuid)
         {
             await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var sql = $@"
@@ -102,7 +102,28 @@ namespace Dictum.Data.Repositories
             return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { uuid });
         }
 
-        public async Task<Quote> GetRandom(string languageCode)
+        public async Task<Quote> GetById(int id)
+        {
+            await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
+            var sql = $@"
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
+                                {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
+                                {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
+                     FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
+                     INNER JOIN {LanguageSchema.Table} AS {LanguageSchema.Table}
+                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {LanguageSchema.Table}.{LanguageSchema.Columns.Id}
+                     INNER JOIN {AuthorSchema.Table} AS {AuthorSchema.Table}
+                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorSchema.Table}.{AuthorSchema.Columns.Id}
+                     INNER JOIN {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
+                     ON         {AuthorSchema.Table}.{AuthorSchema.Columns.Id} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
+                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
+                     WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.Id} = @{nameof(id)}";
+
+            return await connection.QueryFirstOrDefaultAsync<Quote>(sql, new { id });
+        }
+
+        public async Task<IEnumerable<int>> GetQuoteIds(string languageCode)
         {
             await using var connection = ConfigurationExtensions.CreateOpenConnection(_configuration);
             var languageIdSql = $@"
@@ -110,39 +131,13 @@ namespace Dictum.Data.Repositories
                     FROM   {LanguageSchema.Table} AS {LanguageSchema.Table}
                     WHERE  {LanguageSchema.Table}.{LanguageSchema.Columns.Code} = @{nameof(languageCode)};";
 
-            var minMaxIdSql = $@"
-                    SELECT @min := MIN({QuoteSchema.Table}.{QuoteSchema.Columns.Id}),
-                           @max := MAX({QuoteSchema.Table}.{QuoteSchema.Columns.Id})
-                    FROM   {QuoteSchema.Table} AS {QuoteSchema.Table}
-                    WHERE  {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = @languageId;";
-
             var sql = $@"
-                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id} AS Id,
-                                {QuoteSchema.Table}.{QuoteSchema.Columns.Uuid} AS Uuid,
-                                {QuoteSchema.Table}.{QuoteSchema.Columns.Text} AS Text,
-                                {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.Name} AS Author
+                     SELECT     {QuoteSchema.Table}.{QuoteSchema.Columns.Id},
                      FROM       {QuoteSchema.Table} AS {QuoteSchema.Table}
-                     LEFT JOIN  {AuthorNameSchema.Table} AS {AuthorNameSchema.Table}
-                     ON         {QuoteSchema.Table}.{QuoteSchema.Columns.AuthorId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.AuthorId}
-                     AND        {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = {AuthorNameSchema.Table}.{AuthorNameSchema.Columns.LanguageId}
-                     JOIN (
-                        SELECT {QuoteSchema.Columns.Id}
-                        FROM (
-                             SELECT   {QuoteSchema.Columns.Id}
-                             FROM     (SELECT @min + (@max - @min + 1 - 500) * RAND() AS START FROM DUAL) AS INIT
-                             JOIN     {QuoteSchema.Table} AS Y
-                             WHERE    Y.{QuoteSchema.Columns.Id} > INIT.START
-                             ORDER BY Y.{QuoteSchema.Columns.Id}
-                             LIMIT 500 -- Inflated to deal with gaps
-                        ) AS Z ORDER BY RAND()
-                        LIMIT 1 -- number of rows desired (change to 1 if looking for a single row)
-                     ) R
-                     ON {QuoteSchema.Table}.{QuoteSchema.Columns.Id} = R.{QuoteSchema.Columns.Id}
-                     AND {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId}=@languageId;";
+                     WHERE      {QuoteSchema.Table}.{QuoteSchema.Columns.LanguageId} = @languageId;";
 
             var languageId = await connection.QueryFirstAsync<int>(languageIdSql, new { languageCode });
-            var (min, max) = await connection.QueryFirstAsync<(int min, int max)>(minMaxIdSql, new { languageId });
-            return await connection.QueryFirstAsync<Quote>(sql, new { min, max, languageId });
+            return await connection.QueryAsync<int>(sql, new { languageId });
         }
 
         public async Task<IEnumerable<Quote>> GetByAuthor(string languageCode, string authorUuid, int page, int count)
