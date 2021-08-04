@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="Humanizer" Version="2.8.26" />
+    <PackageReference Include="Humanizer" Version="2.11.10" />
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
   </ItemGroup>
 
