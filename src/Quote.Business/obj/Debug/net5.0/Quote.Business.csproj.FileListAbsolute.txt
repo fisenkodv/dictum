@@ -1,0 +1,9 @@
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/net5.0/Quote.Business.deps.json
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/net5.0/Quote.Business.dll
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/net5.0/ref/Quote.Business.dll
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/net5.0/Quote.Business.pdb
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/net5.0/Quote.Business.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/net5.0/Quote.Business.csproj.CoreCompileInputs.cache
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/net5.0/Quote.Business.dll
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/net5.0/ref/Quote.Business.dll
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/net5.0/Quote.Business.pdb
