@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: net.fisenko
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, asciidoctor, assertj, hibernate-validator, http-client, java, java-application, jib, junit, logback, lombok, maven, mongo-reactive, netty-server, reactor, reactor-http-client, readme, shade, testcontainers, yaml]
