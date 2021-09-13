@@ -1,0 +1,5 @@
+net/dictum/DictumTest.class
+net/dictum/$DictumTest$Definition.class
+net/dictum/$DictumTest$Definition$Exec.class
+META-INF/services/io.micronaut.inject.BeanDefinitionReference
+net/dictum/$DictumTest$Definition$Reference.class

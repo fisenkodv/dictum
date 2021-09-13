@@ -7,7 +7,7 @@
     <parent>
         <groupId>net.fisenko.dictum</groupId>
         <artifactId>dictum-parent</artifactId>
-        <version>0.1</version>
+        <version>0.0.1</version>
     </parent>
 
     <artifactId>dictum-service</artifactId>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>net.fisenko.dictum</groupId>
             <artifactId>dictum-business</artifactId>
-            <version>0.1</version>
+            <version>0.0.1</version>
             <scope>compile</scope>
         </dependency>
 
