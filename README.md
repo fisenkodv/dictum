@@ -1,6 +1,20 @@
-# Dictum &middot; [![Travis CI](https://travis-ci.com/fisenkodv/dictum.svg?branch=master)](https://travis-ci.com/fisenkodv/dictum) [![GitHub Actions](https://action-badges.now.sh/fisenkodv/dictum?workflow=main)](https://github.com/fisenkodv/dictum/actions) ![CodeQL](https://github.com/fisenkodv/dictum/workflows/CodeQL/badge.svg) ![Publish API To Docker](https://github.com/fisenkodv/dictum/workflows/Publish%20API%20To%20Docker/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/e03dc36ba07a461b497a/maintainability)](https://codeclimate.com/github/fisenkodv/dictum/maintainability) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/fisenkodv/dictum/blob/master/LICENSE)
-
+# Dictum
 > API to get access to the collection of the most inspiring expressions of mankind
+
+<div align="center">
+    <img alt="Travis (.com)" src="https://img.shields.io/travis/com/fisenkodv/dictum?style=for-the-badge">
+    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/fisenkodv/dictum/Publish%20API%20To%20GitHub?label=Publish%20API%20To%20GitHub&style=for-the-badge">
+    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/fisenkodv/dictum/Publish%20API%20To%20Docker?label=Publish%20API%20To%20Docker&style=for-the-badge">
+    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/fisenkodv/dictum/CodeQL?label=Code%20QL&style=for-the-badge">
+    <img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/fisenkodv/dictum?style=for-the-badge">
+    <a href="https://github.com/fisenkodv/dictum/issues">
+      <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/fisenkodv/dictum?style=for-the-badge">
+    </a>
+    <a href="https://github.com/fisenkodv/dictum/stargazers">
+      <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/fisenkodv/dictum?style=for-the-badge">
+    </a>
+    <img alt="GitHub" src="https://img.shields.io/github/license/fisenkodv/dictum?style=for-the-badge">
+</div>
 
 ## API Methods
 
