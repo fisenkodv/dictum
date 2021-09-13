@@ -1,0 +1,7 @@
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/netcoreapp3.0/Quote.Business.deps.json
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/netcoreapp3.0/Quote.Business.dll
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/bin/Debug/netcoreapp3.0/Quote.Business.pdb
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/netcoreapp3.0/Quote.Business.csprojAssemblyReference.cache
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/netcoreapp3.0/Quote.Business.csproj.CoreCompileInputs.cache
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/netcoreapp3.0/Quote.Business.dll
+/Users/dmitry.fisenko/Projects/personal/dictum/src/Quote.Business/obj/Debug/netcoreapp3.0/Quote.Business.pdb
