@@ -5,38 +5,36 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>dictum-parent</artifactId>
         <groupId>net.fisenko.dictum</groupId>
+        <artifactId>dictum-parent</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>dictum-data</artifactId>
+    <artifactId>dictum-core</artifactId>
 
     <properties>
-        <micronaut-mongo-reactive.version>4.0.0</micronaut-mongo-reactive.version>
-        <de.cronn.version>2.9.0</de.cronn.version>
+        <modelmapper.version>2.3.9</modelmapper.version>
+        <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>net.fisenko.dictum</groupId>
-            <artifactId>dictum-core</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.mongodb</groupId>
-            <artifactId>micronaut-mongo-reactive</artifactId>
-            <version>${micronaut-mongo-reactive.version}</version>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.cronn</groupId>
-            <artifactId>reflection-util</artifactId>
-            <version>${de.cronn.version}</version>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
     </dependencies>
 </project>
