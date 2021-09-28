@@ -7,10 +7,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Author {
+public class Quote {
 
     private String id;
-    private String name;
-    private String bio;
+    private String text;
+    private Author author;
     private String language;
 }
