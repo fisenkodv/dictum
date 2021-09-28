@@ -2,6 +2,7 @@ package net.fisenko.dictum.data.mongo.repository;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.TextSearchOptions;
 import com.mongodb.reactivestreams.client.FindPublisher;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
@@ -35,11 +36,12 @@ public class MongoAuthorRepository implements AuthorRepository {
     @Override
     public Flux<Author> getAuthors(String language, @Nullable String query, int limit, int offset) {
         final List<Bson> filters = new ArrayList<>();
-        filters.add(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         if (!Strings.isNullOrEmpty(query)) {
-            filters.add(Filters.regex(AuthorEntity.NAME_FIELD_NAME, query, "i"));
+            filters.add(Filters.text(query, new TextSearchOptions().caseSensitive(false)));
         }
+
+        filters.add(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         final Bson filter = Filters.and(filters);
         final FindPublisher<AuthorEntity> result = getCollection().find(filter)

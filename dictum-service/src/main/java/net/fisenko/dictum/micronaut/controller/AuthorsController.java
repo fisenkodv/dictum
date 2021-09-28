@@ -12,6 +12,7 @@ import net.fisenko.dictum.core.business.mapping.MappingService;
 import net.fisenko.dictum.core.business.service.AuthorService;
 import net.fisenko.dictum.core.model.dto.author.AuthorDetail;
 import net.fisenko.dictum.core.model.dto.author.AuthorSummary;
+import net.fisenko.dictum.core.model.dto.quote.QuoteSummary;
 import net.fisenko.dictum.micronaut.binding.Search;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,5 +42,11 @@ public class AuthorsController {
     public Mono<AuthorDetail> getAuthor(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String id) {
         return authorService.getAuthor(language, id)
                             .map(x -> mappingService.map(x, AuthorDetail.class));
+    }
+
+    @Get("{id}/quotes{?search*}")
+    public Flux<QuoteSummary> searchAuthorQuotes(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String id, @Nullable @Valid Search search) {
+        return authorService.searchAuthorQuotes(language, id, Search.getQuery(search), Search.getLimit(search), Search.getOffset(search))
+                            .map(x -> mappingService.map(x, QuoteSummary.class));
     }
 }

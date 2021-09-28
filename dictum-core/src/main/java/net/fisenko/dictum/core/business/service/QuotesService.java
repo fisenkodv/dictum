@@ -17,7 +17,7 @@ public class QuotesService {
     }
 
     public Flux<Quote> searchQuotes(String language, @Nullable String query, int limit, int offset) {
-        return null;
+        return quoteRepository.searchQuotes(language, query, limit, offset);
     }
 
     public Mono<Quote> getRandomQuote(String language) {
@@ -25,6 +25,6 @@ public class QuotesService {
     }
 
     public Mono<Quote> getQuote(String language, String id) {
-        return null;
+        return quoteRepository.getQuote(language, id);
     }
 }

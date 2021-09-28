@@ -21,7 +21,7 @@ public record Search(@Nullable @QueryValue String query,
     public static int getLimit(Search search) {
         int limit = search == null || search.limit() == null ? DEFAULT_LIMIT : search.limit();
 
-        if (limit > DEFAULT_LIMIT) {
+        if (limit > DEFAULT_LIMIT || limit <= 0) {
             log.info("Limit was {}, setting to default value {}", limit, DEFAULT_LIMIT);
             limit = DEFAULT_LIMIT;
         }

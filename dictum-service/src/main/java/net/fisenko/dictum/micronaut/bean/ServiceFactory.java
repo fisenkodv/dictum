@@ -18,8 +18,8 @@ public final class ServiceFactory {
     }
 
     @Singleton
-    public AuthorService authorService(AuthorRepository authorRepository) {
-        return new AuthorService(authorRepository);
+    public AuthorService authorService(AuthorRepository authorRepository, QuoteRepository quoteRepository) {
+        return new AuthorService(authorRepository, quoteRepository);
     }
 
     @Singleton
