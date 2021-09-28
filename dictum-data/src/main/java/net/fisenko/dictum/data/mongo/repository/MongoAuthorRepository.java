@@ -5,7 +5,6 @@ import com.mongodb.client.model.Sorts;
 import com.mongodb.reactivestreams.client.FindPublisher;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
-import de.cronn.reflection.util.PropertyUtils;
 import net.fisenko.dictum.core.business.mapping.MappingService;
 import net.fisenko.dictum.core.configuration.DatabaseConfiguration;
 import net.fisenko.dictum.core.data.AuthorRepository;
@@ -36,15 +35,15 @@ public class MongoAuthorRepository implements AuthorRepository {
     @Override
     public Flux<Author> getAuthors(String language, @Nullable String query, int limit, int offset) {
         final List<Bson> filters = new ArrayList<>();
-        filters.add(Filters.eq(PropertyUtils.getPropertyName(AuthorEntity.class, AuthorEntity::getLanguage), language));
+        filters.add(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         if (!Strings.isNullOrEmpty(query)) {
-            filters.add(Filters.regex(PropertyUtils.getPropertyName(AuthorEntity.class, AuthorEntity::getName), query, "i"));
+            filters.add(Filters.regex(AuthorEntity.NAME_FIELD_NAME, query, "i"));
         }
 
         final Bson filter = Filters.and(filters);
         final FindPublisher<AuthorEntity> result = getCollection().find(filter)
-                                                                  .sort(Sorts.ascending(PropertyUtils.getPropertyName(AuthorEntity.class, AuthorEntity::getName)))
+                                                                  .sort(Sorts.ascending(AuthorEntity.NAME_FIELD_NAME))
                                                                   .limit(limit)
                                                                   .skip(offset);
 
@@ -54,7 +53,7 @@ public class MongoAuthorRepository implements AuthorRepository {
     @Override
     public Mono<Author> getAuthor(String language, String id) {
         final Bson filter = Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(id)),
-                                        Filters.eq(PropertyUtils.getPropertyName(AuthorEntity.class, AuthorEntity::getLanguage), language));
+                                        Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         final FindPublisher<AuthorEntity> result = getCollection().find(filter);
 

@@ -14,7 +14,6 @@
 
     <properties>
         <micronaut-mongo-reactive.version>4.0.0</micronaut-mongo-reactive.version>
-        <de.cronn.version>2.9.0</de.cronn.version>
     </properties>
 
     <dependencies>
@@ -32,11 +31,6 @@
             <groupId>io.micronaut.mongodb</groupId>
             <artifactId>micronaut-mongo-reactive</artifactId>
             <version>${micronaut-mongo-reactive.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.cronn</groupId>
-            <artifactId>reflection-util</artifactId>
-            <version>${de.cronn.version}</version>
         </dependency>
     </dependencies>
 </project>
