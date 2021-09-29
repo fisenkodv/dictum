@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
-const { random, includes } = require('lodash');
-const quoteApiUrl = 'https://api.fisenko.net/quotes';
+const {random, includes} = require('lodash');
+const quoteApiUrl = 'https://api.fisenko.net/';
 
 const enKeywords = ['though', 'quote', 'dictum', 'wise', 'more'];
 const ruKeywords = ['цитата', 'мысль', 'еще', 'ещё'];
@@ -13,11 +13,11 @@ function getLanguage(query) {
 
 async function getQuote(language) {
     try {
-        const url = `${quoteApiUrl}?l=${language}`;
+        const url = `${quoteApiUrl}v1/quotes/${language}/random`;
         const data = await fetch(url);
         const json = await data.json();
         const quote = json.text;
-        const author = json.author;
+        const author = json.author.name;
         return `<b>${quote}</b>\n\u2014 <i>${author}</i>`;
     } catch (err) {
         console.error('Fail to fetch data: ' + err);
@@ -28,11 +28,8 @@ async function getQuote(language) {
 }
 
 function getHelp() {
-    const help =
-        '<b>To get a quote send any of the following:</b> <i>quote, though, dictum, more</i>\n' +
+    return '<b>To get a quote send any of the following:</b> <i>quote, though, dictum, more</i>\n' +
         '<b>Чтобы получить цитату отправьте любую из следующих фраз:</b> <i>цитата, мысль, еще</i>';
-
-    return help;
 }
 
 exports.handler = async event => {
@@ -54,11 +51,11 @@ exports.handler = async event => {
         chat_id: body.message.chat.id,
         text: botMessage,
         reply_markup: JSON.stringify({
-            keyboard: [[{ text: 'More quote' }], [{ text: 'Ещё цитату' }]]
+            keyboard: [[{text: 'More quote'}], [{text: 'Ещё цитату'}]]
         })
     };
 
-    const response = {
+    return {
         statusCode: 200,
         headers: {
             'Content-Type': 'application/json; charset=utf-8'
@@ -66,5 +63,4 @@ exports.handler = async event => {
         body: JSON.stringify(msg),
         isBase64Encoded: false
     };
-    return response;
 };
