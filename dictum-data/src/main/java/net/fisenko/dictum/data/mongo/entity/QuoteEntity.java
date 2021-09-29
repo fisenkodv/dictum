@@ -21,6 +21,7 @@ public class QuoteEntity {
     public final static String TEXT_FIELD_NAME = "text";
     public final static String HASH_FIELD_NAME = "hash";
     public final static String AUTHOR_FIELD_NAME = "author";
+    public final static String AUTHOR_ID_FIELD_NAME = "author_id";
     public final static String CREATED_AT_FIELD_NAME = "created_at";
     public final static String LANGUAGE_FIELD_NAME = "language";
 

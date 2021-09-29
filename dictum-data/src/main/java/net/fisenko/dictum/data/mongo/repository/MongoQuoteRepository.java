@@ -28,7 +28,6 @@ import java.util.List;
 public class MongoQuoteRepository implements QuoteRepository {
 
     private final static int RANDOM_SAMPLE_SIZE = 1000;
-    private final String AUTHOR_ID_FIELD_NAME = "author_id";
 
     private final MappingService mappingService;
     private final DatabaseConfiguration databaseConfiguration;
@@ -74,8 +73,8 @@ public class MongoQuoteRepository implements QuoteRepository {
     @Override
     public Mono<Quote> getQuote(String language, String id) {
         final List<Bson> aggregates = List.of(Aggregates.match(Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(id)), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))),
-                                              Aggregates.addFields(new Field<>(AUTHOR_ID_FIELD_NAME, Expressions.toObjectId(Fields.getFieldPath(AUTHOR_ID_FIELD_NAME)))),
-                                              Aggregates.lookup(AuthorEntity.COLLECTION_NAME, AUTHOR_ID_FIELD_NAME, Fields.UNDERSCORE_ID, QuoteEntity.AUTHOR_FIELD_NAME),
+                                              Aggregates.addFields(new Field<>(QuoteEntity.AUTHOR_ID_FIELD_NAME, Expressions.toObjectId(Fields.getFieldPath(QuoteEntity.AUTHOR_ID_FIELD_NAME)))),
+                                              Aggregates.lookup(AuthorEntity.COLLECTION_NAME, QuoteEntity.AUTHOR_ID_FIELD_NAME, Fields.UNDERSCORE_ID, QuoteEntity.AUTHOR_FIELD_NAME),
                                               Aggregates.unwind(Fields.getFieldPath(QuoteEntity.AUTHOR_FIELD_NAME)));
 
         final AggregatePublisher<QuoteEntity> result = getCollection().aggregate(aggregates);
@@ -91,7 +90,7 @@ public class MongoQuoteRepository implements QuoteRepository {
             aggregates.add(Aggregates.match(Filters.text(query, new TextSearchOptions().caseSensitive(false))));
         }
 
-        aggregates.add(Aggregates.match(Filters.and(Filters.eq(AUTHOR_ID_FIELD_NAME, id), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))));
+        aggregates.add(Aggregates.match(Filters.and(Filters.eq(QuoteEntity.AUTHOR_ID_FIELD_NAME, id), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))));
         aggregates.addAll(getPagingAggregationStages(limit, offset));
         aggregates.addAll(getAuthorLookupAggregationStages());
 
@@ -102,8 +101,8 @@ public class MongoQuoteRepository implements QuoteRepository {
 
     private Collection<Bson> getAuthorLookupAggregationStages() {
         return List.of(
-                Aggregates.addFields(new Field<>(AUTHOR_ID_FIELD_NAME, Expressions.toObjectId(Fields.getFieldPath(AUTHOR_ID_FIELD_NAME)))),
-                Aggregates.lookup(AuthorEntity.COLLECTION_NAME, AUTHOR_ID_FIELD_NAME, Fields.UNDERSCORE_ID, QuoteEntity.AUTHOR_FIELD_NAME),
+                Aggregates.addFields(new Field<>(QuoteEntity.AUTHOR_ID_FIELD_NAME, Expressions.toObjectId(Fields.getFieldPath(QuoteEntity.AUTHOR_ID_FIELD_NAME)))),
+                Aggregates.lookup(AuthorEntity.COLLECTION_NAME, QuoteEntity.AUTHOR_ID_FIELD_NAME, Fields.UNDERSCORE_ID, QuoteEntity.AUTHOR_FIELD_NAME),
                 Aggregates.unwind(Fields.getFieldPath(QuoteEntity.AUTHOR_FIELD_NAME))
         );
     }
