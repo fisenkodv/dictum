@@ -1,0 +1,15 @@
+{
+  "name": "quote-telegram-bot",
+  "version": "1.0.0",
+  "description": "Dictum Telegram Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dmitry Fisenko",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "node-fetch": "^2.6.1"
+  }
+}
