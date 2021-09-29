@@ -19,6 +19,7 @@
         <micronaut.runtime>netty</micronaut.runtime>
         <micronaut-maven-plugin.version>3.0.2</micronaut-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -45,10 +46,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-tools</artifactId>
-        </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
@@ -147,6 +144,35 @@
                         <arg>-Amicronaut.processing.module=dictum</arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>azul/zulu-openjdk:17</image>
+                    </from>
+                    <to>
+                        <image>docker.io/fisenkodv/dictum:${project.version}</image>
+                    </to>
+                    <container>
+                        <environment>
+                            <MONGO_HOST>127.0.0.1</MONGO_HOST>
+                            <MONGO_PORT>27017</MONGO_PORT>
+                            <DB_NAME>dictum</DB_NAME>
+                        </environment>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build-docker-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
