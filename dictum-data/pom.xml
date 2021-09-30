@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>dictum-parent</artifactId>
+        <groupId>net.fisenko.dictum</groupId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>dictum-data</artifactId>
+
+    <properties>
+        <micronaut-mongo-reactive.version>4.0.0</micronaut-mongo-reactive.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.fisenko.dictum</groupId>
+            <artifactId>dictum-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.mongodb</groupId>
+            <artifactId>micronaut-mongo-reactive</artifactId>
+            <version>${micronaut-mongo-reactive.version}</version>
+        </dependency>
+    </dependencies>
+</project>
