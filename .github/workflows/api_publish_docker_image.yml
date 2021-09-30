@@ -35,4 +35,5 @@ jobs:
 #        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
 #        DOCKER_REGISTRY_URL: ghcr.io
     - name: Build with Maven
-      run: mvn package
+      run: cat $HOME/.docker/config.json
+#      run: mvn package -Ddocker=true
