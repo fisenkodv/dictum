@@ -317,5 +317,8 @@ MIT
 ## Supporters
 
 JetBrains is supporting this open source project with:
-
-[![Intellij IDEA](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png)](http://www.jetbrains.com/idea/)
+<p>
+    <a href="http://www.jetbrains.com/idea/">
+        <img alt="Intellij IDEA" width="50%" src="https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png">
+    </a>
+</p>
