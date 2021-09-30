@@ -38,4 +38,4 @@ jobs:
     - name: Build with Maven
       run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.image=docker.io/fisenkodv/dictum-api
     - name: Build with Maven 1
-      run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.USER_NAME }} -Djib.from.auth.password=${{ secrets.USER_PASSWORD }} -Djib.to.auth.username=${{ secrets.USER_NAME }} -Djib.to.auth.password=${{ secrets.USER_PASSWORD }} -Djib.to.image=ghcr.io/dictum/dictum-api
+      run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.USER_NAME }} -Djib.to.auth.password=${{ secrets.USER_PASSWORD }} -Djib.to.image=ghcr.io/dictum/dictum-api
