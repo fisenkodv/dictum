@@ -1,8 +1,10 @@
 package net.fisenko.dictum.core.business.service;
 
 import lombok.extern.slf4j.Slf4j;
+import net.fisenko.dictum.core.ResourceNotFoundException;
 import net.fisenko.dictum.core.data.QuoteRepository;
 import net.fisenko.dictum.core.model.domain.Quote;
+import net.fisenko.dictum.core.util.Monos;
 import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,6 +27,9 @@ public class QuotesService {
     }
 
     public Mono<Quote> getQuote(String language, String id) {
-        return quoteRepository.getQuote(language, id);
+        return quoteRepository.getQuote(language, id)
+                              .filterWhen(Monos::isEmpty)
+                              .switchIfEmpty(Mono.error(new ResourceNotFoundException("quote.get.not_found.error", language, id)))
+                              .flatMap(Mono::just);
     }
 }

@@ -1,9 +1,11 @@
 package net.fisenko.dictum.core.business.service;
 
+import net.fisenko.dictum.core.ResourceNotFoundException;
 import net.fisenko.dictum.core.data.AuthorRepository;
 import net.fisenko.dictum.core.data.QuoteRepository;
 import net.fisenko.dictum.core.model.domain.Author;
 import net.fisenko.dictum.core.model.domain.Quote;
+import net.fisenko.dictum.core.util.Monos;
 import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,8 +26,8 @@ public class AuthorService {
 
     public Mono<Author> getAuthor(String language, String id) {
         return authorRepository.getAuthor(language, id)
-                               .filterWhen(x -> x == null ? Mono.empty() : Mono.just(true))
-                               .switchIfEmpty(Mono.error(new Exception("fdsafdsa")))
+                               .filterWhen(Monos::isEmpty)
+                               .switchIfEmpty(Mono.error(new ResourceNotFoundException("author.get.not_found.error", language, id)))
                                .flatMap(Mono::just);
     }
 
