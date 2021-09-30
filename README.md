@@ -313,3 +313,9 @@ returns
 ## License
 
 MIT
+
+## Supporters
+
+JetBrains is supporting this open source project with:
+
+[![Intellij IDEA](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png)](http://www.jetbrains.com/idea/)
