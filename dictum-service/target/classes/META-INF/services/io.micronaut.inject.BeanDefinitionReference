@@ -1,0 +1,17 @@
+net.fisenko.dictum.micronaut.controller.$LanguagesController$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$RepositoryFactory$LanguageRepository2$Definition$Reference
+net.fisenko.dictum.micronaut.configuration.$MicronautApplicationConfiguration$Definition$Reference
+net.fisenko.dictum.micronaut.controller.$AuthorsController$Definition$Intercepted$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$ServiceFactory$Definition$Reference
+net.fisenko.dictum.micronaut.controller.$QuotesController$Definition$Reference
+net.fisenko.dictum.micronaut.controller.$QuotesController$Definition$Intercepted$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$ServiceFactory$AuthorService1$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$RepositoryFactory$QuoteRepository1$Definition$Reference
+net.fisenko.dictum.micronaut.controller.$LanguagesController$Definition$Intercepted$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$RepositoryFactory$Definition$Reference
+net.fisenko.dictum.micronaut.controller.$AuthorsController$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$ServiceFactory$QuotesService3$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$RepositoryFactory$AuthorRepository0$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$ServiceFactory$MappingService0$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$RepositoryFactory$DatabaseConfiguration3$Definition$Reference
+net.fisenko.dictum.micronaut.bean.$ServiceFactory$LanguageService2$Definition$Reference

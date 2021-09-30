@@ -1,0 +1,9 @@
+net/fisenko/dictum/data/mongo/repository/MongoLanguageRepository.class
+net/fisenko/dictum/data/mongo/util/Operators.class
+net/fisenko/dictum/data/mongo/util/Expressions.class
+net/fisenko/dictum/data/mongo/repository/MongoAuthorRepository.class
+net/fisenko/dictum/data/mongo/repository/MongoQuoteRepository.class
+net/fisenko/dictum/data/mongo/entity/AuthorEntity.class
+net/fisenko/dictum/data/mongo/entity/LanguageEntity.class
+net/fisenko/dictum/data/mongo/entity/QuoteEntity.class
+net/fisenko/dictum/data/mongo/util/Fields.class
