@@ -1,4 +1,5 @@
 # Dictum
+
 > API to get access to the collection of the most inspiring expressions of mankind
 
 <div align="center">
@@ -16,95 +17,31 @@
     <img alt="GitHub" src="https://img.shields.io/github/license/fisenkodv/dictum?style=for-the-badge">
 </div>
 
-## API Methods
+## APIs
 
-### Get Random Quote
+### Authors
+
+### Search authors
 
 ```http
-GET https://api.fisenko.net/quotes?l=[EN|RU]
+GET https://api.fisenko.net/v1/authors/[language]?query=[query]&offset=[offset]&limit=[limit]
 ```
 
 #### Parameters
 
-| Parameter | Type     | Description                                |
-| :-------- | :------- | :----------------------------------------- |
-| `l`       | `string` | **optional** language. By default is `EN`. |
+| Parameter  | Type     | Description                                                                                                |
+| :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`.                                                                    |
+| `query`    | `string` | **optional** a search query.                                                                               |
+| `offset`   | `int`    | **optional** an offset. By default is `0`.                                                                 |
+| `limit`    | `int`    | **optional** a maximum number of items in the response. By default is `50`. Could not be greater than `50` |
 
 #### Example
 
 request
 
 ```http
-GET https://api.fisenko.net/quotes
-```
-
-or
-
-```http
-GET https://api.fisenko.net/quotes?l=en
-```
-
-returns
-
-```json
-{
-  "uuid": "l86O4m2Wez",
-  "text": "Nothing is softer or more flexible than water, yet nothing can resist it.",
-  "author": "Lao Tzu"
-}
-```
-
-### Get Quote By Id
-
-```http
-GET https://api.fisenko.net/quotes/[uuid]
-```
-
-#### Parameters
-
-| Parameter | Type     | Description                     |
-| :-------- | :------- | :------------------------------ |
-| `uuid`    | `string` | **required** unique quote's id. |
-
-#### Example
-
-request
-
-```http
-GET https://api.fisenko.net/quotes/l86O4m2Wez
-```
-
-returns
-
-```json
-{
-  "uuid": "l86O4m2Wez",
-  "text": "Nothing is softer or more flexible than water, yet nothing can resist it.",
-  "author": "Lao Tzu"
-}
-```
-
-### Get Quotes By Author UUID
-
-```http
-GET https://api.fisenko.net/quotes/author/[uuid]?l=[EN|RU]&p=[page]&c=[count]
-```
-
-#### Parameters
-
-| Parameter | Type     | Description                                                                     |
-| :-------- | :------- | :------------------------------------------------------------------------------ |
-| `l`       | `string` | **optional** language. By default is `EN`.                                      |
-| `uuid`    | `string` | **required** unique author's id.                                                |
-| `p`       | `int`    | **optional** page number. By default is `0`                                     |
-| `c`       | `int`    | **optional** items per page. By default is `10`. Could not be greater than `50` |
-
-#### Example
-
-request
-
-```http
-GET https://api.fisenko.net/quotes/author/4PO19Pf6DR
+GET https://api.fisenko.net/v1/authors/en?query="Steve Jobs"&limit=50&offset=0
 ```
 
 returns
@@ -112,38 +49,64 @@ returns
 ```json
 [
   {
-    "uuid": "l86O4m2Wez",
-    "text": "Nothing is softer or more flexible than water, yet nothing can resist it.",
-    "author": "Lao Tzu"
-  },
-  {
-    "uuid": "BqI18fmaGH",
-    "text": "If you would take, you must first give, this is the beginning of intelligence.",
-    "author": "Lao Tzu"
+    "id": "6153b7d49e8e5ae3eb230a5b",
+    "name": "Steve Jobs"
   }
 ]
 ```
 
-### Get Authors
+### Get an author by ID
 
 ```http
-GET https://api.fisenko.net/quotes/authors?q=[query]&p=[page]&c=[count]
+GET https://api.fisenko.net/v1/authors/[language]/[id]
 ```
 
 #### Parameters
 
-| Parameter | Type     | Description                                                                     |
-| :-------- | :------- | :------------------------------------------------------------------------------ |
-| `q`       | `string` | **required** query                                                              |
-| `p`       | `int`    | **optional** page number. By default is `0`                                     |
-| `c`       | `int`    | **optional** items per page. By default is `10`. Could not be greater than `50` |
+| Parameter  | Type     | Description                             |
+| :--------- | :------- | :-------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`. |
+| `id`       | `string` | **required** an author ID.              |
 
 #### Example
 
 request
 
 ```http
-GET https://api.fisenko.net/quotes/authors?q=Elon Musk
+GET https://api.fisenko.net/v1/authors/en/6153b7d49e8e5ae3eb230a5b
+```
+
+returns
+
+```json
+{
+  "id": "6153b7d49e8e5ae3eb230a5b",
+  "name": "Steve Jobs"
+}
+```
+
+### Search an author's quotes
+
+```http
+GET https://api.fisenko.net/v1/authors/[language]/[id]/quotes?query=[query]&offset=[offset]&limit=[limit]
+```
+
+#### Parameters
+
+| Parameter  | Type     | Description                                                                                                |
+| :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`.                                                                    |
+| `id`       | `string` | **required** an author ID.                                                                                 |
+| `query`    | `string` | **optional** a search query.                                                                               |
+| `offset`   | `int`    | **optional** an offset. By default is `0`.                                                                 |
+| `limit`    | `int`    | **optional** a maximum number of items in the response. By default is `50`. Could not be greater than `50` |
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.net/v1/authors/en/6153b7d49e8e5ae3eb230a5b/quotes?query=&limit=1&offset=0
 ```
 
 returns
@@ -151,51 +114,143 @@ returns
 ```json
 [
   {
-    "uuid": "GUAsFob8S9",
-    "name": "Elon Musk"
+    "id": "6153bbb29e8e5ae3eb2399d0",
+    "text": "Be a yardstick of quality. Some people arent used to an environment where excellence is expected.",
+    "author": {
+      "id": "6153b7d49e8e5ae3eb230a5b",
+      "name": "Steve Jobs"
+    }
   }
 ]
 ```
 
-### Get Statistics
+---
+
+### Quotes
+
+#### Get Random Quote
 
 ```http
-GET https://api.fisenko.net/statistics
+GET https://api.fisenko.net/v1/quotes/[language]/random
 ```
+
+#### Parameters
+
+| Parameter  | Type     | Description                             |
+| :--------- | :------- | :-------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`. |
 
 #### Example
 
 request
 
 ```http
-GET https://api.fisenko.net/statistics
+GET https://api.fisenko.net/v1/quotes/en/random
+```
+
+returns
+
+```json
+[
+  {
+    "id": "6153bbe19e8e5ae3eb2c85aa",
+    "text": "Stay hungry, stay foolish.",
+    "author": {
+      "id": "6153b7d49e8e5ae3eb230a5b",
+      "name": "Steve Jobs"
+    }
+  }
+]
+```
+
+### Search quotes
+
+```http
+GET https://api.fisenko.net/v1/quotes/[language]?query=[query]&offset=[offset]&limit=[limit]
+```
+
+#### Parameters
+
+| Parameter  | Type     | Description                                                                                                |
+| :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`.                                                                    |
+| `query`    | `string` | **optional** a search query.                                                                               |
+| `offset`   | `int`    | **optional** an offset. By default is `0`.                                                                 |
+| `limit`    | `int`    | **optional** a maximum number of items in the response. By default is `50`. Could not be greater than `50` |
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.net/v1/quotes/en?query="Stay hungry"&limit=5&offset=0
+```
+
+returns
+
+```json
+[
+  {
+    "id": "6153bbe59e8e5ae3eb2d2cc1",
+    "text": "Artists are supposed to stay hungry.",
+    "author": {
+      "id": "6153b7d69e8e5ae3eb234901",
+      "name": "Michael Connelly"
+    }
+  },
+  {
+    "id": "6153bbe19e8e5ae3eb2c85aa",
+    "text": "Stay hungry, stay foolish.",
+    "author": {
+      "id": "6153b7d49e8e5ae3eb230a5b",
+      "name": "Steve Jobs"
+    }
+  }
+]
+```
+
+### Get a quote by ID
+
+```http
+GET https://api.fisenko.net/v1/quotes/[language]/[id]
+```
+
+#### Parameters
+
+| Parameter  | Type     | Description                             |
+| :--------- | :------- | :-------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`. |
+| `id`       | `string` | **required** a quote ID.                |
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.net/v1/quotes/en/6153bbe19e8e5ae3eb2c85aa
 ```
 
 returns
 
 ```json
 {
-  "authors": {
-    "total": 29573,
-    "byLanguage": {
-      "EN": 28203,
-      "RU": 1370
-    }
-  },
-  "quotes": {
-    "total": 731144,
-    "byLanguage": {
-      "EN": 724315,
-      "RU": 6829
-    }
+  "id": "6153bbe19e8e5ae3eb2c85aa",
+  "text": "Stay hungry, stay foolish.",
+  "author": {
+    "id": "6153b7d49e8e5ae3eb230a5b",
+    "name": "Steve Jobs"
   }
 }
 ```
 
-### Get Health
+---
+
+### Languages
+
+### Get languages
 
 ```http
-GET https://api.fisenko.net/health
+GET https://api.fisenko.net/v1/languages
 ```
 
 #### Example
@@ -203,19 +258,56 @@ GET https://api.fisenko.net/health
 request
 
 ```http
-GET https://api.fisenko.net/health
+GET https://api.fisenko.net/v1/languages
 ```
 
 returns
 
 ```json
-{
-  "status": "Healthy",
-  "errors": []
-}
+[
+  {
+    "code": "RU",
+    "language": "Русский"
+  },
+  {
+    "code": "en",
+    "language": "English"
+  }
+]
+```
+
+---
+
+### Statistics
+
+### Get statistics
+
+```http
+GET https://api.fisenko.net/v1/statistics/[language]
+```
+
+#### Parameters
+
+| Parameter  | Type     | Description                             |
+| :--------- | :------- | :-------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`. |
+
+#### Example
+
+request
+
+```http
+GET https://api.fisenko.net/v1/statistics/en
+```
+
+returns
+
+```json
+
 ```
 
 ## Links
+
 - [Telegram Bot](https://telegram.me/ExpressionsOfMankindBot)
 
 ## License
