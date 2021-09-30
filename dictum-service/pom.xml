@@ -155,6 +155,7 @@
                     </from>
                     <to>
                         <image>docker.io/fisenkodv/dictum:${project.version}</image>
+                        <image>docker.pkg.github.com/dictum/api:${project.version}</image>
                     </to>
                     <container>
                         <environment>
@@ -162,6 +163,9 @@
                             <MONGO_PORT>27017</MONGO_PORT>
                             <DB_NAME>dictum</DB_NAME>
                         </environment>
+                        <jvmFlags>
+                            <jvmFlag>-XX:TieredStopAtLevel=1</jvmFlag>
+                        </jvmFlags>
                     </container>
                 </configuration>
                 <executions>

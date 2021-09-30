@@ -1,31 +1,31 @@
-name: Publish API To GitHub
-
-on:
-  push:
-    branches:
-    - master
-
-jobs:
-  test_and_publish:
-    name: Test And Publish To GitHub
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: Docker Login
-      uses: actions-hub/docker/login@master
-      env:
-        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
-        DOCKER_REGISTRY_URL: docker.pkg.github.com
-    - name: Run Tests
-      uses: actions-hub/docker@master
-      with:
-        args: build --file docker/test/Dockerfile .
-    - name: Build Docker Image
-      uses: actions-hub/docker@master
-      with:
-        args: build --rm --tag docker.pkg.github.com/${{ github.repository }}/api:latest --file docker/api/Dockerfile .
-    - name: Publish To GitHub
-      uses: actions-hub/docker@master
-      with:
-        args: push docker.pkg.github.com/${{ github.repository }}/api:latest
+#name: Publish API To GitHub
+#
+#on:
+#  push:
+#    branches:
+#    - master
+#
+#jobs:
+#  test_and_publish:
+#    name: Test And Publish To GitHub
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@master
+#    - name: Docker Login
+#      uses: actions-hub/docker/login@master
+#      env:
+#        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+#        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
+#        DOCKER_REGISTRY_URL: docker.pkg.github.com
+#    - name: Run Tests
+#      uses: actions-hub/docker@master
+#      with:
+#        args: build --file docker/test/Dockerfile .
+#    - name: Build Docker Image
+#      uses: actions-hub/docker@master
+#      with:
+#        args: build --rm --tag docker.pkg.github.com/${{ github.repository }}/api:latest --file docker/api/Dockerfile .
+#    - name: Publish To GitHub
+#      uses: actions-hub/docker@master
+#      with:
+#        args: push docker.pkg.github.com/${{ github.repository }}/api:latest

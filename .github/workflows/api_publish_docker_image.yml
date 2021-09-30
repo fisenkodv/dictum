@@ -1,30 +1,38 @@
-name: Publish API To Docker
+name: Publish API Docker
 
 on:
   push:
     branches:
     - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  test_and_publish:
+  compile_and_publish:
     name: Test And Publish To Docker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Docker Login
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Docker Login Docker Hub
       uses: actions-hub/docker/login@master
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    - name: Run Tests
-      uses: actions-hub/docker@master
-      with:
-        args: build --file docker/test/Dockerfile .
-    - name: Build Docker Image
-      uses: actions-hub/docker@master
-      with:
-        args: build --rm --tag fisenkodv/dictum:latest --file docker/api/Dockerfile .
-    - name: Publish To Docker Hub
-      uses: actions-hub/docker@master
-      with:
-        args: push fisenkodv/dictum:latest
+    - name: Docker Login GitHub
+      uses: actions-hub/docker/login@master
+      env:
+        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
+        DOCKER_REGISTRY_URL: docker.pkg.github.com
+    - name: Build with Maven
+      run: mvn package
