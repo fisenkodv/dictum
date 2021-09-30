@@ -4,9 +4,6 @@ on:
   push:
     branches:
     - master
-  pull_request:
-    branches:
-      - master
 
 jobs:
   compile_and_publish:
@@ -23,19 +20,5 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-#    - name: Docker Login Docker Hub
-#      uses: actions-hub/docker/login@master
-#      env:
-#        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-#        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-#        DOCKER_REGISTRY_URL: index.docker.io/v2/
-#    - name: Docker Login GitHub
-#      uses: actions-hub/docker/login@master
-#      env:
-#        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-#        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
-#        DOCKER_REGISTRY_URL: ghcr.io
-    - name: Build with Maven
+    - name: Deploy Docker
       run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.image=docker.io/fisenkodv/dictum-api
-    - name: Build with Maven 1
-      run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.GH_USERNAME }} -Djib.to.auth.password=${{ secrets.GH_PASSWORD }} -Djib.to.image=ghcr.io/dictum/dictum-api
