@@ -23,7 +23,10 @@ public class AuthorService {
     }
 
     public Mono<Author> getAuthor(String language, String id) {
-        return authorRepository.getAuthor(language, id);
+        return authorRepository.getAuthor(language, id)
+                               .filterWhen(x -> x == null ? Mono.empty() : Mono.just(true))
+                               .switchIfEmpty(Mono.error(new Exception("fdsafdsa")))
+                               .flatMap(Mono::just);
     }
 
     public Flux<Quote> searchAuthorQuotes(String language, String id, @Nullable String query, int limit, int offset) {

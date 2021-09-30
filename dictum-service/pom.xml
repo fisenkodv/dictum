@@ -13,7 +13,7 @@
     <artifactId>dictum-service</artifactId>
 
     <properties>
-        <micronaut.version>3.0.1</micronaut.version>
+        <micronaut.version>3.0.2</micronaut.version>
         <lombok.version>1.18.20</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
@@ -135,7 +135,11 @@
                                     <DB_NAME>dictum</DB_NAME>
                                 </environment>
                                 <jvmFlags>
+                                    <jvmFlag>-server</jvmFlag>
+                                    <jvmFlag>-Xms1G</jvmFlag>
+                                    <jvmFlag>-Xmx2G</jvmFlag>
                                     <jvmFlag>-XX:TieredStopAtLevel=1</jvmFlag>
+                                    <jvmFlag>-XX:+UseConcMarkSweepGC</jvmFlag>
                                 </jvmFlags>
                             </container>
                         </configuration>
