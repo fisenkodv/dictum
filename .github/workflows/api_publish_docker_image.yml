@@ -26,8 +26,8 @@ jobs:
     - name: Docker Login Docker Hub
       uses: actions-hub/docker/login@master
       env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 #        DOCKER_REGISTRY_URL: index.docker.io/v2/
 #    - name: Docker Login GitHub
 #      uses: actions-hub/docker/login@master
@@ -36,5 +36,5 @@ jobs:
 #        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
 #        DOCKER_REGISTRY_URL: ghcr.io
     - name: Build with Maven
-      run: cat $DOCKER_CONFIG/config.json
-#      run: mvn package -Ddocker=true
+#      run: cat $DOCKER_CONFIG/config.json
+      run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
