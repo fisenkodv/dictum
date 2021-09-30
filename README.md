@@ -278,7 +278,7 @@ returns
 
 ---
 
-### Statistics IN PROGRESS
+### Statistics
 
 ### Get statistics
 
@@ -303,7 +303,10 @@ GET https://api.fisenko.net/v1/statistics/en
 returns
 
 ```json
-
+{
+    "authors": 30752,
+    "quotes": 911533
+}
 ```
 
 ## Links
