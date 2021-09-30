@@ -139,7 +139,6 @@
                                     <jvmFlag>-Xms1G</jvmFlag>
                                     <jvmFlag>-Xmx2G</jvmFlag>
                                     <jvmFlag>-XX:TieredStopAtLevel=1</jvmFlag>
-                                    <jvmFlag>-XX:+UseConcMarkSweepGC</jvmFlag>
                                 </jvmFlags>
                             </container>
                         </configuration>
