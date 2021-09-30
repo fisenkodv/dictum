@@ -37,4 +37,4 @@ jobs:
 #        DOCKER_REGISTRY_URL: ghcr.io
     - name: Build with Maven
 #      run: cat $DOCKER_CONFIG/config.json
-      run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
+      run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.image=docker.io/fisenkodv/dictum

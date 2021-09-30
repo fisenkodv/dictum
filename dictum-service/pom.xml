@@ -123,8 +123,10 @@
                                 <image>azul/zulu-openjdk:17</image>
                             </from>
                             <to>
-                                <image>docker.io/fisenkodv/dictum:${project.version}</image>
+<!--                                <image>docker.io/fisenkodv/dictum:${project.version}</image>-->
                                 <!--                        <image>ghcr.io/dictum/api:${project.version}</image>-->
+                                <tags>${project.version}</tags>
+                                <tags>latest</tags>
                             </to>
                             <container>
                                 <environment>
