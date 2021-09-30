@@ -1,4 +1,4 @@
-package net.fisenko.dictum.core.model.dto.language;
+package net.fisenko.dictum.core.model.dto.statistics;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class LanguageSummary {
+public final class StatisticsDetail {
 
-    private String code;
-    private String language;
+    private long authors;
+    private long quotes;
 }

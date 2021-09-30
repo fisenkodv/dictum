@@ -7,6 +7,7 @@ import net.fisenko.dictum.core.business.mapping.impl.MappingServiceImpl;
 import net.fisenko.dictum.core.business.service.AuthorService;
 import net.fisenko.dictum.core.business.service.LanguageService;
 import net.fisenko.dictum.core.business.service.QuotesService;
+import net.fisenko.dictum.core.business.service.StatisticsService;
 import net.fisenko.dictum.core.data.AuthorRepository;
 import net.fisenko.dictum.core.data.LanguageRepository;
 import net.fisenko.dictum.core.data.QuoteRepository;
@@ -32,5 +33,10 @@ public final class ServiceFactory {
     @Singleton
     public QuotesService quotesService(QuoteRepository quoteRepository) {
         return new QuotesService(quoteRepository);
+    }
+
+    @Singleton
+    public StatisticsService quotesService(AuthorRepository authorRepository, QuoteRepository quoteRepository) {
+        return new StatisticsService(authorRepository, quoteRepository);
     }
 }

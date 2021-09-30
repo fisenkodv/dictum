@@ -14,4 +14,6 @@ public interface QuoteRepository {
     Mono<Quote> getQuote(String language, String id);
 
     Flux<Quote> searchAuthorQuotes(String language, String id, @Nullable String query, int limit, int offset);
+
+    Mono<Long> getQuotesCount(String language);
 }

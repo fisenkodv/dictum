@@ -18,6 +18,7 @@ import net.fisenko.dictum.data.mongo.util.Expressions;
 import net.fisenko.dictum.data.mongo.util.Fields;
 import org.bson.conversions.Bson;
 import org.jetbrains.annotations.Nullable;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -97,6 +98,13 @@ public class MongoQuoteRepository implements QuoteRepository {
         final AggregatePublisher<QuoteEntity> result = getCollection().aggregate(aggregates);
 
         return Flux.from(result).map(x -> mappingService.map(x, Quote.class));
+    }
+
+    @Override
+    public Mono<Long> getQuotesCount(String language) {
+        final Publisher<Long> result = getCollection().countDocuments(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
+
+        return Mono.from(result);
     }
 
     private Collection<Bson> getAuthorLookupAggregationStages() {

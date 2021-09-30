@@ -15,6 +15,7 @@ import net.fisenko.dictum.data.mongo.entity.AuthorEntity;
 import net.fisenko.dictum.data.mongo.util.Fields;
 import org.bson.conversions.Bson;
 import org.jetbrains.annotations.Nullable;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -60,6 +61,13 @@ public class MongoAuthorRepository implements AuthorRepository {
         final FindPublisher<AuthorEntity> result = getCollection().find(filter);
 
         return Mono.from(result).map(x -> mappingService.map(x, Author.class));
+    }
+
+    @Override
+    public Mono<Long> getAuthorsCount(String language) {
+        final Publisher<Long> result = getCollection().countDocuments(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
+
+        return Mono.from(result);
     }
 
     private MongoCollection<AuthorEntity> getCollection() {
