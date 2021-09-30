@@ -23,16 +23,16 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-#    - name: Docker Login Docker Hub
-#      uses: actions-hub/docker/login@master
-#      env:
-#        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-#        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    - name: Docker Login GitHub
+    - name: Docker Login Docker Hub
       uses: actions-hub/docker/login@master
       env:
-        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
-        DOCKER_REGISTRY_URL: ghcr.io
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#    - name: Docker Login GitHub
+#      uses: actions-hub/docker/login@master
+#      env:
+#        DOCKER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+#        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
+#        DOCKER_REGISTRY_URL: ghcr.io
     - name: Build with Maven
       run: mvn package
