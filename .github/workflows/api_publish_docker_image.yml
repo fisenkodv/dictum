@@ -28,6 +28,7 @@ jobs:
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_REGISTRY_URL: index.docker.io/v2/
 #    - name: Docker Login GitHub
 #      uses: actions-hub/docker/login@master
 #      env:
