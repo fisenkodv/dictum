@@ -14,7 +14,7 @@
 
     <properties>
         <modelmapper.version>2.4.4</modelmapper.version>
-        <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
+        <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
