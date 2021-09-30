@@ -28,7 +28,7 @@ jobs:
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_REGISTRY_URL: index.docker.io/v2/
+#        DOCKER_REGISTRY_URL: index.docker.io/v2/
 #    - name: Docker Login GitHub
 #      uses: actions-hub/docker/login@master
 #      env:
@@ -36,5 +36,5 @@ jobs:
 #        DOCKER_USERNAME: ${{ secrets.USER_NAME }}
 #        DOCKER_REGISTRY_URL: ghcr.io
     - name: Build with Maven
-      run: cat $HOME/.docker/config.json
+      run: cat $DOCKER_CONFIG/config.json
 #      run: mvn package -Ddocker=true
