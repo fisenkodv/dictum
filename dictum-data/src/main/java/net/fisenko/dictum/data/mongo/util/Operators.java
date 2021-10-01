@@ -6,6 +6,6 @@ public final class Operators {
     }
 
     public static String getPositionOperator(String field) {
-        return field+".$";
+        return field + ".$";
     }
 }

@@ -5,8 +5,8 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.fisenko.dictum.core.configuration.ApplicationConfiguration;
-import net.fisenko.dictum.core.configuration.DatabaseConfiguration;
+import net.fisenko.dictum.core.config.ApplicationConfiguration;
+import net.fisenko.dictum.core.config.DatabaseConfiguration;
 
 @Getter
 @Setter

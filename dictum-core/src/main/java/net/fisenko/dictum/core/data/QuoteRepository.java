@@ -1,6 +1,6 @@
 package net.fisenko.dictum.core.data;
 
-import net.fisenko.dictum.core.model.domain.Quote;
+import net.fisenko.dictum.core.model.Quote;
 import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

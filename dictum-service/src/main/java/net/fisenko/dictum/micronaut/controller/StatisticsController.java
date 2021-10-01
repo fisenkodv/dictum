@@ -6,9 +6,9 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
-import net.fisenko.dictum.core.business.mapping.MappingService;
-import net.fisenko.dictum.core.business.service.StatisticsService;
-import net.fisenko.dictum.core.model.dto.statistics.StatisticsDetail;
+import net.fisenko.dictum.core.service.MappingService;
+import net.fisenko.dictum.core.service.StatisticsService;
+import net.fisenko.dictum.micronaut.dto.statistics.StatisticsDetail;
 import reactor.core.publisher.Mono;
 
 @Slf4j

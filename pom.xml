@@ -6,13 +6,14 @@
 
     <groupId>net.fisenko.dictum</groupId>
     <artifactId>dictum-parent</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 
     <modules>
+        <module>dictum-bom</module>
         <module>dictum-core</module>
         <module>dictum-data</module>
+        <module>dictum-business</module>
         <module>dictum-service</module>
-        <module>dictum-bom</module>
     </modules>
 
     <properties>

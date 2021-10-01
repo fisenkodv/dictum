@@ -7,13 +7,11 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
-import net.fisenko.dictum.core.annotation.Id;
-import net.fisenko.dictum.core.business.mapping.MappingService;
-import net.fisenko.dictum.core.business.service.LanguageService;
-import net.fisenko.dictum.core.business.service.QuotesService;
-import net.fisenko.dictum.core.model.dto.language.LanguageSummary;
-import net.fisenko.dictum.core.model.dto.quote.QuoteSummary;
+import net.fisenko.dictum.business.annotation.Id;
+import net.fisenko.dictum.core.service.MappingService;
+import net.fisenko.dictum.core.service.QuotesService;
 import net.fisenko.dictum.micronaut.binding.Search;
+import net.fisenko.dictum.micronaut.dto.quote.QuoteSummary;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

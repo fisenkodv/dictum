@@ -7,34 +7,15 @@
     <parent>
         <groupId>net.fisenko.dictum</groupId>
         <artifactId>dictum-parent</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
     </parent>
 
     <artifactId>dictum-core</artifactId>
 
-    <properties>
-        <modelmapper.version>2.4.4</modelmapper.version>
-        <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -8,7 +8,7 @@ import io.micronaut.http.server.exceptions.ExceptionHandler;
 import io.micronaut.http.server.exceptions.response.ErrorContext;
 import io.micronaut.http.server.exceptions.response.ErrorResponseProcessor;
 import jakarta.inject.Singleton;
-import net.fisenko.dictum.core.ResourceNotFoundException;
+import net.fisenko.dictum.business.exception.ResourceNotFoundException;
 
 @Produces
 @Singleton

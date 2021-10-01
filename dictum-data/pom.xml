@@ -7,7 +7,7 @@
     <parent>
         <artifactId>dictum-parent</artifactId>
         <groupId>net.fisenko.dictum</groupId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
     </parent>
 
     <artifactId>dictum-data</artifactId>
@@ -23,10 +23,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-core</artifactId>
-        </dependency>
         <dependency>
             <groupId>io.micronaut.mongodb</groupId>
             <artifactId>micronaut-mongo-reactive</artifactId>

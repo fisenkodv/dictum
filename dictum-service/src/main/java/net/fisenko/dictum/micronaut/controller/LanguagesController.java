@@ -4,9 +4,9 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
-import net.fisenko.dictum.core.business.mapping.MappingService;
-import net.fisenko.dictum.core.business.service.LanguageService;
-import net.fisenko.dictum.core.model.dto.language.LanguageSummary;
+import net.fisenko.dictum.core.service.LanguageService;
+import net.fisenko.dictum.core.service.MappingService;
+import net.fisenko.dictum.micronaut.dto.language.LanguageSummary;
 import reactor.core.publisher.Flux;
 
 @Slf4j
