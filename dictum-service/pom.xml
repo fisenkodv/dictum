@@ -134,17 +134,20 @@
                                 </tags>
                             </to>
                             <container>
-                                <environment>
-                                    <MONGO_HOST>127.0.0.1</MONGO_HOST>
-                                    <MONGO_PORT>27017</MONGO_PORT>
-                                    <DB_NAME>dictum</DB_NAME>
-                                </environment>
                                 <jvmFlags>
                                     <jvmFlag>-server</jvmFlag>
                                     <jvmFlag>-Xms1G</jvmFlag>
                                     <jvmFlag>-Xmx2G</jvmFlag>
                                     <jvmFlag>-XX:TieredStopAtLevel=1</jvmFlag>
                                 </jvmFlags>
+                                <environment>
+                                    <MONGO_HOST>127.0.0.1</MONGO_HOST>
+                                    <MONGO_PORT>27017</MONGO_PORT>
+                                    <DB_NAME>dictum</DB_NAME>
+                                </environment>
+                                <volumes>
+                                    <volume>/var/log/</volume>
+                                </volumes>
                             </container>
                         </configuration>
                         <executions>
