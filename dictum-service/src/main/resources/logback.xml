@@ -19,7 +19,7 @@
         </encoder>
     </appender>
 
-    <logger name="io.micronaut.context" level="INFO"/>
+    <logger name="io.micronaut.http.server.netty" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="FILE" />
