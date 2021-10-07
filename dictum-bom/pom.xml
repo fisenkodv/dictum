@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <lombok.version>1.18.20</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <slf4j-api.version>1.7.32</slf4j-api.version>
         <reactor-core.version>3.4.8</reactor-core.version>
         <annotations.version>22.0.0</annotations.version>
