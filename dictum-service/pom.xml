@@ -125,7 +125,7 @@
                         <version>${jib-maven-plugin.version}</version>
                         <configuration>
                             <from>
-                                <image>azul/zulu-openjdk:17</image>
+                                <image>azul/zulu-openjdk-alpine:17</image>
                             </from>
                             <to>
                                 <tags>
