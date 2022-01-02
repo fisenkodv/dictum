@@ -24,6 +24,7 @@ public class QuoteEntity {
     public final static String AUTHOR_ID_FIELD_NAME = "author_id";
     public final static String CREATED_AT_FIELD_NAME = "created_at";
     public final static String LANGUAGE_FIELD_NAME = "language";
+    public static final String LIKES_FIELD_NAME = "likes";
 
     @BsonId
     private ObjectId id;
@@ -37,4 +38,6 @@ public class QuoteEntity {
     private Instant createdAt;
     @BsonProperty(LANGUAGE_FIELD_NAME)
     private String language;
+    @BsonProperty(LIKES_FIELD_NAME)
+    private Integer likes;
 }

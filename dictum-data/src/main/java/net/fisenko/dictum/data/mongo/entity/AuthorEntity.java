@@ -19,6 +19,7 @@ public class AuthorEntity {
     public final static String NAME_FIELD_NAME = "name";
     public final static String BIO_FIELD_NAME = "bio";
     public final static String LANGUAGE_FIELD_NAME = "language";
+    public final static String RANK_FIELD_NAME = "rank";
 
     @BsonId
     private ObjectId id;
@@ -28,4 +29,6 @@ public class AuthorEntity {
     private String bio;
     @BsonProperty(LANGUAGE_FIELD_NAME)
     private String language;
+    @BsonProperty(RANK_FIELD_NAME)
+    private Integer rank;
 }

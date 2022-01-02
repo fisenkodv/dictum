@@ -3,6 +3,7 @@ package net.fisenko.dictum.data.mongo.repository;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.TextSearchOptions;
 import com.mongodb.reactivestreams.client.AggregatePublisher;
 import com.mongodb.reactivestreams.client.MongoClient;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class MongoQuoteRepository implements QuoteRepository {
 
-    private final static int RANDOM_SAMPLE_SIZE = 1000;
+    private final static int RANDOM_SAMPLE_SIZE = 100;
 
     private final MappingService mappingService;
     private final DatabaseConfiguration databaseConfiguration;
@@ -52,23 +53,46 @@ public class MongoQuoteRepository implements QuoteRepository {
         aggregates.addAll(getPagingAggregationStages(limit, offset));
         aggregates.addAll(getAuthorLookupAggregationStages());
 
-        final AggregatePublisher<QuoteEntity> result = getCollection().aggregate(aggregates);
+        final AggregatePublisher<QuoteEntity> result = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).aggregate(aggregates);
 
         return Flux.from(result).map(x -> mappingService.map(x, Quote.class));
     }
 
     @Override
     public Mono<Quote> getRandomQuote(String language) {
-        final List<Bson> aggregates = new ArrayList<>();
+        final List<Bson> topAuthorsAggregates = List.of(Aggregates.match(
+                                                                Filters.and(
+                                                                        Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language),
+                                                                        Filters.ne(AuthorEntity.RANK_FIELD_NAME, null)
+                                                                )
+                                                        ),
+                                                        Aggregates.sort(Sorts.descending(AuthorEntity.RANK_FIELD_NAME)),
+                                                        Aggregates.limit(RANDOM_SAMPLE_SIZE),
+                                                        Aggregates.sample(1)
+        );
 
-        aggregates.add(Aggregates.sample(RANDOM_SAMPLE_SIZE));
-        aggregates.add(Aggregates.match(Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language)));
-        aggregates.addAll(getAuthorLookupAggregationStages());
-        aggregates.add(Aggregates.limit(1));
+        final AggregatePublisher<AuthorEntity> topAuthorsAggregateResult = getCollection(AuthorEntity.COLLECTION_NAME, AuthorEntity.class).aggregate(topAuthorsAggregates);
 
-        final AggregatePublisher<QuoteEntity> result = getCollection().aggregate(aggregates);
+        return Mono.from(topAuthorsAggregateResult)
+                   .map(x -> x.getId().toString())
+                   .flatMap(authorId -> {
+                       final List<Bson> topAuthorQuotesAggregates = new ArrayList<>();
+                       topAuthorQuotesAggregates.add(Aggregates.match(
+                               Filters.and(
+                                       Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language),
+                                       Filters.eq(QuoteEntity.AUTHOR_ID_FIELD_NAME, authorId)
+                               )
+                       ));
+                       topAuthorQuotesAggregates.add(Aggregates.sort(Sorts.descending(QuoteEntity.LIKES_FIELD_NAME)));
+                       topAuthorQuotesAggregates.add(Aggregates.limit(RANDOM_SAMPLE_SIZE));
+                       topAuthorQuotesAggregates.add(Aggregates.sample(1));
+                       topAuthorQuotesAggregates.addAll(getAuthorLookupAggregationStages());
 
-        return Mono.from(result).map(x -> mappingService.map(x, Quote.class));
+                       final AggregatePublisher<QuoteEntity> quoteResult = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).aggregate(topAuthorQuotesAggregates);
+
+                       return Mono.from(quoteResult);
+                   })
+                   .map(x -> mappingService.map(x, Quote.class));
     }
 
     @Override
@@ -78,7 +102,7 @@ public class MongoQuoteRepository implements QuoteRepository {
                                               Aggregates.lookup(AuthorEntity.COLLECTION_NAME, QuoteEntity.AUTHOR_ID_FIELD_NAME, Fields.UNDERSCORE_ID, QuoteEntity.AUTHOR_FIELD_NAME),
                                               Aggregates.unwind(Fields.getFieldPath(QuoteEntity.AUTHOR_FIELD_NAME)));
 
-        final AggregatePublisher<QuoteEntity> result = getCollection().aggregate(aggregates);
+        final AggregatePublisher<QuoteEntity> result = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).aggregate(aggregates);
 
         return Mono.from(result).map(x -> mappingService.map(x, Quote.class));
     }
@@ -95,14 +119,14 @@ public class MongoQuoteRepository implements QuoteRepository {
         aggregates.addAll(getPagingAggregationStages(limit, offset));
         aggregates.addAll(getAuthorLookupAggregationStages());
 
-        final AggregatePublisher<QuoteEntity> result = getCollection().aggregate(aggregates);
+        final AggregatePublisher<QuoteEntity> result = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).aggregate(aggregates);
 
         return Flux.from(result).map(x -> mappingService.map(x, Quote.class));
     }
 
     @Override
     public Mono<Long> getQuotesCount(String language) {
-        final Publisher<Long> result = getCollection().countDocuments(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
+        final Publisher<Long> result = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).countDocuments(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         return Mono.from(result);
     }
@@ -119,9 +143,9 @@ public class MongoQuoteRepository implements QuoteRepository {
         return List.of(Aggregates.limit(limit), Aggregates.skip(offset));
     }
 
-    private MongoCollection<QuoteEntity> getCollection() {
+    private <T> MongoCollection<T> getCollection(String collectionName, Class<T> type) {
         return mongoClient
                 .getDatabase(databaseConfiguration.getName())
-                .getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class);
+                .getCollection(collectionName, type);
     }
 }
