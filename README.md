@@ -17,6 +17,8 @@
     <img alt="GitHub" src="https://img.shields.io/github/license/fisenkodv/dictum?style=for-the-badge">
 </div>
 
+# Table of Contents
+
 - [Dictum](#dictum)
 - [Dictum API](#dictum-api)
   - [Authors](#authors)
@@ -52,6 +54,8 @@
 - [Links](#links)
 - [License](#license)
 - [Supporters](#supporters)
+
+---
 
 # Dictum API
 
