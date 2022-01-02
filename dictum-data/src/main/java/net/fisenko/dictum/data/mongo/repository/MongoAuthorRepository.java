@@ -54,8 +54,8 @@ public class MongoAuthorRepository implements AuthorRepository {
     }
 
     @Override
-    public Mono<Author> getAuthor(String language, String id) {
-        final Bson filter = Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(id)),
+    public Mono<Author> getAuthor(String language, String authorId) {
+        final Bson filter = Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(authorId)),
                                         Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         final FindPublisher<AuthorEntity> result = getCollection().find(filter);

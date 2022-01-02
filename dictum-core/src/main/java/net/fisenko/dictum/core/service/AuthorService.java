@@ -10,7 +10,7 @@ public interface AuthorService {
 
     Flux<Author> searchAuthors(String language, @Nullable String query, int limit, int offset);
 
-    Mono<Author> getAuthor(String language, String id);
+    Mono<Author> getAuthor(String language, String authorId);
 
-    Flux<Quote> searchAuthorQuotes(String language, String id, @Nullable String query, int limit, int offset);
+    Flux<Quote> searchAuthorQuotes(String language, String authorId, @Nullable String query, int limit, int offset);
 }

@@ -2,10 +2,10 @@ package net.fisenko.dictum.business.service;
 
 import lombok.extern.slf4j.Slf4j;
 import net.fisenko.dictum.business.exception.ResourceNotFoundException;
+import net.fisenko.dictum.business.util.Reactive;
 import net.fisenko.dictum.core.data.QuoteRepository;
 import net.fisenko.dictum.core.model.Quote;
 import net.fisenko.dictum.core.service.QuotesService;
-import net.fisenko.dictum.business.util.Reactive;
 import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -30,10 +30,18 @@ public class QuotesServiceImpl implements QuotesService {
     }
 
     @Override
-    public Mono<Quote> getQuote(String language, String id) {
-        return quoteRepository.getQuote(language, id)
+    public Mono<Quote> getQuote(String language, String quoteId) {
+        return quoteRepository.getQuote(language, quoteId)
                               .filterWhen(Reactive::isEmpty)
-                              .switchIfEmpty(Mono.error(new ResourceNotFoundException("quote.get.not_found.error", language, id)))
+                              .switchIfEmpty(Mono.error(new ResourceNotFoundException("quote.get.not_found.error", language, quoteId)))
                               .flatMap(Mono::just);
+    }
+
+    @Override
+    public Mono<Void> likeQuote(String language, String quoteId) {
+        return quoteRepository.likeQuote(language, quoteId)
+                              .filterWhen(Mono::just)
+                              .switchIfEmpty(Mono.error(new ResourceNotFoundException("quote.like.not_found.error", language, quoteId)))
+                              .flatMap(x -> Mono.empty());
     }
 }

@@ -27,15 +27,15 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Mono<Author> getAuthor(String language, String id) {
-        return authorRepository.getAuthor(language, id)
+    public Mono<Author> getAuthor(String language, String authorId) {
+        return authorRepository.getAuthor(language, authorId)
                                .filterWhen(Reactive::isEmpty)
-                               .switchIfEmpty(Mono.error(new ResourceNotFoundException("author.get.not_found.error", language, id)))
+                               .switchIfEmpty(Mono.error(new ResourceNotFoundException("author.get.not_found.error", language, authorId)))
                                .flatMap(Mono::just);
     }
 
     @Override
-    public Flux<Quote> searchAuthorQuotes(String language, String id, @Nullable String query, int limit, int offset) {
-        return quoteRepository.searchAuthorQuotes(language, id, query, limit, offset);
+    public Flux<Quote> searchAuthorQuotes(String language, String authorId, @Nullable String query, int limit, int offset) {
+        return quoteRepository.searchAuthorQuotes(language, authorId, query, limit, offset);
     }
 }

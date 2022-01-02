@@ -17,9 +17,45 @@
     <img alt="GitHub" src="https://img.shields.io/github/license/fisenkodv/dictum?style=for-the-badge">
 </div>
 
-## APIs
+- [Dictum](#dictum)
+- [Dictum API](#dictum-api)
+  - [Authors](#authors)
+    - [Search authors](#search-authors)
+      - [Parameters](#parameters)
+      - [Example](#example)
+    - [Get an author by ID](#get-an-author-by-id)
+      - [Parameters](#parameters-1)
+      - [Example](#example-1)
+    - [Search an author's quotes](#search-an-authors-quotes)
+      - [Parameters](#parameters-2)
+      - [Example](#example-2)
+  - [Quotes](#quotes)
+    - [Get Random Quote](#get-random-quote)
+      - [Parameters](#parameters-3)
+      - [Example](#example-3)
+    - [Search quotes](#search-quotes)
+      - [Parameters](#parameters-4)
+      - [Example](#example-4)
+    - [Get a quote by ID](#get-a-quote-by-id)
+      - [Parameters](#parameters-5)
+      - [Example](#example-5)
+    - [Like a quote](#like-a-quote)
+      - [Parameters](#parameters-6)
+      - [Example](#example-6)
+  - [Languages](#languages)
+    - [Get languages](#get-languages)
+      - [Example](#example-7)
+  - [Statistics](#statistics)
+    - [Get statistics](#get-statistics)
+      - [Parameters](#parameters-7)
+      - [Example](#example-8)
+- [Links](#links)
+- [License](#license)
+- [Supporters](#supporters)
 
-### Authors
+# Dictum API
+
+## Authors
 
 ### Search authors
 
@@ -27,7 +63,7 @@
 GET https://api.fisenko.net/v1/authors/[language]?query=[query]&offset=[offset]&limit=[limit]
 ```
 
-#### Parameters
+##### Parameters
 
 | Parameter  | Type     | Description                                                                                                |
 | :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
@@ -36,7 +72,7 @@ GET https://api.fisenko.net/v1/authors/[language]?query=[query]&offset=[offset]&
 | `offset`   | `int`    | **optional** an offset. By default is `0`.                                                                 |
 | `limit`    | `int`    | **optional** a maximum number of items in the response. By default is `50`. Could not be greater than `50` |
 
-#### Example
+##### Example
 
 request
 
@@ -126,9 +162,9 @@ returns
 
 ---
 
-### Quotes
+## Quotes
 
-#### Get Random Quote
+### Get Random Quote
 
 ```http
 GET https://api.fisenko.net/v1/quotes/[language]/random
@@ -243,9 +279,32 @@ returns
 }
 ```
 
+### Like a quote
+
+```http
+PUT https://api.fisenko.net/v1/quotes/[language]/[id]/like
+```
+
+#### Parameters
+
+| Parameter  | Type     | Description                             |
+| :--------- | :------- | :-------------------------------------- |
+| `language` | `string` | **required** language, e.g. `en`, `ru`. |
+| `id`       | `string` | **required** a quote ID.                |
+
+#### Example
+
+request
+
+```http
+PUT https://api.fisenko.net/v1/quotes/en/6153bbb59e8e5ae3eb2450a3
+```
+
+returns HTTP `200` if the request was successfully executed
+
 ---
 
-### Languages
+## Languages
 
 ### Get languages
 
@@ -278,7 +337,7 @@ returns
 
 ---
 
-### Statistics
+## Statistics
 
 ### Get statistics
 
@@ -304,22 +363,23 @@ returns
 
 ```json
 {
-    "authors": 30752,
-    "quotes": 911533
+  "authors": 30752,
+  "quotes": 911533
 }
 ```
 
-## Links
+# Links
 
 - [Telegram Bot](https://telegram.me/ExpressionsOfMankindBot)
 
-## License
+# License
 
 MIT
 
-## Supporters
+# Supporters
 
 JetBrains is supporting this open source project with:
+
 <p>
     <a href="http://www.jetbrains.com/idea/">
         <img alt="Intellij IDEA" width="50%" src="https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png">

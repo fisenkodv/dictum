@@ -11,5 +11,7 @@ public interface QuotesService {
 
     Mono<Quote> getRandomQuote(String language);
 
-    Mono<Quote> getQuote(String language, String id);
+    Mono<Quote> getQuote(String language, String quoteId);
+
+    Mono<Void> likeQuote(String language, String quoteId);
 }

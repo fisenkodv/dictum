@@ -9,7 +9,7 @@ public interface AuthorRepository {
 
     Flux<Author> getAuthors(String language, @Nullable String query, int limit, int offset);
 
-    Mono<Author> getAuthor(String language, String id);
+    Mono<Author> getAuthor(String language, String authorId);
 
     Mono<Long> getAuthorsCount(String language);
 }

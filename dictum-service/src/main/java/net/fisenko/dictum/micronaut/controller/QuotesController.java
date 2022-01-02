@@ -5,6 +5,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Put;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
 import net.fisenko.dictum.business.annotation.Id;
@@ -42,9 +43,14 @@ public class QuotesController {
                             .map(x -> mappingService.map(x, QuoteSummary.class));
     }
 
-    @Get("{id}")
-    public Mono<QuoteSummary> getQuote(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String id) {
-        return quotesService.getQuote(language, id)
+    @Get("{quoteId}")
+    public Mono<QuoteSummary> getQuote(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String quoteId) {
+        return quotesService.getQuote(language, quoteId)
                             .map(x -> mappingService.map(x, QuoteSummary.class));
+    }
+
+    @Put("{quoteId}/like")
+    public Mono<Void> likeQuote(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String quoteId) {
+        return quotesService.likeQuote(language, quoteId);
     }
 }

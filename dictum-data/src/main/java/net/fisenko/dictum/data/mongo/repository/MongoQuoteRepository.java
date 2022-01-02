@@ -5,6 +5,8 @@ import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.TextSearchOptions;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.reactivestreams.client.AggregatePublisher;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
@@ -96,8 +98,8 @@ public class MongoQuoteRepository implements QuoteRepository {
     }
 
     @Override
-    public Mono<Quote> getQuote(String language, String id) {
-        final List<Bson> aggregates = List.of(Aggregates.match(Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(id)), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))),
+    public Mono<Quote> getQuote(String language, String quoteId) {
+        final List<Bson> aggregates = List.of(Aggregates.match(Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(quoteId)), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))),
                                               Aggregates.addFields(new Field<>(QuoteEntity.AUTHOR_ID_FIELD_NAME, Expressions.toObjectId(Fields.getFieldPath(QuoteEntity.AUTHOR_ID_FIELD_NAME)))),
                                               Aggregates.lookup(AuthorEntity.COLLECTION_NAME, QuoteEntity.AUTHOR_ID_FIELD_NAME, Fields.UNDERSCORE_ID, QuoteEntity.AUTHOR_FIELD_NAME),
                                               Aggregates.unwind(Fields.getFieldPath(QuoteEntity.AUTHOR_FIELD_NAME)));
@@ -108,14 +110,14 @@ public class MongoQuoteRepository implements QuoteRepository {
     }
 
     @Override
-    public Flux<Quote> searchAuthorQuotes(String language, String id, @Nullable String query, int limit, int offset) {
+    public Flux<Quote> searchAuthorQuotes(String language, String authorId, @Nullable String query, int limit, int offset) {
         final List<Bson> aggregates = new ArrayList<>();
 
         if (!Strings.isNullOrEmpty(query)) {
             aggregates.add(Aggregates.match(Filters.text(query, new TextSearchOptions().caseSensitive(false))));
         }
 
-        aggregates.add(Aggregates.match(Filters.and(Filters.eq(QuoteEntity.AUTHOR_ID_FIELD_NAME, id), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))));
+        aggregates.add(Aggregates.match(Filters.and(Filters.eq(QuoteEntity.AUTHOR_ID_FIELD_NAME, authorId), Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language))));
         aggregates.addAll(getPagingAggregationStages(limit, offset));
         aggregates.addAll(getAuthorLookupAggregationStages());
 
@@ -129,6 +131,19 @@ public class MongoQuoteRepository implements QuoteRepository {
         final Publisher<Long> result = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).countDocuments(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         return Mono.from(result);
+    }
+
+    @Override
+    public Mono<Boolean> likeQuote(String language, String quoteId) {
+        final Bson filter = Filters.and(Filters.eq(Fields.UNDERSCORE_ID, Fields.getId(quoteId)),
+                                        Filters.eq(QuoteEntity.LANGUAGE_FIELD_NAME, language));
+
+        final Bson likeIncrement = Updates.inc(QuoteEntity.LIKES_FIELD_NAME, 1);
+        final UpdateOptions updateOptions = new UpdateOptions().upsert(false);
+
+        return Mono.from(getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class)
+                                 .updateOne(filter, likeIncrement, updateOptions))
+                   .map(updateResult -> updateResult.getModifiedCount() != 0);
     }
 
     private Collection<Bson> getAuthorLookupAggregationStages() {

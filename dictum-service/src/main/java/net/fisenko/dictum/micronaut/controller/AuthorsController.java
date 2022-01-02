@@ -38,15 +38,15 @@ public class AuthorsController {
                             .map(x -> mappingService.map(x, AuthorSummary.class));
     }
 
-    @Get("{id}")
-    public Mono<AuthorDetail> getAuthor(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String id) {
-        return authorService.getAuthor(language, id)
+    @Get("{authorId}")
+    public Mono<AuthorDetail> getAuthor(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String authorId) {
+        return authorService.getAuthor(language, authorId)
                             .map(x -> mappingService.map(x, AuthorDetail.class));
     }
 
-    @Get("{id}/quotes{?search*}")
-    public Flux<QuoteSummary> searchAuthorQuotes(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String id, @Nullable @Valid Search search) {
-        return authorService.searchAuthorQuotes(language, id, Search.getQuery(search), Search.getLimit(search), Search.getOffset(search))
+    @Get("{authorId}/quotes{?search*}")
+    public Flux<QuoteSummary> searchAuthorQuotes(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String authorId, @Nullable @Valid Search search) {
+        return authorService.searchAuthorQuotes(language, authorId, Search.getQuery(search), Search.getLimit(search), Search.getOffset(search))
                             .map(x -> mappingService.map(x, QuoteSummary.class));
     }
 }

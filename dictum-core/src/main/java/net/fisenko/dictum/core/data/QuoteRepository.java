@@ -11,9 +11,11 @@ public interface QuoteRepository {
 
     Mono<Quote> getRandomQuote(String language);
 
-    Mono<Quote> getQuote(String language, String id);
+    Mono<Quote> getQuote(String language, String quoteId);
 
-    Flux<Quote> searchAuthorQuotes(String language, String id, @Nullable String query, int limit, int offset);
+    Flux<Quote> searchAuthorQuotes(String language, String authorId, @Nullable String query, int limit, int offset);
 
     Mono<Long> getQuotesCount(String language);
+
+    Mono<Boolean> likeQuote(String language, String quoteId);
 }
