@@ -13,7 +13,7 @@
     <artifactId>dictum-service</artifactId>
 
     <properties>
-        <micronaut.version>3.2.3</micronaut.version>
+        <micronaut.version>3.2.4</micronaut.version>
         <lombok.version>1.18.20</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
