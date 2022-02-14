@@ -18,7 +18,7 @@
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
         <micronaut-maven-plugin.version>3.1.1</micronaut-maven-plugin.version>
-        <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.10.0</maven-compiler-plugin.version>
         <jib-maven-plugin.version>3.2.0</jib-maven-plugin.version>
     </properties>
 
