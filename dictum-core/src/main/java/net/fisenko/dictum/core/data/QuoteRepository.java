@@ -17,5 +17,7 @@ public interface QuoteRepository {
 
     Mono<Long> getQuotesCount(String language);
 
+    Mono<Quote> createQuote(String language, String authorId, String text);
+
     Mono<Boolean> likeQuote(String language, String quoteId);
 }

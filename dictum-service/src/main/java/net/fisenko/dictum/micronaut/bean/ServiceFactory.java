@@ -35,12 +35,12 @@ public final class ServiceFactory {
     }
 
     @Singleton
-    public QuotesService quotesService(QuoteRepository quoteRepository) {
-        return new QuotesServiceImpl(quoteRepository);
+    public QuotesService quotesService(AuthorRepository authorRepository, QuoteRepository quoteRepository) {
+        return new QuotesServiceImpl(authorRepository, quoteRepository);
     }
 
     @Singleton
-    public StatisticsService quotesService(AuthorRepository authorRepository, QuoteRepository quoteRepository) {
+    public StatisticsService statisticsService(AuthorRepository authorRepository, QuoteRepository quoteRepository) {
         return new StatisticsServiceImpl(authorRepository, quoteRepository);
     }
 }

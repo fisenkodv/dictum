@@ -1,4 +1,4 @@
-package net.fisenko.dictum.business.util;
+package net.fisenko.dictum.core.util;
 
 import lombok.SneakyThrows;
 

@@ -14,20 +14,24 @@ import net.fisenko.dictum.core.config.DatabaseConfiguration;
 import net.fisenko.dictum.core.data.QuoteRepository;
 import net.fisenko.dictum.core.model.Quote;
 import net.fisenko.dictum.core.service.MappingService;
+import net.fisenko.dictum.core.util.Hash;
 import net.fisenko.dictum.core.util.Strings;
 import net.fisenko.dictum.data.mongo.entity.AuthorEntity;
 import net.fisenko.dictum.data.mongo.entity.QuoteEntity;
 import net.fisenko.dictum.data.mongo.util.Expressions;
 import net.fisenko.dictum.data.mongo.util.Fields;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.jetbrains.annotations.Nullable;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class MongoQuoteRepository implements QuoteRepository {
 
@@ -131,6 +135,20 @@ public class MongoQuoteRepository implements QuoteRepository {
         final Publisher<Long> result = getCollection(QuoteEntity.COLLECTION_NAME, QuoteEntity.class).countDocuments(Filters.eq(AuthorEntity.LANGUAGE_FIELD_NAME, language));
 
         return Mono.from(result);
+    }
+
+    @Override
+    public Mono<Quote> createQuote(String language, String authorId, String text) {
+        Document doc = new Document(QuoteEntity.TEXT_FIELD_NAME, text)
+                .append(QuoteEntity.HASH_FIELD_NAME, Hash.sha256(text))
+                .append(QuoteEntity.AUTHOR_ID_FIELD_NAME, Fields.getId(authorId))
+                .append(QuoteEntity.ADDED_AT_FIELD_NAME, LocalDateTime.now())
+                .append(QuoteEntity.LANGUAGE_FIELD_NAME, language)
+                .append(QuoteEntity.LIKES_FIELD_NAME, 0);
+
+        return Mono.from(getCollection(QuoteEntity.COLLECTION_NAME, Document.class).insertOne(doc))
+                   .map(insertOneResult -> Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue().toString())
+                   .flatMap(insertedId -> this.getQuote(language, insertedId));
     }
 
     @Override

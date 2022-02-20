@@ -1,5 +1,6 @@
 package net.fisenko.dictum.business.util;
 
+import net.fisenko.dictum.core.util.Hash;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

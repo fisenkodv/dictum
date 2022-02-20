@@ -22,7 +22,7 @@ public class QuoteEntity {
     public final static String HASH_FIELD_NAME = "hash";
     public final static String AUTHOR_FIELD_NAME = "author";
     public final static String AUTHOR_ID_FIELD_NAME = "author_id";
-    public final static String CREATED_AT_FIELD_NAME = "created_at";
+    public final static String ADDED_AT_FIELD_NAME = "added_at";
     public final static String LANGUAGE_FIELD_NAME = "language";
     public static final String LIKES_FIELD_NAME = "likes";
 
@@ -34,8 +34,8 @@ public class QuoteEntity {
     private String hash;
     @BsonProperty(AUTHOR_FIELD_NAME)
     private AuthorEntity author;
-    @BsonProperty(CREATED_AT_FIELD_NAME)
-    private Instant createdAt;
+    @BsonProperty(ADDED_AT_FIELD_NAME)
+    private Instant addedAt;
     @BsonProperty(LANGUAGE_FIELD_NAME)
     private String language;
     @BsonProperty(LIKES_FIELD_NAME)

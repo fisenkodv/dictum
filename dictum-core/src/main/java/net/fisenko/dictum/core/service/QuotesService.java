@@ -13,5 +13,7 @@ public interface QuotesService {
 
     Mono<Quote> getQuote(String language, String quoteId);
 
+    Mono<Quote> createQuote(String language, String authorId, String text);
+
     Mono<Void> likeQuote(String language, String quoteId);
 }

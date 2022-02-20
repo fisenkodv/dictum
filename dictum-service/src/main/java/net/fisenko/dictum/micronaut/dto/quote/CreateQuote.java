@@ -5,16 +5,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.fisenko.dictum.micronaut.dto.author.AuthorSummary;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class QuoteSummary {
+public final class CreateQuote {
 
-    private String id;
+    @NotBlank
+    private String authorId;
+    @NotBlank
     private String text;
-    private AuthorSummary author;
 }

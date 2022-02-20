@@ -5,6 +5,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import net.fisenko.dictum.business.annotation.Id;
 import net.fisenko.dictum.core.service.MappingService;
 import net.fisenko.dictum.core.service.QuotesService;
 import net.fisenko.dictum.micronaut.binding.Search;
+import net.fisenko.dictum.micronaut.dto.quote.CreateQuote;
 import net.fisenko.dictum.micronaut.dto.quote.QuoteSummary;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -46,6 +48,12 @@ public class QuotesController {
     @Get("{quoteId}")
     public Mono<QuoteSummary> getQuote(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String quoteId) {
         return quotesService.getQuote(language, quoteId)
+                            .map(x -> mappingService.map(x, QuoteSummary.class));
+    }
+
+    @Post()
+    public Mono<QuoteSummary> createQuote(@PathVariable @NonNull String language, @Valid CreateQuote quote) {
+        return quotesService.createQuote(language, quote.getAuthorId(), quote.getText())
                             .map(x -> mappingService.map(x, QuoteSummary.class));
     }
 
