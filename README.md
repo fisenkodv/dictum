@@ -21,36 +21,36 @@
 
 - [Dictum](#dictum)
 - [Dictum API](#dictum-api)
-  - [Authors](#authors)
-    - [Search authors](#search-authors)
-      - [Parameters](#parameters)
-      - [Example](#example)
-    - [Get an author by ID](#get-an-author-by-id)
-      - [Parameters](#parameters-1)
-      - [Example](#example-1)
-    - [Search an author's quotes](#search-an-authors-quotes)
-      - [Parameters](#parameters-2)
-      - [Example](#example-2)
-  - [Quotes](#quotes)
-    - [Get Random Quote](#get-random-quote)
-      - [Parameters](#parameters-3)
-      - [Example](#example-3)
-    - [Search quotes](#search-quotes)
-      - [Parameters](#parameters-4)
-      - [Example](#example-4)
-    - [Get a quote by ID](#get-a-quote-by-id)
-      - [Parameters](#parameters-5)
-      - [Example](#example-5)
-    - [Like a quote](#like-a-quote)
-      - [Parameters](#parameters-6)
-      - [Example](#example-6)
-  - [Languages](#languages)
-    - [Get languages](#get-languages)
-      - [Example](#example-7)
-  - [Statistics](#statistics)
-    - [Get statistics](#get-statistics)
-      - [Parameters](#parameters-7)
-      - [Example](#example-8)
+    - [Authors](#authors)
+        - [Search authors](#search-authors)
+            - [Parameters](#parameters)
+            - [Example](#example)
+        - [Get an author by ID](#get-an-author-by-id)
+            - [Parameters](#parameters-1)
+            - [Example](#example-1)
+        - [Search an author's quotes](#search-an-authors-quotes)
+            - [Parameters](#parameters-2)
+            - [Example](#example-2)
+    - [Quotes](#quotes)
+        - [Get Random Quote](#get-random-quote)
+            - [Parameters](#parameters-3)
+            - [Example](#example-3)
+        - [Search quotes](#search-quotes)
+            - [Parameters](#parameters-4)
+            - [Example](#example-4)
+        - [Get a quote by ID](#get-a-quote-by-id)
+            - [Parameters](#parameters-5)
+            - [Example](#example-5)
+        - [Like a quote](#like-a-quote)
+            - [Parameters](#parameters-6)
+            - [Example](#example-6)
+    - [Languages](#languages)
+        - [Get languages](#get-languages)
+            - [Example](#example-7)
+    - [Statistics](#statistics)
+        - [Get statistics](#get-statistics)
+            - [Parameters](#parameters-7)
+            - [Example](#example-8)
 - [Links](#links)
 - [License](#license)
 - [Supporters](#supporters)
@@ -70,7 +70,7 @@ GET https://api.fisenko.net/v1/authors/[language]?query=[query]&offset=[offset]&
 ##### Parameters
 
 | Parameter  | Type     | Description                                                                                                |
-| :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
+|:-----------|:---------|:-----------------------------------------------------------------------------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`.                                                                    |
 | `query`    | `string` | **optional** a search query.                                                                               |
 | `offset`   | `int`    | **optional** an offset. By default is `0`.                                                                 |
@@ -104,7 +104,7 @@ GET https://api.fisenko.net/v1/authors/[language]/[id]
 #### Parameters
 
 | Parameter  | Type     | Description                             |
-| :--------- | :------- | :-------------------------------------- |
+|:-----------|:---------|:----------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`. |
 | `id`       | `string` | **required** an author ID.              |
 
@@ -134,7 +134,7 @@ GET https://api.fisenko.net/v1/authors/[language]/[id]/quotes?query=[query]&offs
 #### Parameters
 
 | Parameter  | Type     | Description                                                                                                |
-| :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
+|:-----------|:---------|:-----------------------------------------------------------------------------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`.                                                                    |
 | `id`       | `string` | **required** an author ID.                                                                                 |
 | `query`    | `string` | **optional** a search query.                                                                               |
@@ -177,7 +177,7 @@ GET https://api.fisenko.net/v1/quotes/[language]/random
 #### Parameters
 
 | Parameter  | Type     | Description                             |
-| :--------- | :------- | :-------------------------------------- |
+|:-----------|:---------|:----------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`. |
 
 #### Example
@@ -212,7 +212,7 @@ GET https://api.fisenko.net/v1/quotes/[language]?query=[query]&offset=[offset]&l
 #### Parameters
 
 | Parameter  | Type     | Description                                                                                                |
-| :--------- | :------- | :--------------------------------------------------------------------------------------------------------- |
+|:-----------|:---------|:-----------------------------------------------------------------------------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`.                                                                    |
 | `query`    | `string` | **optional** a search query.                                                                               |
 | `offset`   | `int`    | **optional** an offset. By default is `0`.                                                                 |
@@ -258,7 +258,7 @@ GET https://api.fisenko.net/v1/quotes/[language]/[id]
 #### Parameters
 
 | Parameter  | Type     | Description                             |
-| :--------- | :------- | :-------------------------------------- |
+|:-----------|:---------|:----------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`. |
 | `id`       | `string` | **required** a quote ID.                |
 
@@ -283,6 +283,51 @@ returns
 }
 ```
 
+### Create a quote
+
+```http
+POST https://api.fisenko.net/v1/quotes/[language]
+```
+
+#### Parameters
+
+| Parameter  | Type     | Description                             |
+|:-----------|:---------|:----------------------------------------|
+| `language` | `string` | **required** language, e.g. `en`, `ru`. |
+
+#### Payload
+
+| Parameter  | Type     | Description                             |
+|:-----------|:---------|:----------------------------------------|
+| `authorId` | `string` | **required** Id of the author's  quote. |
+| `text`     | `string` | **required** a quote text.              |
+
+#### Example
+
+request
+
+```http
+POST https://api.fisenko.net/v1/quotes/en
+BODY
+{
+    "authorId": "6153b7d49e8e5ae3eb230a5b",
+    "text": "Stay hungry, stay foolish."
+}
+```
+
+returns
+
+```json
+{
+  "id": "6153bbe19e8e5ae3eb2c85aa",
+  "text": "Stay hungry, stay foolish.",
+  "author": {
+    "id": "6153b7d49e8e5ae3eb230a5b",
+    "name": "Steve Jobs"
+  }
+}
+```
+
 ### Like a quote
 
 ```http
@@ -292,7 +337,7 @@ PUT https://api.fisenko.net/v1/quotes/[language]/[id]/like
 #### Parameters
 
 | Parameter  | Type     | Description                             |
-| :--------- | :------- | :-------------------------------------- |
+|:-----------|:---------|:----------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`. |
 | `id`       | `string` | **required** a quote ID.                |
 
@@ -352,7 +397,7 @@ GET https://api.fisenko.net/v1/statistics/[language]
 #### Parameters
 
 | Parameter  | Type     | Description                             |
-| :--------- | :------- | :-------------------------------------- |
+|:-----------|:---------|:----------------------------------------|
 | `language` | `string` | **required** language, e.g. `en`, `ru`. |
 
 #### Example
@@ -385,7 +430,7 @@ MIT
 JetBrains is supporting this open source project with:
 
 <p>
-    <a href="http://www.jetbrains.com/idea/">
+    <a href="https://www.jetbrains.com/idea/">
         <img alt="Intellij IDEA" width="50%" src="https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png">
     </a>
 </p>
