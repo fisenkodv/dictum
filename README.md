@@ -20,37 +20,42 @@
 # Table of Contents
 
 - [Dictum](#dictum)
+- [Table of Contents](#table-of-contents)
 - [Dictum API](#dictum-api)
-    - [Authors](#authors)
-        - [Search authors](#search-authors)
-            - [Parameters](#parameters)
-            - [Example](#example)
-        - [Get an author by ID](#get-an-author-by-id)
-            - [Parameters](#parameters-1)
-            - [Example](#example-1)
-        - [Search an author's quotes](#search-an-authors-quotes)
-            - [Parameters](#parameters-2)
-            - [Example](#example-2)
-    - [Quotes](#quotes)
-        - [Get Random Quote](#get-random-quote)
-            - [Parameters](#parameters-3)
-            - [Example](#example-3)
-        - [Search quotes](#search-quotes)
-            - [Parameters](#parameters-4)
-            - [Example](#example-4)
-        - [Get a quote by ID](#get-a-quote-by-id)
-            - [Parameters](#parameters-5)
-            - [Example](#example-5)
-        - [Like a quote](#like-a-quote)
-            - [Parameters](#parameters-6)
-            - [Example](#example-6)
-    - [Languages](#languages)
-        - [Get languages](#get-languages)
-            - [Example](#example-7)
-    - [Statistics](#statistics)
-        - [Get statistics](#get-statistics)
-            - [Parameters](#parameters-7)
-            - [Example](#example-8)
+  - [Authors](#authors)
+    - [Search authors](#search-authors)
+      - [Parameters](#parameters)
+      - [Example](#example)
+    - [Get an author by ID](#get-an-author-by-id)
+      - [Parameters](#parameters-1)
+      - [Example](#example-1)
+    - [Search an author's quotes](#search-an-authors-quotes)
+      - [Parameters](#parameters-2)
+      - [Example](#example-2)
+  - [Quotes](#quotes)
+    - [Get Random Quote](#get-random-quote)
+      - [Parameters](#parameters-3)
+      - [Example](#example-3)
+    - [Search quotes](#search-quotes)
+      - [Parameters](#parameters-4)
+      - [Example](#example-4)
+    - [Get a quote by ID](#get-a-quote-by-id)
+      - [Parameters](#parameters-5)
+      - [Example](#example-5)
+    - [Create a quote](#create-a-quote)
+      - [Parameters](#parameters-6)
+      - [Payload](#payload)
+      - [Example](#example-6)
+    - [Like a quote](#like-a-quote)
+      - [Parameters](#parameters-7)
+      - [Example](#example-7)
+  - [Languages](#languages)
+    - [Get languages](#get-languages)
+      - [Example](#example-8)
+  - [Statistics](#statistics)
+    - [Get statistics](#get-statistics)
+      - [Parameters](#parameters-8)
+      - [Example](#example-9)
 - [Links](#links)
 - [License](#license)
 - [Supporters](#supporters)
@@ -297,10 +302,10 @@ POST https://api.fisenko.net/v1/quotes/[language]
 
 #### Payload
 
-| Parameter  | Type     | Description                             |
-|:-----------|:---------|:----------------------------------------|
-| `authorId` | `string` | **required** Id of the author's  quote. |
-| `text`     | `string` | **required** a quote text.              |
+| Parameter  | Type     | Description                            |
+|:-----------|:---------|:---------------------------------------|
+| `authorId` | `string` | **required** Id of the author's quote. |
+| `text`     | `string` | **required** a quote text.             |
 
 #### Example
 
