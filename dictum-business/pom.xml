@@ -13,7 +13,7 @@
     <artifactId>dictum-business</artifactId>
 
     <properties>
-        <modelmapper.version>3.0.0</modelmapper.version>
+        <modelmapper.version>3.1.0</modelmapper.version>
         <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
     </properties>
 
