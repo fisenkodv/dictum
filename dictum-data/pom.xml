@@ -13,7 +13,7 @@
     <artifactId>dictum-data</artifactId>
 
     <properties>
-        <micronaut-mongo-reactive.version>4.0.0</micronaut-mongo-reactive.version>
+        <micronaut-mongo-reactive.version>4.1.0</micronaut-mongo-reactive.version>
     </properties>
 
     <dependencies>
