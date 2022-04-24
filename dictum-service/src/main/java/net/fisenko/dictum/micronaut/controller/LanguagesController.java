@@ -2,6 +2,8 @@ package net.fisenko.dictum.micronaut.controller;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
 import net.fisenko.dictum.core.service.LanguageService;
@@ -11,6 +13,7 @@ import reactor.core.publisher.Flux;
 
 @Slf4j
 @Validated
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/${dictum.api.version}/languages")
 public class LanguagesController {
 

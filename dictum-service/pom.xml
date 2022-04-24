@@ -7,7 +7,7 @@
     <parent>
         <groupId>net.fisenko.dictum</groupId>
         <artifactId>dictum-parent</artifactId>
-        <version>0.0.9</version>
+        <version>0.1.1</version>
     </parent>
 
     <artifactId>dictum-service</artifactId>
@@ -97,6 +97,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-jwt</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
@@ -180,7 +185,7 @@
                 <configuration>
                     <!-- Uncomment to enable incremental compilation -->
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-                    <annotationProcessorPaths combine.self="override">
+                    <annotationProcessorPaths combine.self="override" combine.children="append">
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
@@ -199,6 +204,11 @@
                         <path>
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-validation</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.security</groupId>
+                            <artifactId>micronaut-security-annotations</artifactId>
                             <version>${micronaut.version}</version>
                         </path>
                     </annotationProcessorPaths>

@@ -7,9 +7,12 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
 import net.fisenko.dictum.business.annotation.Id;
+import net.fisenko.dictum.core.security.SecurityRoles;
 import net.fisenko.dictum.core.service.MappingService;
 import net.fisenko.dictum.core.service.QuotesService;
 import net.fisenko.dictum.micronaut.binding.Search;
@@ -22,6 +25,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Validated
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/${dictum.api.version}/quotes/{language}")
 public class QuotesController {
 
@@ -52,12 +56,14 @@ public class QuotesController {
     }
 
     @Post()
+    @Secured({SecurityRoles.EDITOR})
     public Mono<QuoteSummary> createQuote(@PathVariable @NonNull String language, @Valid CreateQuote quote) {
         return quotesService.createQuote(language, quote.getAuthorId(), quote.getText())
                             .map(x -> mappingService.map(x, QuoteSummary.class));
     }
 
     @Put("{quoteId}/like")
+    @Secured({SecurityRoles.EDITOR})
     public Mono<Void> likeQuote(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String quoteId) {
         return quotesService.likeQuote(language, quoteId);
     }
