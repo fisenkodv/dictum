@@ -4,6 +4,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
 import net.fisenko.dictum.core.service.MappingService;
@@ -13,6 +15,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Validated
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/${dictum.api.version}/statistics/{language}")
 public class StatisticsController {
 

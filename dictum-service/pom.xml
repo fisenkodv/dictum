@@ -7,13 +7,14 @@
     <parent>
         <groupId>net.fisenko.dictum</groupId>
         <artifactId>dictum-parent</artifactId>
-        <version>0.0.9</version>
+        <version>0.1.1</version>
     </parent>
 
     <artifactId>dictum-service</artifactId>
 
     <properties>
         <micronaut.version>3.4.2</micronaut.version>
+        <micronaut-security.version>3.4.1</micronaut-security.version>
         <lombok.version>1.18.20</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
@@ -94,6 +95,11 @@
         <dependency>
             <groupId>io.micronaut.reactor</groupId>
             <artifactId>micronaut-reactor-http-client</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-jwt</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -180,7 +186,7 @@
                 <configuration>
                     <!-- Uncomment to enable incremental compilation -->
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-                    <annotationProcessorPaths combine.self="override">
+                    <annotationProcessorPaths combine.self="override" combine.children="append">
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
@@ -200,6 +206,11 @@
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-validation</artifactId>
                             <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.security</groupId>
+                            <artifactId>micronaut-security-annotations</artifactId>
+                            <version>${micronaut-security.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>

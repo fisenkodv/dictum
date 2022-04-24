@@ -7,7 +7,7 @@
     <parent>
         <artifactId>dictum-parent</artifactId>
         <groupId>net.fisenko.dictum</groupId>
-        <version>0.0.9</version>
+        <version>0.1.1</version>
     </parent>
 
     <artifactId>dictum-data</artifactId>

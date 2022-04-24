@@ -12,7 +12,7 @@ import net.fisenko.dictum.core.config.DatabaseConfiguration;
 @Setter
 @ToString
 @ConfigurationProperties("dictum")
-public class MicronautApplicationConfiguration implements ApplicationConfiguration {
+public class DictumApplicationConfiguration implements ApplicationConfiguration {
 
     @ConfigurationBuilder(configurationPrefix = "db")
     private DatabaseConfiguration DB = new DatabaseConfiguration();
