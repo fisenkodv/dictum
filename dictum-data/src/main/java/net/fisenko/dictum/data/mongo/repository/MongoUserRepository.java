@@ -27,7 +27,8 @@ public class MongoUserRepository implements UserRepository {
     public Mono<User> getUser(String username) {
         final FindPublisher<UserEntity> result = getCollection().find(Filters.eq(UserEntity.USER_NAME_FIELD_NAME, username))
                                                                 .limit(1);
-        return Mono.from(result).map(x -> mappingService.map(x, User.class));
+
+        return Mono.from(result).map(userEntity -> mappingService.map(userEntity, User.class));
     }
 
     private MongoCollection<UserEntity> getCollection() {

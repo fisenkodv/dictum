@@ -46,7 +46,8 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     public Mono<RefreshToken> getRefreshToken(String refreshToken) {
         final FindPublisher<RefreshTokenEntity> result = getCollection().find(Filters.eq(RefreshTokenEntity.REFRESH_TOKEN_FIELD_NAME, refreshToken))
                                                                         .limit(1);
-        return Mono.from(result).map(x -> mappingService.map(x, RefreshToken.class));
+
+        return Mono.from(result).map(refreshTokenEntity -> mappingService.map(refreshTokenEntity, RefreshToken.class));
     }
 
     private MongoCollection<RefreshTokenEntity> getCollection() {
