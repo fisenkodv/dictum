@@ -8,16 +8,6 @@ import net.fisenko.dictum.core.service.SecurityService;
 @Factory
 public class SecurityFactory {
 
-//    @Singleton
-//    public AuthenticationProvider getAuthenticationProvider() {
-//        return new DictumAuthenticationProvider();
-//    }
-
-//    @Singleton
-//    public RefreshTokenPersistence getRefreshTokenPersistence() {
-//        return new DictumRefreshTokenPersistence();
-//    }
-
     @Singleton
     public SecurityService securityService() {
         return new SecurityServiceImpl();
