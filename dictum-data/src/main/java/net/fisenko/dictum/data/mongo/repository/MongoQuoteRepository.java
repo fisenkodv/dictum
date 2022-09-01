@@ -173,7 +173,7 @@ public class MongoQuoteRepository implements QuoteRepository {
     }
 
     private Collection<Bson> getPagingAggregationStages(int limit, int offset) {
-        return List.of(Aggregates.limit(limit), Aggregates.skip(offset));
+        return List.of(Aggregates.skip(offset), Aggregates.limit(limit));
     }
 
     private <T> MongoCollection<T> getCollection(String collectionName, Class<T> type) {
