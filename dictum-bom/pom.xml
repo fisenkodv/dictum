@@ -19,7 +19,7 @@
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <assertj-core.version>3.23.1</assertj-core.version>
-        <versions-maven-plugin.version>2.11.0</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.12.0</versions-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
