@@ -15,7 +15,7 @@
         <slf4j-api.version>2.0.1</slf4j-api.version>
         <reactor-core.version>3.4.23</reactor-core.version>
         <annotations.version>23.0.0</annotations.version>
-        <junit5.version>5.9.0</junit5.version>
+        <junit5.version>5.9.1</junit5.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <assertj-core.version>3.23.1</assertj-core.version>
