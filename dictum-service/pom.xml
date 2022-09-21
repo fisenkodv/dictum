@@ -13,7 +13,7 @@
     <artifactId>dictum-service</artifactId>
 
     <properties>
-        <micronaut.version>3.6.3</micronaut.version>
+        <micronaut.version>3.7.0</micronaut.version>
         <micronaut-security.version>3.4.1</micronaut-security.version>
         <micronaut-openapi.version>4.0.1</micronaut-openapi.version>
         <lombok.version>1.18.20</lombok.version>
