@@ -7,7 +7,7 @@
     <parent>
         <groupId>net.fisenko.dictum</groupId>
         <artifactId>dictum-parent</artifactId>
-        <version>0.1.3</version>
+        <version>0.1.4</version>
     </parent>
 
     <artifactId>dictum-service</artifactId>
@@ -136,7 +136,7 @@
                         <version>${jib-maven-plugin.version}</version>
                         <configuration>
                             <from>
-                                <image>azul/zulu-openjdk-alpine:17</image>
+                                <image>azul/zulu-openjdk-alpine:19</image>
                             </from>
                             <to>
                                 <tags>
