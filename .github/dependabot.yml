@@ -9,3 +9,11 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    labels:
+      - "maven"
+      - "java"
+      - "dependencies"
+    reviewers:
+      - "fisenkodv"
+      assignees:
+      - "fisenkodv"
