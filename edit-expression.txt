@@ -1,0 +1,14 @@
+Hello sir.
+
+I am new to web development / software engineering.
+
+
+When I was trying your API, I noticed a spelling error(unwanted apostrophe) on Anne Frank's inspiring expression.
+You can see it here: https://api.fisenko.net/v1/quotes/en/6153bbb29e8e5ae3eb239825
+
+
+You created something wonderful. I want to make it 'perfect'.
+
+Sorry if I do not know how to make a proper pull request for a project.
+
+Have a great day!
