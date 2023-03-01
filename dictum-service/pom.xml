@@ -15,7 +15,7 @@
     <properties>
         <micronaut.version>3.8.6</micronaut.version>
         <micronaut-security.version>3.4.1</micronaut-security.version>
-        <micronaut-openapi.version>4.0.1</micronaut-openapi.version>
+        <micronaut-openapi.version>4.8.4</micronaut-openapi.version>
         <lombok.version>1.18.20</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
