@@ -16,7 +16,7 @@
         <micronaut.version>3.9.2</micronaut.version>
         <micronaut-security.version>3.11.0</micronaut-security.version>
         <micronaut-openapi.version>4.8.7</micronaut-openapi.version>
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.28</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
         <micronaut-maven-plugin.version>3.5.3</micronaut-maven-plugin.version>
