@@ -61,10 +61,4 @@ public class QuotesController {
         return quotesService.createQuote(language, quote.getAuthorId(), quote.getText())
                             .map(x -> mappingService.map(x, QuoteSummary.class));
     }
-
-    @Put("{quoteId}/like")
-    @Secured({SecurityRoles.EDITOR})
-    public Mono<Void> likeQuote(@PathVariable @NonNull String language, @PathVariable @NonNull @Id String quoteId) {
-        return quotesService.likeQuote(language, quoteId);
-    }
 }
