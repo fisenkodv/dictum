@@ -1,7 +1,6 @@
 package net.fisenko.dictum.micronaut.security;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
@@ -29,7 +28,7 @@ public class DictumAuthenticationProvider implements AuthenticationProvider {
     }
 
     @Override
-    public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
+    public Publisher<AuthenticationResponse> authenticate(@Nullable Object httpRequest, AuthenticationRequest authenticationRequest) {
         final String username = authenticationRequest.getIdentity().toString();
         final String password = authenticationRequest.getSecret().toString();
 
@@ -39,15 +38,15 @@ public class DictumAuthenticationProvider implements AuthenticationProvider {
                 .switchIfEmpty(Mono.create(emitter -> emitter.error(AuthenticationResponse.exception())))
                 .flux()
                 .flatMap(user ->
-                                 Flux.create(emitter -> {
-                                                 if (securityService.verify(password, user.getPasswordHash())) {
-                                                     emitter.next(AuthenticationResponse.success((String) authenticationRequest.getIdentity(), List.of(SecurityRoles.EDITOR)));
-                                                     emitter.complete();
-                                                 } else {
-                                                     emitter.error(AuthenticationResponse.exception());
-                                                 }
-                                             },
-                                             FluxSink.OverflowStrategy.ERROR
-                                 ));
+                        Flux.create(emitter -> {
+                                    if (securityService.verify(password, user.getPasswordHash())) {
+                                        emitter.next(AuthenticationResponse.success((String) authenticationRequest.getIdentity(), List.of(SecurityRoles.EDITOR)));
+                                        emitter.complete();
+                                    } else {
+                                        emitter.error(AuthenticationResponse.exception());
+                                    }
+                                },
+                                FluxSink.OverflowStrategy.ERROR
+                        ));
     }
 }

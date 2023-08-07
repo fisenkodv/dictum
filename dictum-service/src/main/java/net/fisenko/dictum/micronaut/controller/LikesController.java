@@ -13,7 +13,7 @@ import net.fisenko.dictum.core.service.QuotesService;
 import net.fisenko.dictum.micronaut.dto.like.LikeQuote;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Slf4j
 @Validated

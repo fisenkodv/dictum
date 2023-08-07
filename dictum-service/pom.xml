@@ -13,13 +13,13 @@
     <artifactId>dictum-service</artifactId>
 
     <properties>
-        <micronaut.version>3.10.0</micronaut.version>
+        <micronaut.version>4.0.1</micronaut.version>
         <micronaut-security.version>4.0.3</micronaut-security.version>
         <micronaut-openapi.version>5.0.1</micronaut-openapi.version>
         <lombok.version>1.18.28</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
-        <micronaut-maven-plugin.version>3.5.4</micronaut-maven-plugin.version>
+        <micronaut-maven-plugin.version>4.0.4</micronaut-maven-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
     </properties>
@@ -27,8 +27,8 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-bom</artifactId>
+                <groupId>io.micronaut.platform</groupId>
+                <artifactId>micronaut-platform</artifactId>
                 <version>${micronaut.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -59,7 +59,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut</groupId>
+            <groupId>io.micronaut.validation</groupId>
             <artifactId>micronaut-validation</artifactId>
             <scope>compile</scope>
         </dependency>
@@ -179,7 +179,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>io.micronaut.build</groupId>
+                <groupId>io.micronaut.maven</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
                 <version>${micronaut-maven-plugin.version}</version>
             </plugin>
@@ -207,7 +207,7 @@
                             <version>${micronaut.version}</version>
                         </path>
                         <path>
-                            <groupId>io.micronaut</groupId>
+                            <groupId>io.micronaut.validation</groupId>
                             <artifactId>micronaut-validation</artifactId>
                             <version>${micronaut.version}</version>
                         </path>

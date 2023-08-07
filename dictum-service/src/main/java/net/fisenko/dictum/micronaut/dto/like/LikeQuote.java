@@ -3,7 +3,7 @@ package net.fisenko.dictum.micronaut.dto.like;
 import lombok.*;
 import net.fisenko.dictum.business.annotation.Id;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @Setter
