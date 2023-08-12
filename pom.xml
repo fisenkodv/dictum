@@ -6,7 +6,7 @@
 
     <groupId>net.fisenko.dictum</groupId>
     <artifactId>dictum-parent</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 
     <modules>
         <module>dictum-bom</module>
