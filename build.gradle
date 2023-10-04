@@ -1,0 +1,75 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.micronaut.application") version "4.0.3"
+    id("io.micronaut.test-resources") version "4.0.3"
+    id("io.micronaut.aot") version "4.0.3"
+}
+
+version = "0.1"
+group = "net.fisenko"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor('org.projectlombok:lombok:1.18.26')
+    annotationProcessor('io.micronaut.serde:micronaut-serde-processor:1.5.2')
+
+//    implementation('io.micronaut:micronaut-bom:3.9.4')
+
+    implementation('io.micronaut.serde:micronaut-serde-jackson:1.5.2')
+    implementation('io.micronaut.sql:micronaut-jasync-sql:4.8.0')
+    implementation("io.micronaut.validation:micronaut-validation:4.0.1")
+    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator:4.0.2")
+    implementation("io.micronaut.security:micronaut-security:4.0.3")
+//    implementation("io.micronaut.security:micronaut-security-annotations:4.0.1")
+    implementation('com.github.jasync-sql:jasync-postgresql:2.2.0')
+    implementation('org.modelmapper:modelmapper:3.1.1')
+//    implementation("io.micronaut.flyway:micronaut-flyway")
+//    implementation("org.flywaydb:flyway-core")
+
+//    implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.8.0')
+    compileOnly("org.projectlombok:lombok")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.yaml:snakeyaml")
+//    runtimeOnly("org.postgresql:postgresql")
+//    runtimeOnly("org.flywaydb:flyway-postgresq")
+    testImplementation('io.micronaut:micronaut-http-client:3.8.7')
+}
+
+
+application {
+    mainClass.set("net.fisenko.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("net.fisenko.*")
+    }
+    testResources {
+        additionalModules.add("jdbc-postgresql")
+    }
+    aot {
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+    }
+}
+
+
+

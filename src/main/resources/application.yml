@@ -1,0 +1,45 @@
+#micronaut:
+#  application:dictum
+micronaut:
+  application:
+    name: ${APP_NAME:dictum}
+#    name: dictum
+  router:
+    versioning:
+      enabled: true
+      default-version: 1
+
+  #datasources.default.db-type=postgres
+  ##datasources.default.driver-class-name=org.postgrsesql.Driver
+  #datasources.default.url=jdbc:postgresql://192.168.10.2:6543/dictum
+  #datasources.default.username=root
+  #datasources.default.password=dtfbma14sz1mx4fkwtx70pgf63
+#datasources.default.minPoolSize=1
+#datasources.default.maxPoolSize=10
+jasync:
+  client:
+    password: dtfbma14sz1mx4fkwtx70pgf63
+    database: dictum
+    username: root
+    host: 192.168.10.2
+    port: 6543
+    max-active-connections: 5
+
+
+#  jasync.client.password=dtfbma14sz1mx4fkwtx70pgf63
+#  jasync.client.database=dictum
+#  jasync.client.username=root
+#  jasync.client.host=192.168.10.2
+#  jasync.client.port=6543
+#  jasync.client.max-active-connections=5
+
+#flyway:
+#  datasources:
+#    default:
+#      url: jdbc:postgresql://localhost:5432/your_database
+#      username: your_username
+#      password: your_password
+#  locations: classpath:db/migration
+dictum:
+  api:
+    version: v2

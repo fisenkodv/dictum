@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: net.fisenko
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [app-name, gradle, http-client-test, jasync-sql, java, java-application, jdbc-hikari, junit, logback, lombok, micronaut-aot, micronaut-build, netty-server, postgres, properties, readme, serialization-jackson, shade, test-resources]
