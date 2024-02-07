@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         distribution: 'zulu'
-        java-version: '17'
+        java-version: '21'
 
     - name: Deploy Docker
       run: mvn package -Ddocker=true -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }} -Djib.to.image=docker.io/fisenkodv/dictum-api
