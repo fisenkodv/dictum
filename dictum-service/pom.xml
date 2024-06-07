@@ -14,14 +14,14 @@
 
     <properties>
         <micronaut.version>4.4.3</micronaut.version>
-        <micronaut-security.version>4.7.0</micronaut-security.version>
-        <micronaut-openapi.version>6.9.1</micronaut-openapi.version>
+        <micronaut-security.version>4.9.0</micronaut-security.version>
+        <micronaut-openapi.version>6.11.0</micronaut-openapi.version>
         <lombok.version>1.18.32</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
-        <micronaut-maven-plugin.version>4.5.3</micronaut-maven-plugin.version>
+        <micronaut-maven-plugin.version>4.6.0</micronaut-maven-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
+        <jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
