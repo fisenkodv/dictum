@@ -24,13 +24,7 @@
 
 ---
 
-# Dictum API
-
-Please refer to the [Swagger UI](https://api.fisenko.net/swagger-ui/) to get more details.
-
-# Links
-
-- [Telegram Bot](https://telegram.me/ExpressionsOfMankindBot)
+Public API will be migrated to https://quoterism.com
 
 # License
 
