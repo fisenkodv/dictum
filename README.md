@@ -24,7 +24,7 @@
 
 ---
 
-Public API will be migrated to https://quoterism.com
+The API migrated to https://quoterism.com, for more details please refer to [Developers](https://www.quoterism.com/developer).
 
 # License
 
