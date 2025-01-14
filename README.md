@@ -24,7 +24,7 @@
 
 ---
 
-The API migrated to https://quoterism.com, for more details please refer to [Developers](https://www.quoterism.com/developer).
+The API migrated to https://quoterism.com. For more details please refer to [API Documentation](https://www.quoterism.com/developer).
 
 # License
 
