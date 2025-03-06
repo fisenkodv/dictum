@@ -26,6 +26,8 @@
 
 The API migrated to https://quoterism.com. For more details please refer to [API Documentation](https://www.quoterism.com/developer).
 
+If you use [Raycast](https://www.raycast.com) feel free to install [Quoterism Extension](https://www.raycast.com/dmitry_fisenko/quoterism-raycast).
+
 # License
 
 MIT
