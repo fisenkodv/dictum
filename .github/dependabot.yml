@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "maven"
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "montly"
     labels:
       - "maven"
       - "java"
