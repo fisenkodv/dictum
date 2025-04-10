@@ -19,7 +19,7 @@
         <lombok.version>1.18.38</lombok.version>
         <exec.mainClass>net.fisenko.dictum.micronaut.Application</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
-        <micronaut-maven-plugin.version>4.8.0</micronaut-maven-plugin.version>
+        <micronaut-maven-plugin.version>4.8.2</micronaut-maven-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <jib-maven-plugin.version>3.4.5</jib-maven-plugin.version>
     </properties>
